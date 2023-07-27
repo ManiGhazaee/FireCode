@@ -4,11 +4,13 @@ import ReactCodeMirror from "@uiw/react-codemirror";
 import { loadLanguage } from "@uiw/codemirror-extensions-langs";
 import { tokyoNight } from "@uiw/codemirror-theme-tokyo-night";
 import axios from "axios";
+import ProblemNavbar from "../components/ProblemNavbar";
 
 const ProblemPage = () => {
     const [code, setCode] = useState<string>("");
     const explanationRef = useRef<HTMLDivElement>(null);
     const sliderRef = useRef<HTMLDivElement>(null);
+    const [currentLang, setCurrentLang] = useState<string>("JavaScript");
     const handleSlider = (event: React.MouseEvent<HTMLDivElement>) => {
         const mouseX = event.clientX;
         const newWidth = mouseX - 8;
@@ -35,7 +37,9 @@ const ProblemPage = () => {
                         id="explanation"
                         className="h-[calc(100%-16px)] bg-slate-700 ml-[8px] rounded-lg w-[50%]"
                         ref={explanationRef}
-                    ></div>
+                    >
+                        <ProblemNavbar />
+                    </div>
                     <div
                         id="slider"
                         className="w-[8px] h-[calc(100%-16px)] rounded-lg hover:bg-blue-800 hover:cursor-col-resize transition active:bg-blue-800 active:cursor-col-resize"
@@ -44,6 +48,14 @@ const ProblemPage = () => {
                     ></div>
                     <div className="flex flex-col h-[calc(100%-16px)] min-w-[calc(20%-8px)] mr-[8px] flex-grow">
                         <div className="min-h-0 flex-grow min-w-full mr-[8px] mb-[8px] rounded-lg overflow-hidden">
+                            <div className="h-[50px] bg-slate-700 relative">
+                                <div
+                                    className=" inline-block relative w-fit h-fit rounded-md ml-[13px] top-[8px] px-[6px] py-[6px] text-gray-300 hover:text-white cursor-pointer text-[14px] font-bold transition select-none"
+                                    onClick={submitCode}
+                                >
+                                    {currentLang}
+                                </div>
+                            </div>
                             <ReactCodeMirror
                                 value={code}
                                 extensions={[loadLanguage("javascript")!]}
@@ -57,9 +69,20 @@ const ProblemPage = () => {
                         </div>
                         <div
                             id="console"
-                            className="flex justify-end items-center  bg-slate-700 w-full h-[60px] rounded-lg"
+                            className="flex justify-end items-center  bg-slate-700 w-full h-[50px] rounded-lg"
                         >
-                            <div className="w-fit h-fit rounded-md mr-[13px] px-[26px] py-[6px] hover:bg-green-500 cursor-pointer hover:text-black text-green-500 bg-black border-[1px] text-[14px] active:border-green-800 active:bg-green-800 border-green-500 font-bold right-0 transition select-none" onClick={submitCode}>submit</div>
+                            <div
+                                className="w-fit h-fit rounded-md mr-[11px] px-[22px] py-[4px] hover:bg-gray-500 cursor-pointer hover:text-black text-gray-500 bg-black border-[1px] text-[14px] active:border-gray-600 active:bg-gray-600 border-gray-500 font-bold right-0 transition select-none"
+                                // onClick={runCode}
+                            >
+                                run
+                            </div>
+                            <div
+                                className="w-fit h-fit rounded-md mr-[11px] px-[22px] py-[4px] hover:bg-green-500 cursor-pointer hover:text-black text-green-500 bg-black border-[1px] text-[14px] active:border-green-800 active:bg-green-800 border-green-500 font-bold right-0 transition select-none"
+                                onClick={submitCode}
+                            >
+                                submit
+                            </div>
                         </div>
                     </div>
                 </div>
