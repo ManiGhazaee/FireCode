@@ -11,9 +11,9 @@ html {
 *,
 *::after,
 *::before {
-        box-sizing: border-box;
-        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-        text-decoration: none;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    text-decoration: none;
 }
 
 body {
@@ -33,6 +33,7 @@ code {
 }
 ::-webkit-scrollbar-thumb {
     background-color: gray;
+    border-radius: 99px;
 }
 
 .cm-theme {
@@ -40,3 +41,39 @@ code {
     width: 100%;
 }
 
+#description-body > p {
+    width: calc(100% - 26px);
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+#description-body > p > code,
+#description-body > p > em > code {
+    background-color: #252525;
+    border-radius: 4px;
+    padding: 0px 6px;
+}
+
+#description-body > pre {
+    width: calc(100% - 26px);
+    overflow-x: scroll;
+    background-color: #252525;
+    padding: 10px 16px;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+#description-body > ul {
+    width: calc(100% - 26px);
+}
+#description-body > ul > li {
+    margin-bottom: 8px;
+    margin-top: 8px;
+    list-style:inside;
+}
+
+#description-body > ul > li > code {
+    overflow-x: scroll;
+    background-color: #252525;
+    padding: 1px 12px;
+    border-radius: 4px;
+    box-sizing: border-box;
+}

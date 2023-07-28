@@ -14,6 +14,7 @@ function App() {
                     <Route path="/" Component={LandingPage} />
                     <Route path="/problem" Component={ProblemPage} />
                     <Route path="/problemset" Component={ProblemSet} />
+                    <Route path="/problem/:name" Component={ProblemPage} />
                 </Routes>
             </BrowserRouter>
         </div>
