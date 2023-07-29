@@ -29,7 +29,6 @@ const ProblemNavbar = ({
             ? "description"
             : data.nav_option_name
     );
-    onOptionClick(activeItem);
 
     const [activeItemWidth, setActiveItemWidth] = useState<string>("");
     const [translateXActiveItem, setTranslateXActiveItem] = useState<number>(0);

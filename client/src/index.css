@@ -67,7 +67,7 @@ code {
 #description-body > ul > li {
     margin-bottom: 8px;
     margin-top: 8px;
-    list-style:inside;
+    list-style: inside;
 }
 
 #description-body > ul > li > code {
@@ -76,4 +76,18 @@ code {
     padding: 1px 12px;
     border-radius: 4px;
     box-sizing: border-box;
+}
+
+#description-body > h2 {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+#description-body > h1 {
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 20px;
+    margin-top: 20px;
 }

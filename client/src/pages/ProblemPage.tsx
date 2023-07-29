@@ -8,9 +8,6 @@ import ProblemNavbar from "../components/ProblemNavbar";
 import ProblemDescription from "../components/ProblemDescription";
 import { useLocation, useParams } from "react-router-dom";
 import { DescriptionData } from "../components/ProblemDescription";
-import { getProblem } from "../constants/problems/problemToJSON";
-import { stringify } from "querystring";
-import path from "path";
 import Editorial from "../components/Editorial";
 
 export interface Data {
@@ -69,11 +66,14 @@ const ProblemPage = () => {
     const pathSplited = useLocation().pathname.split("/");
     const path = pathSplited[pathSplited.length - 1];
 
+    useEffect(() => {
+        setActiveNavOption(() => (path === name ? "description" : path));
+    }, []);
+
     const submitCode = () => {
         axios
             .post("http://localhost:80/problem", { code })
-            .then(({ data }) => {
-            })
+            .then(({ data }) => {})
             .catch((err) => console.error(err));
     };
 
