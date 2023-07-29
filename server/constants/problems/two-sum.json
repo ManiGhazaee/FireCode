@@ -1,0 +1,21 @@
+{
+    "id": 1,
+    "name": "Two Sum",
+    "difficulty": "easy",
+    "like_count": 1,
+    "dislike_count": 1,
+    "is_solved": false,
+    "is_starred": false,
+    "description_body": "Given an array of integers `nums` and an integer `target`, _return indices of the two numbers such that they add up to `target`_.\n\nYou may assume that each input would have **_exactly_ one solution**, and you may not use the _same_ element twice.\n\nYou can return the answer in any order.\n\n**Example 1:**\n\n```\nInput: nums = [2,7,11,15], target = 9\nOutput: [0,1]\nExplanation: Because nums[0] + nums[1] == 9, we return [0, 1].\n```\n\n**Example 2:**\n\n```\nInput: nums = [3,2,4], target = 6\nOutput: [1,2]\n```\n\n**Example 3:**\n\n```\nInput: nums = [3,3], target = 6\nOutput: [0,1]\n```\n\n**Constraints:**\n\n-   `2 <= nums.length <= 104`\n-   `109 <= nums[i] <= 109`\n-   `109 <= target <= 109`\n-   **Only one valid answer exists.**\n\n**Follow-up:** Can you come up with an algorithm that is less than `O(n2)` time complexity?\n",
+    "accept_count": 20,
+    "submission_count": 2000,
+    "acceptance_rate_count": 50,
+    "discussion_count": 4000,
+    "related_topics": ["Three Sum"],
+    "similar_questions": ["Three Sum"],
+    "solution_count": 222,
+    "code_default_language": "javascript",
+    "code_body": {
+        "javascript": "/**\n * @param {number[]} nums\n * @param {number} target\n * @return {number[]}\n */\nvar twoSum = function(nums, target) {\n    \n};"
+    }
+}

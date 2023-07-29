@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { SetStateAction, useEffect, useRef } from "react";
 import { useState } from "react";
 import ReactCodeMirror from "@uiw/react-codemirror";
 import { loadLanguage } from "@uiw/codemirror-extensions-langs";
@@ -10,12 +10,10 @@ import { useParams } from "react-router-dom";
 import { DescriptionData } from "../components/ProblemDescription";
 import { getProblem } from "../constants/problems/problemToJSON";
 
-import * as two_sum from "../constants/problems/two-sum.json";
-
 export interface Data {
     id: number;
     name: number;
-    difficulty: "hard" | "medium" | "easy";
+    difficulty: "hard" | "medium" | "easy" | string;
     like_count: number;
     dislike_count: number;
     is_solved: boolean;
@@ -67,8 +65,23 @@ const ProblemPage = () => {
     };
 
     useEffect(() => {
-        setProblemDescriptionData(two_sum);
-        console.log(two_sum);
+        if (name == undefined) return;
+        axios
+            .get(`http://localhost:80/problem/${name}`)
+            .then(({ data }) => {
+                console.log(data);
+                setProblemDescriptionData(
+                    data as unknown as SetStateAction<
+                        DescriptionData | undefined
+                    >
+                );
+                if ("code_body" in data && "javascript" in data.code_body) {
+                    setCode(data.code_body.javascript as unknown as string);
+                }
+            })
+            .catch((e) => console.error(e));
+        // setProblemDescriptionData(two_sum);
+        // console.log(two_sum);
     }, []);
 
     return (
