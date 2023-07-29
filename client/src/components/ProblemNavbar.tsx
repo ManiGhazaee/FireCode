@@ -1,13 +1,36 @@
 import React, { useEffect } from "react";
 import { useState, useRef } from "react";
+import { Link } from "react-router-dom";
 
-const ProblemNavbar = () => {
+export interface Navbar {
+    text: string;
+    color?: string | undefined;
+    background_color?: string | undefined;
+    onclick_function: Function;
+}
+
+type OnOptionClick = (string: string) => void;
+type Data = { problem_name: string; nav_option_name: string };
+
+const ProblemNavbar = ({
+    onOptionClick,
+    data,
+}: {
+    onOptionClick: OnOptionClick;
+    data: Data;
+}) => {
     const [currentWidth, setCurrentWidth] = useState<string>("");
     const [isInMenu, setIsInMenu] = useState<boolean>(false);
     const [prevIsInMenu, setPrevIsInMenu] = useState<boolean>(false);
     const [translateX, setTranslateX] = useState<number>(0);
 
-    const [activeItem, setActiveItem] = useState<string>("description");
+    const [activeItem, setActiveItem] = useState<string>(
+        data.nav_option_name === data.problem_name
+            ? "description"
+            : data.nav_option_name
+    );
+    onOptionClick(activeItem);
+
     const [activeItemWidth, setActiveItemWidth] = useState<string>("");
     const [translateXActiveItem, setTranslateXActiveItem] = useState<number>(0);
 
@@ -17,12 +40,6 @@ const ProblemNavbar = () => {
         setActiveItemWidth((width || 0) - 40 + "px");
         setTranslateXActiveItem(active?.offsetLeft || 0);
     }, []);
-
-    const descriptionRef = useRef<HTMLDivElement>(null);
-    const editorialRef = useRef<HTMLDivElement>(null);
-    const solutionsRef = useRef<HTMLDivElement>(null);
-    const submissionsRef = useRef<HTMLDivElement>(null);
-    const hoverRectRef = useRef<HTMLDivElement>(null);
 
     const handleMenuItemsHover = (event: React.MouseEvent<HTMLDivElement>) => {
         const targetWidth = event.currentTarget.offsetWidth;
@@ -36,16 +53,12 @@ const ProblemNavbar = () => {
         setActiveItem(target.id);
         setActiveItemWidth(target.clientWidth - 40 + "px");
         setTranslateXActiveItem(target.offsetLeft);
+        onOptionClick(target.id);
     };
-
-    const handleDescriptionOnClick = () => {};
-    const handleEditorialOnClick = () => {};
-    const handleSolutionsOnClick = () => {};
-    const handleSubmissionsOnClick = () => {};
 
     return (
         <div
-            className="relative bg-slate-800 flex flex-row h-[50px] rounded-t-lg text-[14px] items-center text-gray-500 overflow-hidden"
+            className="relative bg-slate-800 w-fit flex flex-row h-[50px] rounded-t-lg text-[14px] items-center text-gray-500 overflow-hidden select-none"
             onMouseOver={() => setIsInMenu(true)}
             onMouseOut={() => setIsInMenu(false)}
         >
@@ -60,7 +73,6 @@ const ProblemNavbar = () => {
                     transform: `translateX(${translateX}px)`,
                     opacity: isInMenu ? 1 : 0,
                 }}
-                ref={hoverRectRef}
             ></div>
             <div
                 id="active-underline"
@@ -71,62 +83,63 @@ const ProblemNavbar = () => {
                     transform: `translateX(${translateXActiveItem + 20}px)`,
                 }}
             ></div>
-            <div
-                id="description"
-                className={`ml-[9px] z-40 px-[20px] py-[14px] cursor-pointer hover:text-white transition relative ${
-                    activeItem === "description" ? "text-white " : ""
-                }`}
-                ref={descriptionRef}
-                onMouseOver={handleMenuItemsHover}
-                onClick={(event) => {
-                    handleActiveItem(event);
-                    handleDescriptionOnClick();
-                }}
-            >
-                Description
-            </div>
-            <div
-                id="editorial"
-                className={`z-40 px-[20px] py-[14px] cursor-pointer hover:text-white transition relative p-[14px] ${
-                    activeItem === "editorial" ? "text-white " : ""
-                }`}
-                ref={editorialRef}
-                onMouseOver={handleMenuItemsHover}
-                onClick={(event) => {
-                    handleActiveItem(event);
-                    handleEditorialOnClick();
-                }}
-            >
-                Editorial
-            </div>
-            <div
-                id="solutions"
-                className={`z-40 px-[20px] py-[14px] cursor-pointer hover:text-white transition relative p-[14px] ${
-                    activeItem === "solutions" ? "text-white " : ""
-                }`}
-                ref={solutionsRef}
-                onMouseOver={handleMenuItemsHover}
-                onClick={(event) => {
-                    handleActiveItem(event);
-                    handleSolutionsOnClick();
-                }}
-            >
-                Solutions
-            </div>
-            <div
-                id="submissions"
-                className={`z-40 px-[20px] py-[14px] cursor-pointer hover:text-white transition relative p-[14px] ${
-                    activeItem === "submissions" ? "text-white " : ""
-                }`}
-                ref={submissionsRef}
-                onMouseOver={handleMenuItemsHover}
-                onClick={(event) => {
-                    handleActiveItem(event);
-                    handleSubmissionsOnClick();
-                }}
-            >
-                Submissions
-            </div>
+            <Link to={`/problem/${data.problem_name}`}>
+                <div
+                    id="description"
+                    className={`ml-[9px] z-40 px-[20px] py-[14px] cursor-pointer hover:text-white transition relative ${
+                        activeItem === "description" ? "text-white " : ""
+                    }`}
+                    onMouseOver={handleMenuItemsHover}
+                    onClick={(event) => {
+                        handleActiveItem(event);
+                    }}
+                >
+                    Description
+                </div>
+            </Link>
+            <Link to={`/problem/${data.problem_name}/editorial`}>
+                <div
+                    id="editorial"
+                    className={`z-40 px-[20px] py-[14px] cursor-pointer hover:text-white transition relative p-[14px] ${
+                        activeItem === "editorial" ? "text-white " : ""
+                    }`}
+                    onMouseOver={handleMenuItemsHover}
+                    onClick={(event) => {
+                        handleActiveItem(event);
+                        console.log("object");
+                    }}
+                >
+                    Editorial
+                </div>
+            </Link>
+            <Link to={`/problem/${data.problem_name}/solutions`}>
+                <div
+                    id="solutions"
+                    className={`z-40 px-[20px] py-[14px] cursor-pointer hover:text-white transition relative p-[14px] ${
+                        activeItem === "solutions" ? "text-white " : ""
+                    }`}
+                    onMouseOver={handleMenuItemsHover}
+                    onClick={(event) => {
+                        handleActiveItem(event);
+                    }}
+                >
+                    Solutions
+                </div>
+            </Link>
+            <Link to={`/problem/${data.problem_name}/submissions`}>
+                <div
+                    id="submissions"
+                    className={`z-40 px-[20px] py-[14px] cursor-pointer hover:text-white transition relative p-[14px] ${
+                        activeItem === "submissions" ? "text-white " : ""
+                    }`}
+                    onMouseOver={handleMenuItemsHover}
+                    onClick={(event) => {
+                        handleActiveItem(event);
+                    }}
+                >
+                    Submissions
+                </div>
+            </Link>
         </div>
     );
 };

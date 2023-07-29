@@ -24,13 +24,20 @@ export interface Data {
     testcases?: TestCase[];
 }
 
+export interface Json {
+    main: Data;
+    editorial: {
+        editorial_body: string;
+    };
+}
+
 export interface TestCase {
     inputs: Record<string, string>;
     expected_output_name: string;
     expected_output: string;
 }
 
-const problemsObject: Record<string, Data> = {
+const problemsObject: Record<string, Json> = {
     "two-sum": two_sum,
 };
 
@@ -45,11 +52,22 @@ app.post("/problem", (req, res) => {
     res.json({ status: "success" });
 });
 
+app.get("/problem/:name/editorial", (req, res) => {
+    const name = req.params.name;
+
+    if (name in problemsObject) {
+        const response = problemsObject[name].editorial;
+        res.json(response);
+    } else {
+        res.json({ status: "failure" });
+    }
+});
+
 app.get("/problem/:name", (req, res) => {
     const name = req.params.name;
 
     if (name in problemsObject) {
-        const response = problemsObject[name];
+        const response = problemsObject[name].main;
         res.json(response);
     } else {
         res.json({ status: "failure" });

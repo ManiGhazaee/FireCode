@@ -6,9 +6,12 @@ import { tokyoNight } from "@uiw/codemirror-theme-tokyo-night";
 import axios from "axios";
 import ProblemNavbar from "../components/ProblemNavbar";
 import ProblemDescription from "../components/ProblemDescription";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { DescriptionData } from "../components/ProblemDescription";
 import { getProblem } from "../constants/problems/problemToJSON";
+import { stringify } from "querystring";
+import path from "path";
+import Editorial from "../components/Editorial";
 
 export interface Data {
     id: number;
@@ -42,7 +45,7 @@ const ProblemPage = () => {
     const [code, setCode] = useState<string>("");
     const explanationRef = useRef<HTMLDivElement>(null);
     const sliderRef = useRef<HTMLDivElement>(null);
-    const [currentLang, setCurrentLang] = useState<string>("JavaScript");
+    const [currentLang, setCurrentLang] = useState<string>("javascript");
     const handleSlider = (event: React.MouseEvent<HTMLDivElement>) => {
         const mouseX = event.clientX;
         const newWidth = mouseX - 8;
@@ -50,26 +53,34 @@ const ProblemPage = () => {
             explanationRef.current.style.width = newWidth + "px";
     };
 
+    const [editorial, setEditorial] = useState<string>("");
+
+    const [activeNavOption, setActiveNavOption] =
+        useState<string>("description");
+
+    const changeActiveNavOptionOnClick = (string: string) => {
+        setActiveNavOption(string);
+    };
+
     const [problemDescriptionData, setProblemDescriptionData] =
         useState<DescriptionData>();
 
     const { name } = useParams();
+    const pathSplited = useLocation().pathname.split("/");
+    const path = pathSplited[pathSplited.length - 1];
 
     const submitCode = () => {
         axios
             .post("http://localhost:80/problem", { code })
             .then(({ data }) => {
-                console.log(data);
             })
             .catch((err) => console.error(err));
     };
 
     useEffect(() => {
-        if (name == undefined) return;
         axios
             .get(`http://localhost:80/problem/${name}`)
             .then(({ data }) => {
-                console.log(data);
                 setProblemDescriptionData(
                     data as unknown as SetStateAction<
                         DescriptionData | undefined
@@ -80,9 +91,22 @@ const ProblemPage = () => {
                 }
             })
             .catch((e) => console.error(e));
-        // setProblemDescriptionData(two_sum);
-        // console.log(two_sum);
     }, []);
+
+    useEffect(() => {
+        if (activeNavOption === "description") return;
+
+        axios
+            .get(`http://localhost:80/problem/${name}/${activeNavOption}`)
+            .then(({ data }) => {
+                if (activeNavOption === "editorial") {
+                    if ("editorial_body" in data) {
+                        setEditorial(data.editorial_body);
+                    }
+                }
+            })
+            .catch((e) => console.error(e));
+    }, [activeNavOption]);
 
     return (
         <>
@@ -96,14 +120,28 @@ const ProblemPage = () => {
                         className="h-[calc(100%-16px)] bg-slate-700 ml-[8px] rounded-lg w-[50%] overflow-hidden"
                         ref={explanationRef}
                     >
-                        <ProblemNavbar />
+                        <div className="relative w-full bg-slate-800 h-[50px] rounded-t-lg overflow-hidden">
+                            {name != undefined && (
+                                <ProblemNavbar
+                                    onOptionClick={changeActiveNavOptionOnClick}
+                                    data={{
+                                        problem_name: name,
+                                        nav_option_name: path,
+                                    }}
+                                />
+                            )}
+                        </div>
                         <div className="description-body relative w-full h-[calc(100%-50px)] overflow-y-auto bg-black">
-                            {problemDescriptionData != undefined ? (
+                            {problemDescriptionData != undefined &&
+                            activeNavOption === "description" ? (
                                 <ProblemDescription
                                     data={problemDescriptionData}
                                 />
                             ) : (
-                                <div>not found</div>
+                                <></>
+                            )}
+                            {activeNavOption === "editorial" && (
+                                <Editorial data={editorial} />
                             )}
                         </div>
                     </div>

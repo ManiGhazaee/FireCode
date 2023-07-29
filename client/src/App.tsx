@@ -13,6 +13,9 @@ function App() {
                 <Routes>
                     <Route path="/" Component={LandingPage} />
                     <Route path="/problemset" Component={ProblemSet} />
+                    <Route path="/problem/:name/editorial" Component={ProblemPage} />
+                    <Route path="/problem/:name/solutions" Component={ProblemPage} />
+                    <Route path="/problem/:name/submissions" Component={ProblemPage} />
                     <Route path="/problem/:name" Component={ProblemPage} />
                 </Routes>
             </BrowserRouter>
