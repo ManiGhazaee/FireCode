@@ -73,7 +73,7 @@ export function toSnakeOrKebabOrScreamCase(str: string, changeTo: "snake" | "keb
         if (changeTo === "scream") {
                 result = result.toUpperCase();
         }
-        return result;
+        return result.toLocaleLowerCase();
 }
 
 /**
