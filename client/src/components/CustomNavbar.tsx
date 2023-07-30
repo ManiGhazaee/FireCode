@@ -4,7 +4,7 @@ import { changeCase } from "../ts/utils/string";
 
 export interface Navbar {
     items: NavbarItem[];
-    default_active_item: string | "none";
+    default_active_item?: string | "none" | undefined;
     width_all?: string | undefined;
     color_all?: string | undefined;
     color_hover_all?: string | undefined;
@@ -40,16 +40,18 @@ const CustomNavbar = ({ data }: { data: Navbar }) => {
 
     const [activeItem, setActiveItem] = useState<string>();
 
-    const [activeItemWidth, setActiveItemWidth] = useState<string>(
-        data.default_active_item === "none"
-            ? ""
-            : data.default_active_item || data.items[0].text
-    );
+    const [activeItemWidth, setActiveItemWidth] = useState<string>("");
     const [translateXActiveItem, setTranslateXActiveItem] = useState<number>(0);
 
+    const activeItemConst =
+        data.default_active_item === "none"
+            ? ""
+            : data.default_active_item ||
+              changeCase(data.items[0].text, "kebab");
+
     useEffect(() => {
-        if (!activeItem) return;
-        const active = document.getElementById(activeItem);
+        if (activeItemConst == undefined) return;
+        const active = document.getElementById(activeItem || activeItemConst);
         const width = active?.clientWidth;
         setActiveItemWidth((width || 0) - 40 + "px");
         setTranslateXActiveItem(active?.offsetLeft || 0);
@@ -135,7 +137,7 @@ const CustomNavbar = ({ data }: { data: Navbar }) => {
                             <div
                                 id={changeCase(elem.text, "kebab")}
                                 className={`hover-color ${
-                                    activeItem ===
+                                    (activeItem || activeItemConst) ===
                                     changeCase(elem.text, "kebab")
                                         ? "active-color"
                                         : ""

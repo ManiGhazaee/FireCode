@@ -8,7 +8,7 @@ export interface DescriptionData {
     difficulty: "hard" | "medium" | "easy" | string;
     like_count: number;
     dislike_count: number;
-    is_solved: boolean;
+    status: "solved" | "none" | "attempted" | string;
     is_starred: boolean;
     description_body: string;
     accept_count: number;
@@ -17,6 +17,7 @@ export interface DescriptionData {
     discussion_count: number;
     related_topics: string[];
     similar_questions: string[];
+    solution_count: number;
 }
 
 const ProblemDescription = ({ data }: { data: DescriptionData }) => {
@@ -41,12 +42,18 @@ const ProblemDescription = ({ data }: { data: DescriptionData }) => {
                         </div>
                         <div
                             className={`ml-[10px] ${
-                                data.is_solved
+                                data.status === "solved"
                                     ? "problem-solved"
-                                    : "problem-not-solved"
+                                    : data.status === "none"
+                                    ? "problem-not-solved"
+                                    : "problem-attempted"
                             }`}
                         >
-                            {data.is_solved ? "solved" : "not-solved"}
+                            {data.status === "solved"
+                                ? "solved"
+                                : data.status === "none"
+                                ? "not-solved"
+                                : "attempted"}
                         </div>
                         <div id="like-count" className="ml-[10px]">
                             likes: <span>{data.like_count}</span>

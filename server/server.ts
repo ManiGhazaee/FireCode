@@ -2,13 +2,21 @@ import express from "express";
 import cors from "cors";
 import * as two_sum from "./constants/problems/two-sum.json";
 
-export interface Data {
+type ProblemData = CodeData & DescriptionData;
+
+export interface CodeData {
+    code_default_language: string;
+    code_body: Record<string, string>;
+    testcases?: TestCase[];
+}
+
+export interface DescriptionData {
     id: number;
     name: string;
     difficulty: "hard" | "medium" | "easy" | string;
     like_count: number;
     dislike_count: number;
-    is_solved: boolean;
+    status: "solved" | "none" | "attempted" | string;
     is_starred: boolean;
     description_body: string;
     accept_count: number;
@@ -18,17 +26,15 @@ export interface Data {
     related_topics: string[];
     similar_questions: string[];
     solution_count: number;
+}
 
-    code_default_language: string;
-    code_body: Record<string, string>;
-    testcases?: TestCase[];
+export interface EditorialData {
+    editorial_body: string;
 }
 
 export interface Json {
-    main: Data;
-    editorial: {
-        editorial_body: string;
-    };
+    main: ProblemData;
+    editorial: EditorialData;
 }
 
 export interface TestCase {

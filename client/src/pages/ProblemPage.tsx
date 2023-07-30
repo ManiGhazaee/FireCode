@@ -7,16 +7,23 @@ import axios from "axios";
 import ProblemNavbar from "../components/ProblemNavbar";
 import ProblemDescription from "../components/ProblemDescription";
 import { useLocation, useParams } from "react-router-dom";
-import { DescriptionData } from "../components/ProblemDescription";
 import Editorial from "../components/Editorial";
 
-export interface Data {
+type ProblemData = CodeData & DescriptionData;
+
+export interface CodeData {
+    code_default_language: string;
+    code_body: Record<string, string>;
+    testcases?: TestCase[];
+}
+
+export interface DescriptionData {
     id: number;
-    name: number;
+    name: string;
     difficulty: "hard" | "medium" | "easy" | string;
     like_count: number;
     dislike_count: number;
-    is_solved: boolean;
+    status: "solved" | "none" | "attempted" | string;
     is_starred: boolean;
     description_body: string;
     accept_count: number;
@@ -26,10 +33,15 @@ export interface Data {
     related_topics: string[];
     similar_questions: string[];
     solution_count: number;
+}
 
-    code_default_language: string;
-    code_body: Record<string, string>;
-    testcases: TestCase[];
+export interface EditorialData {
+    editorial_body: string;
+}
+
+export interface Json {
+    main: ProblemData;
+    editorial: EditorialData;
 }
 
 export interface TestCase {
@@ -37,6 +49,7 @@ export interface TestCase {
     expected_output_name: string;
     expected_output: string;
 }
+
 
 const ProblemPage = () => {
     const [code, setCode] = useState<string>("");
