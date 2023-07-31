@@ -12,33 +12,17 @@ export interface Navbar {
 type OnOptionClick = (string: string) => void;
 type Data = { problem_name: string; nav_option_name: string };
 
-const ProblemNavbar = ({
-    onOptionClick,
-    data,
-}: {
-    onOptionClick: OnOptionClick;
-    data: Data;
-}) => {
+const ProblemNavbar = ({ data }: { data: Data }) => {
     const [currentWidth, setCurrentWidth] = useState<string>("");
     const [isInMenu, setIsInMenu] = useState<boolean>(false);
     const [prevIsInMenu, setPrevIsInMenu] = useState<boolean>(false);
     const [translateX, setTranslateX] = useState<number>(0);
 
-    const [activeItem, setActiveItem] = useState<string>(
-        data.nav_option_name === data.problem_name
-            ? "description"
-            : data.nav_option_name
-    );
-
-    const [activeItemWidth, setActiveItemWidth] = useState<string>("");
-    const [translateXActiveItem, setTranslateXActiveItem] = useState<number>(0);
-
-    useEffect(() => {
-        const active = document.getElementById(activeItem);
-        const width = active?.clientWidth;
-        setActiveItemWidth((width || 0) - 40 + "px");
-        setTranslateXActiveItem(active?.offsetLeft || 0);
-    }, []);
+    const activeItem = data.nav_option_name;
+    const active = document.getElementById(activeItem);
+    const width = active?.clientWidth;
+    const activeItemWidth = (width || 0) - 40 + "px";
+    const translateXActiveItem = active?.offsetLeft || 0;
 
     const handleMenuItemsHover = (event: React.MouseEvent<HTMLDivElement>) => {
         const targetWidth = event.currentTarget.offsetWidth;
@@ -47,22 +31,14 @@ const ProblemNavbar = ({
         setPrevIsInMenu(isInMenu);
     };
 
-    const handleActiveItem = (event: React.MouseEvent<HTMLDivElement>) => {
-        const target = event.currentTarget;
-        setActiveItem(target.id);
-        setActiveItemWidth(target.clientWidth - 40 + "px");
-        setTranslateXActiveItem(target.offsetLeft);
-        onOptionClick(target.id);
-    };
-
     return (
         <div
-            className="relative bg-slate-800 w-fit flex flex-row h-[50px] rounded-t-lg text-[14px] items-center text-gray-500 overflow-hidden select-none"
+            className="relative bg-black w-fit flex flex-row h-[50px] rounded-t-lg text-[14px] items-center text-[#808080] overflow-hidden select-none"
             onMouseOver={() => setIsInMenu(true)}
             onMouseOut={() => setIsInMenu(false)}
         >
             <div
-                className="h-[32px] bg-slate-600 absolute opacity-transition box-content rounded"
+                className="h-[32px] bg-[#1d1d1d] absolute opacity-transition box-content rounded"
                 id="hover-rect"
                 style={{
                     width: currentWidth,
@@ -86,12 +62,11 @@ const ProblemNavbar = ({
                 <div
                     id="description"
                     className={`ml-[9px] z-40 px-[20px] py-[14px] cursor-pointer hover:text-white transition relative ${
-                        activeItem === "description" ? "text-white " : ""
+                        (activeItem || data.nav_option_name) === "description"
+                            ? "text-white "
+                            : ""
                     }`}
                     onMouseOver={handleMenuItemsHover}
-                    onClick={(event) => {
-                        handleActiveItem(event);
-                    }}
                 >
                     Description
                 </div>
@@ -100,13 +75,11 @@ const ProblemNavbar = ({
                 <div
                     id="editorial"
                     className={`z-40 px-[20px] py-[14px] cursor-pointer hover:text-white transition relative p-[14px] ${
-                        activeItem === "editorial" ? "text-white " : ""
+                        (activeItem || data.nav_option_name) === "editorial"
+                            ? "text-white "
+                            : ""
                     }`}
                     onMouseOver={handleMenuItemsHover}
-                    onClick={(event) => {
-                        handleActiveItem(event);
-                        console.log("object");
-                    }}
                 >
                     Editorial
                 </div>
@@ -115,12 +88,11 @@ const ProblemNavbar = ({
                 <div
                     id="solutions"
                     className={`z-40 px-[20px] py-[14px] cursor-pointer hover:text-white transition relative p-[14px] ${
-                        activeItem === "solutions" ? "text-white " : ""
+                        (activeItem || data.nav_option_name) === "solutions"
+                            ? "text-white "
+                            : ""
                     }`}
                     onMouseOver={handleMenuItemsHover}
-                    onClick={(event) => {
-                        handleActiveItem(event);
-                    }}
                 >
                     Solutions
                 </div>
@@ -129,12 +101,11 @@ const ProblemNavbar = ({
                 <div
                     id="submissions"
                     className={`z-40 px-[20px] py-[14px] cursor-pointer hover:text-white transition relative p-[14px] ${
-                        activeItem === "submissions" ? "text-white " : ""
+                        (activeItem || data.nav_option_name) === "submissions"
+                            ? "text-white "
+                            : ""
                     }`}
                     onMouseOver={handleMenuItemsHover}
-                    onClick={(event) => {
-                        handleActiveItem(event);
-                    }}
                 >
                     Submissions
                 </div>

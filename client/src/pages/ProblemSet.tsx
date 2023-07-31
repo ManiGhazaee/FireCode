@@ -2,6 +2,7 @@ import React from "react";
 import CustomNavbar, { Navbar } from "../components/CustomNavbar";
 import ProblemList from "../components/ProblemList";
 import { changeCase } from "../ts/utils/string";
+import MainHeading from "../components/MainHeading";
 
 const ProblemSet = () => {
     const customNavData: Navbar = {
@@ -37,16 +38,17 @@ const ProblemSet = () => {
     ];
     return (
         <>
-            <div className="h-[calc(100vh-60px)] overflow-hidden">
+            <MainHeading />
+            <div className="h-[calc(100vh-60px)] overflow-hidden bg-black">
                 <div
                     id="cont"
                     className="relative flex flex-row h-[calc(100vh-60px)] w-full mt-[8px] "
                 >
                     <div
                         id="explanation"
-                        className="h-[calc(100%-16px)] bg-black ml-[8px] rounded-lg w-[calc(100%-16px)] overflow-hidden"
+                        className="h-[calc(100%-16px)] bg-black border border-[#222] ml-[8px] rounded-lg w-[calc(100%-16px)] overflow-hidden"
                     >
-                        <div className="w-full bg-black">
+                        <div className="w-full bg-black border-b border-[#222]">
                             <CustomNavbar data={customNavData} />
                         </div>
                         <div>

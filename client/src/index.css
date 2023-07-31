@@ -32,8 +32,7 @@ code {
     height: 8px;
 }
 ::-webkit-scrollbar-thumb {
-    background-color: gray;
-    border-radius: 99px;
+    background-color: #333;
 }
 
 .cm-theme {
@@ -48,7 +47,7 @@ code {
 }
 #description-body > p > code,
 #description-body > p > em > code {
-    background-color: #252525;
+    background-color: #1d1d1d;
     border-radius: 4px;
     padding: 0px 6px;
 }
@@ -56,7 +55,7 @@ code {
 #description-body > pre {
     width: calc(100% - 26px);
     overflow-x: scroll;
-    background-color: #252525;
+    background-color: #1d1d1d;
     padding: 10px 16px;
     border-radius: 4px;
     box-sizing: border-box;
@@ -72,7 +71,7 @@ code {
 
 #description-body > ul > li > code {
     overflow-x: scroll;
-    background-color: #252525;
+    background-color: #1d1d1d;
     padding: 1px 12px;
     border-radius: 4px;
     box-sizing: border-box;
@@ -90,4 +89,21 @@ code {
     font-size: 24px;
     margin-bottom: 20px;
     margin-top: 20px;
+}
+
+.cm-line,
+.cm-gutters,
+.cm-editor,
+.cm-lineNumbers,
+.cm-foldGutter {
+    background-color: black;
+}
+
+.cm-activeLineGutter,
+.cm-activeLine {
+    background-color: #1d1d1d !important;
+}
+.cm-foldPlaceholder {
+    background-color: black !important;
+    border: none !important;
 }

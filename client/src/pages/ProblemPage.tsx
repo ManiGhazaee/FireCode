@@ -6,8 +6,9 @@ import { tokyoNight } from "@uiw/codemirror-theme-tokyo-night";
 import axios from "axios";
 import ProblemNavbar from "../components/ProblemNavbar";
 import ProblemDescription from "../components/ProblemDescription";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Editorial from "../components/Editorial";
+import MainHeading from "../components/MainHeading";
 
 type ProblemData = CodeData & DescriptionData;
 
@@ -50,8 +51,11 @@ export interface TestCase {
     expected_output: string;
 }
 
+export interface ProblemPageData {
+    activeNavOption?: string | undefined;
+}
 
-const ProblemPage = () => {
+const ProblemPage = ({ data }: { data?: ProblemPageData }) => {
     const [code, setCode] = useState<string>("");
     const explanationRef = useRef<HTMLDivElement>(null);
     const sliderRef = useRef<HTMLDivElement>(null);
@@ -65,23 +69,12 @@ const ProblemPage = () => {
 
     const [editorial, setEditorial] = useState<string>("");
 
-    const [activeNavOption, setActiveNavOption] =
-        useState<string>("description");
-
-    const changeActiveNavOptionOnClick = (string: string) => {
-        setActiveNavOption(string);
-    };
+    const activeNavOption = data?.activeNavOption || "description";
 
     const [problemDescriptionData, setProblemDescriptionData] =
         useState<DescriptionData>();
 
     const { name } = useParams();
-    const pathSplited = useLocation().pathname.split("/");
-    const path = pathSplited[pathSplited.length - 1];
-
-    useEffect(() => {
-        setActiveNavOption(() => (path === name ? "description" : path));
-    }, []);
 
     const submitCode = () => {
         axios
@@ -123,23 +116,27 @@ const ProblemPage = () => {
 
     return (
         <>
-            <div className="h-[calc(100vh-60px)] overflow-hidden">
+            <MainHeading
+                data={{
+                    items: [{ text: "ProblemList", link_path: "/problemset" }],
+                }}
+            />
+            <div className="h-[calc(100vh-60px)] overflow-hidden bg-black">
                 <div
                     id="cont"
                     className="relative flex flex-row h-[calc(100vh-60px)] w-full mt-[8px] "
                 >
                     <div
                         id="explanation"
-                        className="h-[calc(100%-16px)] bg-slate-700 ml-[8px] rounded-lg w-[50%] overflow-hidden"
+                        className="h-[calc(100%-16px)] bg-black border border-[#222] ml-[8px] rounded-lg w-[50%] overflow-hidden"
                         ref={explanationRef}
                     >
-                        <div className="relative w-full bg-slate-800 h-[50px] rounded-t-lg overflow-hidden">
+                        <div className="relative w-full bg-black h-[50px] rounded-t-lg overflow-hidden border-b border-[#222]">
                             {name != undefined && (
                                 <ProblemNavbar
-                                    onOptionClick={changeActiveNavOptionOnClick}
                                     data={{
                                         problem_name: name,
-                                        nav_option_name: path,
+                                        nav_option_name: activeNavOption,
                                     }}
                                 />
                             )}
@@ -166,8 +163,8 @@ const ProblemPage = () => {
                         draggable="true"
                     ></div>
                     <div className="flex flex-col h-[calc(100%-16px)] min-w-[calc(20%-8px)] mr-[8px] flex-grow">
-                        <div className="min-h-0 flex-grow min-w-full mr-[8px] mb-[8px] rounded-lg overflow-hidden">
-                            <div className="h-[50px] bg-slate-700 relative">
+                        <div className="min-h-0 flex-grow min-w-full mr-[8px] mb-[8px] rounded-lg overflow-hidden bg-black border border-[#222]">
+                            <div className="h-[50px] bg-black relative border-b border-[#222]">
                                 <div
                                     className=" inline-block relative w-fit h-fit rounded-md ml-[13px] top-[8px] px-[6px] py-[6px] text-gray-300 hover:text-white cursor-pointer text-[14px] font-bold transition select-none"
                                     onClick={submitCode}
@@ -188,19 +185,19 @@ const ProblemPage = () => {
                         </div>
                         <div
                             id="console"
-                            className="flex justify-end items-center  bg-slate-700 w-full h-[50px] rounded-lg overflow-hidden"
+                            className="flex justify-end items-center bg-black w-full h-[50px] rounded-lg overflow-hidden border border-[#222]"
                         >
                             <div
-                                className="w-fit h-fit rounded-md mr-[11px] px-[22px] py-[4px] hover:bg-gray-500 cursor-pointer hover:text-black text-gray-500 bg-black border-[1px] text-[14px] active:border-gray-600 active:bg-gray-600 border-gray-500 font-bold right-0 transition select-none"
+                                className="w-fit h-fit rounded mr-[11px] px-[20px] py-[4px] hover:bg-white cursor-pointer hover:text-black hover:border-white text-[#808080] bg-black text-[14px] active:border-[#808080] active:bg-[#808080] border-[#222] font-bold right-0 transition select-none"
                                 // onClick={runCode}
                             >
-                                run
+                                Run
                             </div>
                             <div
-                                className="w-fit h-fit rounded-md mr-[11px] px-[22px] py-[4px] hover:bg-green-500 cursor-pointer hover:text-black text-green-500 bg-black border-[1px] text-[14px] active:border-green-800 active:bg-green-800 border-green-500 font-bold right-0 transition select-none"
+                                className="w-fit h-fit rounded mr-[11px] px-[20px] py-[4px] hover:bg-green-500 cursor-pointer hover:text-black text-green-500 bg-black text-[14px] active:border-green-800 active:bg-green-800 border-green-500 font-bold right-0 transition select-none"
                                 onClick={submitCode}
                             >
-                                submit
+                                Submit
                             </div>
                         </div>
                     </div>
