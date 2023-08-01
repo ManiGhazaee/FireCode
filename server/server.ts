@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import * as two_sum from "./constants/problems/two-sum.json";
+import { writeTestFile } from "./utils/createTest";
+import * as cp from "child_process";
 
 type ProblemData = CodeData & DescriptionData;
 
@@ -36,6 +38,7 @@ export interface EditorialData {
 export interface Json {
     main: ProblemData;
     editorial: EditorialData;
+    test: any[][];
 }
 
 export interface TestCase {
@@ -56,7 +59,14 @@ app.use(express.json());
 
 app.post("/problem", (req, res) => {
     console.log(req.body);
-    res.json({ status: "success" });
+
+    const out = writeTestFile(
+        req.body.code,
+        two_sum.test,
+        two_sum.function_name
+    );
+
+    out.then((resolve) => res.json(resolve));
 });
 
 app.get("/problem/:name/editorial", (req, res) => {

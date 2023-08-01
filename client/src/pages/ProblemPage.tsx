@@ -80,7 +80,9 @@ const ProblemPage = ({ data }: { data?: ProblemPageData }) => {
     const submitCode = () => {
         axios
             .post("http://localhost:80/problem", { code })
-            .then(({ data }) => {})
+            .then(({ data }) => {
+                console.log(data);
+            })
             .catch((err) => console.error(err));
     };
 
