@@ -24,12 +24,13 @@ const ProblemList = ({ data }: { data: ProblemListData[] }) => {
     const starRef = useRef<HTMLDivElement>(null);
 
     const statusWidth = starRef.current?.clientWidth;
-    const titleWidth = titleRef.current?.clientWidth;
     const acceptanceWidth = acceptanceRef.current?.clientWidth;
     const difficultyWidth = difficultyRef.current?.clientWidth;
     const likesWidth = likesRef.current?.clientWidth;
     const dislikesWidth = dislikesRef.current?.clientWidth;
     const starWidth = starRef.current?.clientWidth;
+
+    const statusTest = "attempted";
 
     useEffect(() => {
         setRefReset(1);
@@ -38,7 +39,7 @@ const ProblemList = ({ data }: { data: ProblemListData[] }) => {
     return (
         <div>
             <div className="flex flex-col">
-                <div className="flex flex-row w-full text-[14px] h-[40px] items-center text-[#808080]">
+                <div className="flex flex-row w-full text-[14px] h-[40px] items-center text-[#808080] border-b border-[#222]">
                     <div
                         id="status-label"
                         className="h-fit w-fit px-[20px] ml-[10px]"
@@ -103,7 +104,7 @@ const ProblemList = ({ data }: { data: ProblemListData[] }) => {
                         >
                             <Link
                                 to={`/problem/${elem.name}`}
-                                className="w-full h-[40px] flex flex-row whitespace-nowrap"
+                                className="w-full h-[40px] flex flex-row whitespace-nowrap "
                             >
                                 <div
                                     style={{
@@ -113,18 +114,40 @@ const ProblemList = ({ data }: { data: ProblemListData[] }) => {
                                         marginLeft: "10px",
                                     }}
                                 >
-                                    <div className="ml-[20px]">
-                                        {elem.status}
+                                    <div
+                                        className={`ml-[20px]`}
+                                        style={{
+                                            color:
+                                                elem.status === "solved"
+                                                    ? "#22c55e"
+                                                    : elem.status === "none"
+                                                    ? "#808080"
+                                                    : "#f97316",
+                                        }}
+                                    >
+                                        {elem.status === "solved" ? (
+                                            <i
+                                                className="bi bi-check-circle status-color"
+                                                // style={{ color: "#22c55e" }}
+                                            ></i>
+                                        ) : elem.status === "none" ? (
+                                            <div className="border rounded-[99px] border-[#808080] w-[14px] h-[14px] mt-[13px] status-color"></div>
+                                        ) : (
+                                            <i
+                                                className="bi bi-x-circle status-color "
+                                                // style={{ color: "#f97316" }}
+                                            ></i>
+                                        )}
                                     </div>
                                 </div>
                                 <div
-                                    className="flex-grow"
+                                    className="flex-grow "
                                     style={{
                                         height: "40px",
                                         lineHeight: "40px",
                                     }}
                                 >
-                                    <div className="ml-[20px]">
+                                    <div className="ml-[40px]">
                                         {elem.id +
                                             ". " +
                                             kebabToSpacedPascal(elem.name)}
@@ -139,6 +162,7 @@ const ProblemList = ({ data }: { data: ProblemListData[] }) => {
                                 >
                                     <div className="ml-[20px]">
                                         {elem.acceptance_rate_count}
+                                        {"%"}
                                     </div>
                                 </div>
                                 <div
@@ -196,14 +220,6 @@ const ProblemList = ({ data }: { data: ProblemListData[] }) => {
                             </Link>
                         </div>
                     ))}
-                <style>
-                    {`.hover-easy-bg-color:hover { background-color: #22c55e}`}
-                    {`.hover-medium-bg-color:hover { background-color: #f97316}`}
-                    {`.hover-hard-bg-color:hover { background-color: #dc2626}`}
-                    {`.hover-easy-bg-color:hover .difficulty-text { color: black}`}
-                    {`.hover-medium-bg-color:hover .difficulty-text { color: black}`}
-                    {`.hover-hard-bg-color:hover .difficulty-text { color: black}`}
-                </style>
             </div>
         </div>
     );

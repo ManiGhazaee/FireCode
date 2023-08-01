@@ -107,3 +107,32 @@ code {
     background-color: black !important;
     border: none !important;
 }
+
+
+.hover-easy-bg-color:hover {
+    background-color: #22c55e;
+}
+.hover-medium-bg-color:hover {
+    background-color: #f97316;
+}
+.hover-hard-bg-color:hover {
+    background-color: #dc2626;
+}
+.hover-easy-bg-color:hover .difficulty-text {
+    color: black;
+}
+.hover-medium-bg-color:hover .difficulty-text {
+    color: black;
+}
+.hover-hard-bg-color:hover .difficulty-text {
+    color: black;
+}
+.hover-easy-bg-color:hover .status-color {
+    border-color: black;
+}
+.hover-medium-bg-color:hover .status-color {
+    border-color: black;
+}
+.hover-hard-bg-color:hover .status-color {
+    border-color: black;
+}

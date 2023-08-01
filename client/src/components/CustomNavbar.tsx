@@ -143,7 +143,6 @@ const CustomNavbar = ({ data }: { data: Navbar }) => {
                                         : ""
                                 }`}
                                 style={{
-                                    marginLeft: "9px",
                                     position: "relative",
                                     zIndex: 40,
                                     paddingTop: "14px",

@@ -26,6 +26,7 @@ export interface DescriptionData {
     dislike_count: number;
     status: "solved" | "none" | "attempted" | string;
     is_starred: boolean;
+    like_status: "liked" | "disliked" | "none" | string;
     description_body: string;
     accept_count: number;
     submission_count: number;
