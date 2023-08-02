@@ -47,6 +47,20 @@ export interface TestCase {
     expected_output: string;
 }
 
+export interface Submission {
+    status:
+        | "Accepted"
+        | "Runtime Error"
+        | "Wrong Answer"
+        | "Time Limit Exceeded";
+    error?: string;
+    runtime: number;
+    memory: number;
+    language: "JavaScript";
+    time: Date;
+    code_body: string;
+}
+
 const problemsObject: Record<string, Json> = {
     "two-sum": two_sum,
 };
@@ -60,13 +74,61 @@ app.use(express.json());
 app.post("/problem", (req, res) => {
     console.log(req.body);
 
-    const out = writeTestFile(
-        req.body.code,
-        two_sum.test,
-        two_sum.function_name
-    );
+    try {
+        const out = writeTestFile(
+            req.body.code,
+            two_sum.test,
+            two_sum.function_name
+        );
 
-    out.then((resolve) => res.json(resolve));
+        out.then((resolve) => {
+            try {
+                if (resolve.stdout != undefined) {
+                    console.log("string:", resolve.stdout_string);
+                    let submission: Submission = {
+                        status: resolve.stdout.status,
+                        error: resolve.stdout.error_message,
+                        time: resolve.stdout.date,
+                        runtime: resolve.stdout.runtime,
+                        language: "JavaScript",
+                        memory: Math.random() * 80,
+                        code_body: resolve.code_body,
+                    };
+                    res.json(submission);
+                }
+            } catch (e) {
+                res.json({
+                    status: "Runtime Error",
+                    error: e,
+                    time: new Date(),
+                    runtime: 0,
+                    language: "JavaScript",
+                    memory: Math.random() * 80,
+                    code_body: resolve.code_body,
+                });
+            }
+        }).catch((e) => {
+            res.json({
+                status: "Runtime Error",
+                error: e,
+                time: new Date(),
+                runtime: 0,
+                language: "JavaScript",
+                memory: Math.random() * 80,
+                code_body: undefined,
+            });
+        });
+    } catch (e) {
+        res.json({
+            status: "Runtime Error",
+            error: e,
+            time: new Date(),
+            runtime: 0,
+            language: "JavaScript",
+            memory: Math.random() * 80,
+            code_body: undefined,
+        });
+    }
 });
 
 app.get("/problem/:name/editorial", (req, res) => {

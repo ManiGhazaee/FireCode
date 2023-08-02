@@ -6,9 +6,10 @@ import { tokyoNight } from "@uiw/codemirror-theme-tokyo-night";
 import axios from "axios";
 import ProblemNavbar from "../components/ProblemNavbar";
 import ProblemDescription from "../components/ProblemDescription";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Editorial from "../components/Editorial";
 import MainHeading from "../components/MainHeading";
+import Submissions, { Submission } from "../components/Submissions";
 
 type ProblemData = CodeData & DescriptionData;
 
@@ -75,6 +76,9 @@ const ProblemPage = ({ data }: { data?: ProblemPageData }) => {
     const [problemDescriptionData, setProblemDescriptionData] =
         useState<DescriptionData>();
 
+    const [submissionData, setSubmissionData] = useState<Submission>();
+    const navigate = useNavigate();
+
     const { name } = useParams();
 
     const submitCode = () => {
@@ -82,9 +86,12 @@ const ProblemPage = ({ data }: { data?: ProblemPageData }) => {
             .post("http://localhost:80/problem", { code })
             .then(({ data }) => {
                 console.log(data);
+                setSubmissionData(data as unknown as Submission);
+                navigate(`/problem/${name}/submissions`);
             })
             .catch((err) => console.error(err));
     };
+    console.log(submissionData);
 
     useEffect(() => {
         axios
@@ -156,6 +163,14 @@ const ProblemPage = ({ data }: { data?: ProblemPageData }) => {
                             {activeNavOption === "editorial" && (
                                 <Editorial data={editorial} />
                             )}
+                            {activeNavOption === "submissions" &&
+                                submissionData != undefined && (
+                                    <Submissions
+                                        data={{
+                                            submissions_list: [submissionData],
+                                        }}
+                                    />
+                                )}
                         </div>
                     </div>
                     <div
