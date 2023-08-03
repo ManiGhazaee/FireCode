@@ -4,6 +4,7 @@ import acorn from "acorn";
 
 let handleTestFunction = `function handleTests(testCases, func) {
     let testCase;
+    let problemInput;
     let expectedOut;
     let yourOut;
     let testCaseNumber;
@@ -20,13 +21,14 @@ let handleTestFunction = `function handleTests(testCases, func) {
                     t1 = performance.now();
                     out = func(...input);
                     if (!equality(out, exOutput)) {
+                            problemInput = JSON.stringify(input);
                             testCase = testCases[i];
-                            expectedOut = exOutput;
-                            yourOut = out;
+                            expectedOut = JSON.stringify(exOutput);
+                            yourOut = JSON.stringify(out);
                             testCaseNumber = i;
                             status = "Wrong Answer";
 
-                            ERR = \`Wrong answer Test Case Number: \${i} Input: \${JSON.stringify(input)} Expected Output: \${exOutput} Your Output: \${out}\`;
+                            ERR = \`Wrong answer; Test Case Number: \${i}; Input: \${JSON.stringify(input)}; Expected Output: \${exOutput}; Your Output: \${out};\`;
                     }
             } catch (e) {
                     ERR = e;
@@ -36,7 +38,7 @@ let handleTestFunction = `function handleTests(testCases, func) {
     runtime = performance.now() - t1;
 
     if (ERR == undefined && testCase == undefined) status = "Accepted";
-    return \`{ "status":"\${status}",\n"date":"\${date}",\n"runtime": "\${runtime}",\n"error_message": "\${ERR}",\n"test_case_number" :"\${testCaseNumber}",\n"test_case":"\${testCase}",\n"expected_output":"\${expectedOut}",\n"user_input":"\${yourOut}"\n}\`;
+    return \`{ "status":"\${status}",\n"date":"\${date}",\n"runtime": "\${runtime}",\n"error_message": "\${ERR}",\n"test_case_number" :"\${testCaseNumber}",\n"test_case":"\${testCase}",\n"input": "\${problemInput}",\n"expected_output":"\${expectedOut}",\n"user_output":"\${yourOut}"\n}\`;
 }
 
 function equality(item1, item2) {
@@ -111,7 +113,7 @@ export function writeTestFile(
         "test_case_number" :"undefined",
         "test_case":"undefined",
         "expected_output":"undefined",
-        "user_input":"undefined"
+        "user_output":"undefined"
         }\`); }} catch (e) { console.log(\`{ "status":"Runtime Error",
         "date":"${new Date()}",
         "runtime": 0,
@@ -119,7 +121,7 @@ export function writeTestFile(
         "test_case_number" :"undefined",
         "test_case":"undefined",
         "expected_output":"undefined",
-        "user_input":"undefined"
+        "user_output":"undefined"
         }\`); }`;
 
     fs.writeFile("./test/test.js", data, (err) => {
@@ -155,6 +157,7 @@ interface WriteFileOut {
               error_message?: string;
               test_case_number?: number;
               test_case?: any[];
+              input?: string;
               expected_output?: any;
               user_output?: any;
           }

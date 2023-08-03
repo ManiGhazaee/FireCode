@@ -8,6 +8,14 @@ html {
     font-family: "Inter", sans-serif;
 }
 
+:root {
+    --bg-color: #000;
+    --text-color: white;
+    --text-2-color: #808080;
+    --borders-color: #333;
+    --code-color: #252525;
+}
+
 *,
 *::after,
 *::before {
@@ -23,6 +31,11 @@ body {
 }
 
 code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+        monospace;
+}
+
+.code-font {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
         monospace;
 }
@@ -47,7 +60,7 @@ code {
 }
 #description-body > p > code,
 #description-body > p > em > code {
-    background-color: #1d1d1d;
+    background-color: var(--code-color); 
     border-radius: 4px;
     padding: 0px 6px;
 }
@@ -55,7 +68,7 @@ code {
 #description-body > pre {
     width: calc(100% - 26px);
     overflow-x: scroll;
-    background-color: #1d1d1d;
+    background-color: var(--code-color); 
     padding: 10px 16px;
     border-radius: 4px;
     box-sizing: border-box;
@@ -71,7 +84,7 @@ code {
 
 #description-body > ul > li > code {
     overflow-x: scroll;
-    background-color: #1d1d1d;
+    background-color: var(--code-color);
     padding: 1px 12px;
     border-radius: 4px;
     box-sizing: border-box;
@@ -108,7 +121,6 @@ code {
     border: none !important;
 }
 
-
 .hover-easy-bg-color:hover {
     background-color: #22c55e;
 }
@@ -135,4 +147,26 @@ code {
 }
 .hover-hard-bg-color:hover .status-color {
     border-color: black;
+}
+
+.submission-code-block{
+    width: calc(100% - 52px);
+    font-size: 14px;
+    overflow: hidden;
+    height: 42px;
+    overflow-x: scroll;
+    background-color: var(--code-color); 
+    padding: 10px 16px 3px 16px;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+.submission-error-block{
+    width: calc(100% - 52px);
+    height: fit-content;
+    font-size: 14px;
+    overflow: auto;
+    background-color: var(--code-color); 
+    padding: 10px 16px ;
+    border-radius: 4px;
+    box-sizing: border-box;
 }

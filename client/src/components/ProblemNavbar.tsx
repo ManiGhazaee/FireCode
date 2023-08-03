@@ -38,7 +38,7 @@ const ProblemNavbar = ({ data }: { data: Data }) => {
             onMouseOut={() => setIsInMenu(false)}
         >
             <div
-                className="h-[32px] bg-[#1d1d1d] absolute opacity-transition box-content rounded"
+                className="h-[32px] bg-borders absolute opacity-transition box-content rounded"
                 id="hover-rect"
                 style={{
                     width: currentWidth,

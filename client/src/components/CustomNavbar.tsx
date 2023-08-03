@@ -27,7 +27,7 @@ export interface NavbarItem {
 const CustomNavbar = ({ data }: { data: Navbar }) => {
     const default_color_all: string = "#808080";
     const default_color_hover_all: string = "#fff";
-    const default_bg_color_hover_all: string = "#1d1d1d";
+    const default_bg_color_hover_all: string = "#333";
     const default_bg_color_all: string = "#000";
     const default_active_color_all: string = "#fff";
     const default_font_size_all: string = "14px";

@@ -138,10 +138,10 @@ const ProblemPage = ({ data }: { data?: ProblemPageData }) => {
                 >
                     <div
                         id="explanation"
-                        className="h-[calc(100%-16px)] bg-black border border-[#222] ml-[8px] rounded-lg w-[50%] overflow-hidden"
+                        className="h-[calc(100%-16px)] bg-black border border-borders ml-[8px] rounded-lg w-[50%] overflow-hidden"
                         ref={explanationRef}
                     >
-                        <div className="relative w-full bg-black h-[50px] rounded-t-lg overflow-hidden border-b border-[#222]">
+                        <div className="relative w-full bg-black h-[50px] rounded-t-lg overflow-hidden border-b border-borders box-content">
                             {name != undefined && (
                                 <ProblemNavbar
                                     data={{
@@ -181,10 +181,10 @@ const ProblemPage = ({ data }: { data?: ProblemPageData }) => {
                         draggable="true"
                     ></div>
                     <div className="flex flex-col h-[calc(100%-16px)] min-w-[calc(20%-8px)] mr-[8px] flex-grow">
-                        <div className="min-h-0 flex-grow min-w-full mr-[8px] mb-[8px] rounded-lg overflow-hidden bg-black border border-[#222]">
-                            <div className="h-[50px] bg-black relative border-b border-[#222]">
+                        <div className="min-h-0 flex-grow min-w-full mr-[8px] mb-[8px] rounded-lg overflow-hidden bg-black border border-borders">
+                            <div className="h-[50px] bg-black relative border-b border-borders">
                                 <div
-                                    className=" inline-block relative w-fit h-fit rounded-md ml-[13px] top-[8px] px-[6px] py-[6px] text-gray-300 hover:text-white cursor-pointer text-[14px] font-bold transition select-none"
+                                    className=" inline-block relative w-fit h-fit rounded-md ml-[13px] top-[8px] px-[6px] py-[6px] text-text_2 hover:text-white cursor-pointer text-[14px] transition select-none"
                                     onClick={submitCode}
                                 >
                                     {currentLang}
@@ -203,13 +203,13 @@ const ProblemPage = ({ data }: { data?: ProblemPageData }) => {
                         </div>
                         <div
                             id="console"
-                            className="flex justify-end items-center bg-black w-full h-[50px] rounded-lg overflow-hidden border border-[#222]"
+                            className="flex justify-end items-center bg-black w-full h-[50px] rounded-lg overflow-hidden border border-borders"
                         >
                             <div
                                 className="w-fit h-fit rounded mr-[11px] px-[20px] py-[4px] hover:bg-white cursor-pointer hover:text-black hover:border-white text-[#808080] bg-black text-[14px] active:border-[#808080] active:bg-[#808080] border-[#222] font-bold right-0 transition select-none"
                                 // onClick={runCode}
                             >
-                                Run
+                                <s>Run</s>
                             </div>
                             <div
                                 className="w-fit h-fit rounded mr-[11px] px-[20px] py-[4px] hover:bg-green-500 cursor-pointer hover:text-black text-green-500 bg-black text-[14px] active:border-green-800 active:bg-green-800 border-green-500 font-bold right-0 transition select-none"

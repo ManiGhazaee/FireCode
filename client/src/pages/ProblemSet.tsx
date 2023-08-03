@@ -46,9 +46,9 @@ const ProblemSet = () => {
                 >
                     <div
                         id="explanation"
-                        className="h-[calc(100%-16px)] bg-black border border-[#222] ml-[8px] rounded-lg w-[calc(100%-16px)] overflow-hidden"
+                        className="h-[calc(100%-16px)] bg-black border border-borders ml-[8px] rounded-lg w-[calc(100%-16px)] overflow-hidden"
                     >
-                        <div className="w-full bg-black border-b border-[#222] ">
+                        <div className="w-full bg-black border-b border-borders ">
                             <div className="ml-[9px]">
                                 <CustomNavbar data={customNavData} />
                             </div>

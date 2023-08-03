@@ -13,7 +13,7 @@ export interface MainHeadingItems {
 const MainHeading = ({ data }: { data?: MainHeadingData }) => {
     return (
         <>
-            <div className="fixed w-full h-[60px] bg-black border-b border-[#222] flex felx-row z-[100]">
+            <div className="fixed w-full h-[60px] bg-black border-b border-borders flex felx-row z-[100]">
                 <div
                     id="logo-cont"
                     className="inline-block text-[24px] font-bold italic mx-[36px] mt-[12px]"
@@ -38,7 +38,7 @@ const MainHeading = ({ data }: { data?: MainHeadingData }) => {
                         id="notification"
                         className="inline-block p-[5px] text-[14px] text-[#808080] "
                     >
-                        <div className="group w-[32px] h-[32px] border border-[#222] rounded-[99px] relative hover:bg-[#222] cursor-pointer">
+                        <div className="group w-[32px] h-[32px] border border-borders rounded-[99px] relative hover:bg-[#222] cursor-pointer">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="16"
@@ -55,7 +55,7 @@ const MainHeading = ({ data }: { data?: MainHeadingData }) => {
                         id="profile-picture"
                         className="inline-block p-[5px] text-[14px] text-[#808080]"
                     >
-                        <div className="w-[32px] h-[32px] border border-[#222] rounded-[99px]"></div>
+                        <div className="w-[32px] h-[32px] border border-borders rounded-[99px]"></div>
                     </div>
                 </div>
             </div>

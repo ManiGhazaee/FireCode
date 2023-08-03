@@ -39,7 +39,7 @@ const ProblemList = ({ data }: { data: ProblemListData[] }) => {
     return (
         <div>
             <div className="flex flex-col">
-                <div className="flex flex-row w-full text-[14px] h-[40px] items-center text-[#808080] border-b border-[#222]">
+                <div className="flex flex-row w-full text-[14px] h-[40px] items-center text-[#808080] border-b border-borders">
                     <div
                         id="status-label"
                         className="h-fit w-fit px-[20px] ml-[10px]"

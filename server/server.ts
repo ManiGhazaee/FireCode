@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import * as two_sum from "./constants/problems/two-sum.json";
 import { writeTestFile } from "./utils/createTest";
-import * as cp from "child_process";
 
 type ProblemData = CodeData & DescriptionData;
 
@@ -59,6 +58,9 @@ export interface Submission {
     language: "JavaScript";
     time: Date;
     code_body: string;
+    input?: string;
+    expected_output?: string;
+    user_output?: string;
 }
 
 const problemsObject: Record<string, Json> = {
@@ -74,40 +76,27 @@ app.use(express.json());
 app.post("/problem", (req, res) => {
     console.log(req.body);
 
-    try {
-        const out = writeTestFile(
-            req.body.code,
-            two_sum.test,
-            two_sum.function_name
-        );
+    writeTestFile(req.body.code, two_sum.test, two_sum.function_name)
+        .then((resolve) => {
+            if (resolve.stdout != undefined) {
+                console.log("stdout_string:", resolve.stdout_string);
 
-        out.then((resolve) => {
-            try {
-                if (resolve.stdout != undefined) {
-                    console.log("string:", resolve.stdout_string);
-                    let submission: Submission = {
-                        status: resolve.stdout.status,
-                        error: resolve.stdout.error_message,
-                        time: resolve.stdout.date,
-                        runtime: resolve.stdout.runtime,
-                        language: "JavaScript",
-                        memory: Math.random() * 80,
-                        code_body: resolve.code_body,
-                    };
-                    res.json(submission);
-                }
-            } catch (e) {
-                res.json({
-                    status: "Runtime Error",
-                    error: e,
-                    time: new Date(),
-                    runtime: 0,
+                let submission: Submission = {
+                    status: resolve.stdout.status,
+                    error: resolve.stdout.error_message,
+                    time: resolve.stdout.date,
+                    runtime: resolve.stdout.runtime,
                     language: "JavaScript",
                     memory: Math.random() * 80,
                     code_body: resolve.code_body,
-                });
+                    input: resolve.stdout.input,
+                    expected_output: resolve.stdout.expected_output,
+                    user_output: resolve.stdout.user_output,
+                };
+                res.json(submission);
             }
-        }).catch((e) => {
+        })
+        .catch((e) => {
             res.json({
                 status: "Runtime Error",
                 error: e,
@@ -118,17 +107,6 @@ app.post("/problem", (req, res) => {
                 code_body: undefined,
             });
         });
-    } catch (e) {
-        res.json({
-            status: "Runtime Error",
-            error: e,
-            time: new Date(),
-            runtime: 0,
-            language: "JavaScript",
-            memory: Math.random() * 80,
-            code_body: undefined,
-        });
-    }
 });
 
 app.get("/problem/:name/editorial", (req, res) => {
@@ -156,5 +134,3 @@ app.get("/problem/:name", (req, res) => {
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
 });
-
-console.log(two_sum);
