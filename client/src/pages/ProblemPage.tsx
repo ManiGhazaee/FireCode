@@ -83,7 +83,7 @@ const ProblemPage = ({ data }: { data?: ProblemPageData }) => {
 
     const submitCode = () => {
         axios
-            .post("http://localhost:80/problem", { code })
+            .post(`http://localhost:80/api/problem/${name}`, { code })
             .then(({ data }) => {
                 console.log(data);
                 setSubmissionData(data as unknown as Submission);
@@ -95,15 +95,20 @@ const ProblemPage = ({ data }: { data?: ProblemPageData }) => {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:80/problem/${name}`)
+            .get(`http://localhost:80/api/problem/${name}`)
             .then(({ data }) => {
                 setProblemDescriptionData(
-                    data as unknown as SetStateAction<
+                    data.main as unknown as SetStateAction<
                         DescriptionData | undefined
                     >
                 );
-                if ("code_body" in data && "javascript" in data.code_body) {
-                    setCode(data.code_body.javascript as unknown as string);
+                if (
+                    "code_body" in data.main &&
+                    "javascript" in data.main.code_body
+                ) {
+                    setCode(
+                        data.main.code_body.javascript as unknown as string
+                    );
                 }
             })
             .catch((e) => console.error(e));
@@ -113,7 +118,7 @@ const ProblemPage = ({ data }: { data?: ProblemPageData }) => {
         if (activeNavOption === "description") return;
 
         axios
-            .get(`http://localhost:80/problem/${name}/${activeNavOption}`)
+            .get(`http://localhost:80/api/problem/${name}/${activeNavOption}`)
             .then(({ data }) => {
                 if (activeNavOption === "editorial") {
                     if ("editorial_body" in data) {
