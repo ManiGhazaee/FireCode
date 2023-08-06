@@ -2,3 +2,4 @@ node_modules
 dist
 .env
 /test/test.js
+reqs.rest

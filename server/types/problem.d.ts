@@ -9,12 +9,12 @@ interface CodeData {
 interface DescriptionData {
     id: number;
     name: string;
-    difficulty: "hard" | "medium" | "easy" | string;
+    difficulty: "hard" | "medium" | "easy";
     like_count: number;
-    dislike_count: numbe;
-    status: "solved" | "none" | "attempted" | string;
+    dislike_count: number;
+    status: "solved" | "none" | "attempted";
     is_starred: boolean;
-    like_status: "liked" | "disliked" | "none" | string;
+    like_status: "liked" | "disliked" | "none";
     description_body: string;
     accept_count: number;
     submission_count: number;

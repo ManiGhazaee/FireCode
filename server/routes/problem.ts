@@ -5,6 +5,25 @@ import ProblemModel from "../models/problem";
 
 const problem = express.Router();
 
+problem.get("/:name", async (req, res) => {
+    const name = req.params.name;
+    try {
+        const problem = await ProblemModel.findOne({
+            "main.name": name,
+        });
+
+        console.log(problem);
+        if (problem) {
+            const response = problem;
+            res.json(response);
+        } else {
+            res.json({ error: "problem not found" });
+        }
+    } catch (e) {
+        console.log(e);
+    }
+});
+
 problem.post("/:name", async (req, res) => {
     console.log(req.body);
     const name = req.params.name;
@@ -60,25 +79,6 @@ problem.get("/:name/editorial", async (req, res) => {
         if (problem) {
             const response = problem.editorial;
             res.json(response);
-        }
-    } catch (e) {
-        console.log(e);
-    }
-});
-
-problem.get("/:name", async (req, res) => {
-    const name = req.params.name;
-    try {
-        const problem = await ProblemModel.findOne({
-            "main.name": name,
-        });
-
-        console.log(problem);
-        if (problem) {
-            const response = problem;
-            res.json(response);
-        } else {
-            res.json({ error: "problem not found" });
         }
     } catch (e) {
         console.log(e);
