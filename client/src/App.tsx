@@ -5,6 +5,7 @@ import RouterLayout from "./layout/RouterLayout";
 import ProblemSet from "./pages/ProblemSet";
 import LandingPage from "./pages/LandingPage";
 import SignupPage from "./pages/SignupPage";
+import LoginPage from "./pages/LoginPage";
 
 const TOKEN_STORAGE_KEY = "authToken";
 const ID_STORAGE_KEY = "id";
@@ -84,6 +85,19 @@ function App() {
                         path="/signup"
                         element={
                             <SignupPage
+                                Data={{
+                                    token: token || "",
+                                    setTokenFunction: changeToken,
+                                    id: id || "",
+                                    setIdFunction: changeId,
+                                }}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/login"
+                        element={
+                            <LoginPage
                                 Data={{
                                     token: token || "",
                                     setTokenFunction: changeToken,

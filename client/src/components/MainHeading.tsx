@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Tooltip from "./Tooltip";
 
 export interface MainHeadingData {
     items: MainHeadingItems[];
@@ -54,10 +55,11 @@ const MainHeading = ({ data }: { data?: MainHeadingData }) => {
                     </div>
                     <div
                         id="profile-picture"
-                        className="inline-block p-[5px] text-[14px] text-[#808080]"
+                        className="inline-block relative p-[5px] text-[14px] text-[#808080] "
                     >
-                        <div>{data?.username}</div>
-                        <div className="w-[32px] h-[32px] border border-borders rounded-[99px]"></div>
+                        <Tooltip text={data?.username || ""}>
+                            <div className="w-[32px] h-[32px] border border-borders rounded-[99px]"></div>
+                        </Tooltip>
                     </div>
                 </div>
             </div>
