@@ -19,21 +19,38 @@ accounts.post<
         if (!username || !email || !password) {
             res.status(400).json({
                 success: false,
-                message: "Missing required fields",
+                message: "Missing required fields.",
             });
             return;
         }
 
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+        if (!emailRegex.test(email)) {
+            res.status(400).json({
+                success: false,
+                message: "Email is not valid.",
+            });
+            return;
+        }
+        if (!passwordRegex.test(password)) {
+            res.status(400).json({
+                success: false,
+                message: "Password is not valid. Password must contain at least one letter (uppercase or lowercase) and one digit, and must be at least 8 characters in length.",
+            });
+            return;
+        }
         if (await existsUsername(username)) {
             res.status(409).json({
                 success: false,
-                message: "Username already exists",
+                message: "Username already exists.",
             });
             return;
         } else if (await existsEmail(email)) {
             res.status(409).json({
                 success: false,
-                message: "Email already exists",
+                message: "Email already exists.",
             });
             return;
         }

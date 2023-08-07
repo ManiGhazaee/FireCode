@@ -3,7 +3,7 @@
 @tailwind utilities;
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 html {
-    background-color: #101011;
+    background-color: black;
     color: white;
     font-family: "Inter", sans-serif;
 }
@@ -60,7 +60,7 @@ code {
 }
 #description-body > p > code,
 #description-body > p > em > code {
-    background-color: var(--code-color); 
+    background-color: var(--code-color);
     border-radius: 4px;
     padding: 0px 6px;
 }
@@ -68,7 +68,7 @@ code {
 #description-body > pre {
     width: calc(100% - 26px);
     overflow-x: scroll;
-    background-color: var(--code-color); 
+    background-color: var(--code-color);
     padding: 10px 16px;
     border-radius: 4px;
     box-sizing: border-box;
@@ -149,24 +149,24 @@ code {
     border-color: black;
 }
 
-.submission-code-block{
+.submission-code-block {
     width: calc(100% - 52px);
     font-size: 14px;
     overflow: hidden;
     height: 42px;
     overflow-x: scroll;
-    background-color: var(--code-color); 
+    background-color: var(--code-color);
     padding: 10px 16px 3px 16px;
     border-radius: 4px;
     box-sizing: border-box;
 }
-.submission-error-block{
+.submission-error-block {
     width: calc(100% - 52px);
     height: fit-content;
     font-size: 14px;
     overflow: auto;
-    background-color: var(--code-color); 
-    padding: 10px 16px ;
+    background-color: var(--code-color);
+    padding: 10px 16px;
     border-radius: 4px;
     box-sizing: border-box;
 }

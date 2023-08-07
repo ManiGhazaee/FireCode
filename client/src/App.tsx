@@ -6,6 +6,8 @@ import ProblemSet from "./pages/ProblemSet";
 import LandingPage from "./pages/LandingPage";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
+import ErrorPage from "./pages/ErrorPage";
+import { stringify } from "querystring";
 
 const TOKEN_STORAGE_KEY = "authToken";
 const ID_STORAGE_KEY = "id";
@@ -40,7 +42,10 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route path="/" Component={LandingPage} />
-                    <Route path="/problemset" Component={ProblemSet} />
+                    <Route
+                        path="/problemset"
+                        element={<ProblemSet token={token} id={id} />}
+                    />
                     <Route
                         path="/problem/:name/editorial"
                         element={
@@ -103,6 +108,28 @@ function App() {
                                     setTokenFunction: changeToken,
                                     id: id || "",
                                     setIdFunction: changeId,
+                                }}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/sorry"
+                        element={
+                            <ErrorPage
+                                data={{
+                                    header: "Sorry :(",
+                                    message:
+                                        "If you already have an account, please log in. If you don't, please sign up.",
+                                    links: [
+                                        {
+                                            text: "Login",
+                                            link_path: "/login",
+                                        },
+                                        {
+                                            text: "Signup",
+                                            link_path: "/signup",
+                                        },
+                                    ],
                                 }}
                             />
                         }

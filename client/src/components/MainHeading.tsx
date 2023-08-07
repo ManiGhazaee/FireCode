@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import Tooltip from "./Tooltip";
 
 export interface MainHeadingData {
-    items: MainHeadingItems[];
-    username: string;
+    items?: MainHeadingItems[];
+    username?: string;
 }
 
 export interface MainHeadingItems {
@@ -20,12 +20,14 @@ const MainHeading = ({ data }: { data?: MainHeadingData }) => {
                     id="logo-cont"
                     className="inline-block text-[24px] font-bold italic mx-[36px] mt-[12px]"
                 >
-                    <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-600">
+                    <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-600 px-[1px]">
                         Fire
                     </span>
                     <span>Code</span>
                 </div>
                 {data != undefined &&
+                    "items" in data &&
+                    data.items != undefined &&
                     data.items.length !== 0 &&
                     data.items.map((elem) => (
                         <Link

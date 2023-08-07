@@ -9,6 +9,8 @@ const Tooltip = ({
 }) => {
     const [isHovered, setIsHovered] = React.useState(false);
 
+    if (text === "") return <>{children}</>;
+
     return (
         <>
             <div

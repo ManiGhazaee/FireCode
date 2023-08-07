@@ -3,7 +3,7 @@ import { useState } from "react";
 import ReactCodeMirror from "@uiw/react-codemirror";
 import { loadLanguage } from "@uiw/codemirror-extensions-langs";
 import { tokyoNight } from "@uiw/codemirror-theme-tokyo-night";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import ProblemNavbar from "../components/ProblemNavbar";
 import ProblemDescription from "../components/ProblemDescription";
 import { useNavigate, useParams } from "react-router-dom";
@@ -87,7 +87,15 @@ const ProblemPage = ({
             .then(({ data }) => {
                 setUsername(data.username);
             })
-            .catch((e) => console.error(e));
+            .catch((e: AxiosError) => {
+                console.log(e);
+                if (
+                    (e.response?.data as { success: boolean; message: string })
+                        .success === false
+                ) {
+                    navigate("/sorry");
+                }
+            });
     }, []);
 
     useEffect(() => {
