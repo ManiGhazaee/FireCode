@@ -11,53 +11,16 @@ import Editorial from "../components/Editorial";
 import MainHeading from "../components/MainHeading";
 import Submissions, { Submission } from "../components/Submissions";
 
-type ProblemData = CodeData & DescriptionData;
-
-export interface CodeData {
-    code_default_language: string;
-    code_body: Record<string, string>;
-    testcases?: TestCase[];
-}
-
-export interface DescriptionData {
-    id: number;
-    name: string;
-    difficulty: "hard" | "medium" | "easy" | string;
-    like_count: number;
-    dislike_count: number;
-    status: "solved" | "none" | "attempted" | string;
-    is_starred: boolean;
-    like_status: "liked" | "disliked" | "none" | string;
-    description_body: string;
-    accept_count: number;
-    submission_count: number;
-    acceptance_rate_count: number;
-    discussion_count: number;
-    related_topics: string[];
-    similar_questions: string[];
-    solution_count: number;
-}
-
-export interface EditorialData {
-    editorial_body: string;
-}
-
-export interface Json {
-    main: ProblemData;
-    editorial: EditorialData;
-}
-
-export interface TestCase {
-    inputs: Record<string, string>;
-    expected_output_name: string;
-    expected_output: string;
-}
-
-export interface ProblemPageData {
-    activeNavOption?: string | undefined;
-}
-
-const ProblemPage = ({ data }: { data?: ProblemPageData }) => {
+const ProblemPage = ({
+    data,
+    token,
+    id,
+}: {
+    data?: ProblemPageData;
+    token: string | null;
+    id: string | null;
+}) => {
+    const [username, setUsername] = useState<string>("");
     const [code, setCode] = useState<string>("");
     const explanationRef = useRef<HTMLDivElement>(null);
     const sliderRef = useRef<HTMLDivElement>(null);
@@ -112,6 +75,19 @@ const ProblemPage = ({ data }: { data?: ProblemPageData }) => {
                 }
             })
             .catch((e) => console.error(e));
+
+        if (!token) return;
+
+        axios
+            .get(`http://localhost:80/api/accounts/id/${id}`, {
+                headers: {
+                    Authorization: token,
+                },
+            })
+            .then(({ data }) => {
+                setUsername(data.username);
+            })
+            .catch((e) => console.error(e));
     }, []);
 
     useEffect(() => {
@@ -134,6 +110,7 @@ const ProblemPage = ({ data }: { data?: ProblemPageData }) => {
             <MainHeading
                 data={{
                     items: [{ text: "ProblemList", link_path: "/problemset" }],
+                    username: username,
                 }}
             />
             <div className="h-[calc(100vh-60px)] overflow-hidden bg-black">
