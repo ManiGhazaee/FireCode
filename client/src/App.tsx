@@ -139,7 +139,7 @@ function App() {
                         }
                     />
                     <Route
-                        path="/:name"
+                        path="/accouts/:name"
                         element={<ProfilePage token={token} id={id} />}
                     />
                     <Route

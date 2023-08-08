@@ -43,3 +43,8 @@ interface TestCase {
 interface ProblemPageData {
     activeNavOption?: string | undefined;
 }
+
+
+interface SidePanelData {
+    username: string;
+}

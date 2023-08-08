@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Tooltip from "./Tooltip";
 import SidePanel from "./SidePanel";
@@ -6,6 +6,7 @@ import SidePanel from "./SidePanel";
 export interface MainHeadingData {
     items?: MainHeadingItems[];
     username?: string;
+    id?: string;
     status?: "loggedin" | "not-loggedin" | "none";
 }
 
@@ -15,6 +16,8 @@ export interface MainHeadingItems {
 }
 
 const MainHeading = ({ data }: { data?: MainHeadingData }) => {
+    const [sidePanelState, setSidePanelState] = useState<boolean>(false);
+
     return (
         <>
             <div className="fixed w-full h-[60px] bg-black border-b border-borders flex felx-row z-[100]">
@@ -63,12 +66,19 @@ const MainHeading = ({ data }: { data?: MainHeadingData }) => {
                         <div
                             id="profile-picture"
                             className="inline-block relative p-[5px] text-[14px] text-[#808080] "
+                            onClick={() => setSidePanelState(!sidePanelState)}
                         >
                             <Tooltip text={data?.username || ""}>
                                 <div className="w-[32px] h-[32px] border border-borders rounded-[99px]"></div>
                             </Tooltip>
                         </div>
-                        {/* <SidePanel display={true} /> */}
+                        <SidePanel
+                            displayFn={setSidePanelState}
+                            display={sidePanelState}
+                            data={{
+                                username: data?.username || "",
+                            }}
+                        />
                     </div>
                 ) : data?.status === "not-loggedin" ? (
                     <div className="fixed flex flex-row right-[36px] items-center h-[60px]">
