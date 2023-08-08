@@ -170,3 +170,63 @@ code {
     border-radius: 4px;
     box-sizing: border-box;
 }
+
+.circle {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    opacity: 0.8;
+}
+
+.circle-1-animation {
+    animation: circle-1-animation 2s ease-in infinite;
+    animation-delay: 200ms;
+}
+.circle-2-animation {
+    animation: circle-1-animation 2s ease-in infinite;
+    animation-delay: 1300ms;
+}
+.circle-3-animation {
+    animation: circle-1-animation 2s ease-in infinite;
+    animation-delay: 400ms;
+}
+.circle-4-animation {
+    animation: circle-1-animation 2s ease-in infinite;
+    animation-delay: 1500ms;
+}
+.circle-5-animation {
+    animation: circle-1-animation 2s ease-in infinite;
+    animation-delay: 800ms;
+}
+.circle-6-animation {
+    animation: circle-1-animation 2s ease-in infinite;
+    animation-delay: 1900ms;
+}
+.circle-7-animation {
+    animation: circle-1-animation 3s ease-in infinite;
+    animation-delay: 1200ms;
+}
+
+@keyframes circle-1-animation {
+    0% {
+        transform: translate(-50%, 0%);
+        opacity: 1;
+    }
+    50% {
+        transform: translate(-55%, -100%);
+        opacity: 0;
+    }
+    80% {
+        transform: translate(-45%, 20%);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(-50%, 0%);
+        opacity: 1;
+    }
+}
+
+.company-logo {
+    height: 50px;
+    filter: brightness(900%);
+}

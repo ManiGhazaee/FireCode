@@ -140,7 +140,7 @@ accounts.post<
     }
 });
 
-accounts.get("/:name", authenticateToken, async (req, res) => {
+accounts.get("/:name", async (req, res) => {
     const name = req.params.name;
 
     const user = await UserModel.findOne({
@@ -151,8 +151,12 @@ accounts.get("/:name", authenticateToken, async (req, res) => {
         res.status(404).json({ success: false, message: "User not found" });
         return;
     }
+    const publicUser = {
+        username: user.username,
+        email: user.email,
+    }
 
-    res.json(user);
+    res.json(publicUser);
 });
 
 accounts.get("/id/:id", authenticateToken, async (req, res) => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ProblemPage from "./pages/ProblemPage";
-import { BrowserRouter, Route, Routes, useParams } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import RouterLayout from "./layout/RouterLayout";
 import ProblemSet from "./pages/ProblemSet";
 import LandingPage from "./pages/LandingPage";
@@ -8,6 +8,7 @@ import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import ErrorPage from "./pages/ErrorPage";
 import { stringify } from "querystring";
+import ProfilePage from "./pages/ProfilePage";
 
 const TOKEN_STORAGE_KEY = "authToken";
 const ID_STORAGE_KEY = "id";
@@ -41,7 +42,10 @@ function App() {
             <RouterLayout />
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" Component={LandingPage} />
+                    <Route
+                        path="/"
+                        element={<LandingPage token={token} id={id} />}
+                    />
                     <Route
                         path="/problemset"
                         element={<ProblemSet token={token} id={id} />}
@@ -128,6 +132,28 @@ function App() {
                                         {
                                             text: "Signup",
                                             link_path: "/signup",
+                                        },
+                                    ],
+                                }}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/:name"
+                        element={<ProfilePage token={token} id={id} />}
+                    />
+                    <Route
+                        path="*"
+                        element={
+                            <ErrorPage
+                                data={{
+                                    header: "404",
+                                    message: "Page not found.",
+                                    links: [
+                                        { text: "Main Page", link_path: "/" },
+                                        {
+                                            text: "Problem List",
+                                            link_path: "/problemset",
                                         },
                                     ],
                                 }}
