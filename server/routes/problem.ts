@@ -2,8 +2,23 @@ import express from "express";
 import { writeTestFile } from "../utils/createTest";
 import ProblemModel from "../models/problem";
 
-
 const problem = express.Router();
+
+problem.get("/all", async (req, res) => {
+    try {
+        const allProblems = await ProblemModel.find(
+            {},
+            "main.id main.name main.acceptance_rate_count main.difficulty main.like_count main.dislike_count"
+        )
+            .sort({ "main.id": 1 })
+            .exec();
+
+        res.json(allProblems);
+    } catch (e) {
+        console.log(e);
+        res.json({ success: false, message: "Internal Server Error" });
+    }
+});
 
 problem.get("/:name", async (req, res) => {
     const name = req.params.name;

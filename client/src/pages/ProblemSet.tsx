@@ -17,6 +17,7 @@ const ProblemSet = ({
     const [username, setUsername] = useState<string>("");
     const [verified, setVerified] = useState<boolean>(false);
     const navigate = useNavigate();
+    const [problemListData, setProblemListData] = useState();
     const customNavData: Navbar = {
         items: [
             { text: "All Topics", link_path: "/problemset" },
@@ -26,28 +27,28 @@ const ProblemSet = ({
             { text: "Shell", link_path: "/problemset" },
         ],
     };
-    const problemListData = [
-        {
-            id: 1,
-            name: "two-sum",
-            difficulty: "easy",
-            like_count: 200,
-            dislike_count: 23,
-            status: "none",
-            is_starred: false,
-            acceptance_rate_count: 50.3,
-        },
-        {
-            id: 2,
-            name: "add-two-numbers",
-            difficulty: "medium",
-            like_count: 400,
-            dislike_count: 600,
-            status: "none",
-            is_starred: true,
-            acceptance_rate_count: 42.9,
-        },
-    ];
+    // const problemListData = [
+    //     {
+    //         id: 1,
+    //         name: "two-sum",
+    //         difficulty: "easy",
+    //         like_count: 200,
+    //         dislike_count: 23,
+    //         status: "none",
+    //         is_starred: false,
+    //         acceptance_rate_count: 50.3,
+    //     },
+    //     {
+    //         id: 2,
+    //         name: "add-two-numbers",
+    //         difficulty: "medium",
+    //         like_count: 400,
+    //         dislike_count: 600,
+    //         status: "none",
+    //         is_starred: true,
+    //         acceptance_rate_count: 42.9,
+    //     },
+    // ];
 
     useEffect(() => {
         axios
@@ -70,6 +71,11 @@ const ProblemSet = ({
                     setVerified(false);
                 }
             });
+
+        axios.get("http://localhost:80/api/problem/all").then(({ data }) => {
+            setProblemListData(data);
+            console.log(data)
+        });
     }, []);
 
     return (
@@ -92,7 +98,7 @@ const ProblemSet = ({
                                     </div>
                                 </div>
                                 <div>
-                                    <ProblemList data={problemListData} />
+                                    <ProblemList data={problemListData as any} />
                                 </div>
                             </div>
                         </div>

@@ -3,14 +3,16 @@ import { Link } from "react-router-dom";
 import { kebabToSpacedPascal } from "../ts/utils/string";
 
 export interface ProblemListData {
-    id: number;
-    name: string;
-    difficulty: "hard" | "medium" | "easy" | string;
-    like_count: number;
-    dislike_count: number;
-    status: "solved" | "none" | "attempted" | string;
-    is_starred: boolean;
-    acceptance_rate_count: number;
+    main: {
+        id: number;
+        name: string;
+        difficulty: "hard" | "medium" | "easy" | string;
+        like_count: number;
+        dislike_count: number;
+        status: "solved" | "none" | "attempted" | string;
+        is_starred: boolean;
+        acceptance_rate_count: number;
+    };
 }
 
 const ProblemList = ({ data }: { data: ProblemListData[] }) => {
@@ -90,20 +92,20 @@ const ProblemList = ({ data }: { data: ProblemListData[] }) => {
                         Star
                     </div>
                 </div>
-                {data.length !== 0 &&
+                {data != undefined && data.length !== 0 &&
                     statusRef.current != null &&
-                    data.map((elem, index) => (
+                    data.map(({ main }, index) => (
                         <div
                             className={`h-[40px] w-full text-[14px] hover:text-black duration-150 ${
-                                elem.difficulty === "easy"
+                                main.difficulty === "easy"
                                     ? "hover-easy-bg-color"
-                                    : elem.difficulty === "medium"
+                                    : main.difficulty === "medium"
                                     ? "hover-medium-bg-color"
                                     : "hover-hard-bg-color"
                             } `}
                         >
                             <Link
-                                to={`/problem/${elem.name}`}
+                                to={`/problem/${main.name}`}
                                 className="w-full h-[40px] flex flex-row whitespace-nowrap "
                             >
                                 <div
@@ -118,19 +120,19 @@ const ProblemList = ({ data }: { data: ProblemListData[] }) => {
                                         className={`ml-[20px]`}
                                         style={{
                                             color:
-                                                elem.status === "solved"
+                                                main.status === "solved"
                                                     ? "#22c55e"
-                                                    : elem.status === "none"
+                                                    : main.status === "none"
                                                     ? "#808080"
                                                     : "#f97316",
                                         }}
                                     >
-                                        {elem.status === "solved" ? (
+                                        {main.status === "solved" ? (
                                             <i
                                                 className="bi bi-check-circle status-color"
                                                 // style={{ color: "#22c55e" }}
                                             ></i>
-                                        ) : elem.status === "none" ? (
+                                        ) : main.status === "none" ? (
                                             <div className="border rounded-[99px] border-[#808080] w-[14px] h-[14px] mt-[13px] status-color"></div>
                                         ) : (
                                             <i
@@ -148,9 +150,9 @@ const ProblemList = ({ data }: { data: ProblemListData[] }) => {
                                     }}
                                 >
                                     <div className="ml-[40px]">
-                                        {elem.id +
+                                        {main.id +
                                             ". " +
-                                            kebabToSpacedPascal(elem.name)}
+                                            kebabToSpacedPascal(main.name)}
                                     </div>
                                 </div>
                                 <div
@@ -161,7 +163,7 @@ const ProblemList = ({ data }: { data: ProblemListData[] }) => {
                                     }}
                                 >
                                     <div className="ml-[20px]">
-                                        {elem.acceptance_rate_count}
+                                        {main.acceptance_rate_count}
                                         {"%"}
                                     </div>
                                 </div>
@@ -174,14 +176,14 @@ const ProblemList = ({ data }: { data: ProblemListData[] }) => {
                                 >
                                     <div
                                         className={`ml-[20px] difficulty-text duration-150 ${
-                                            elem.difficulty === "easy"
+                                            main.difficulty === "easy"
                                                 ? "text-green-500"
-                                                : elem.difficulty === "medium"
+                                                : main.difficulty === "medium"
                                                 ? "text-orange-500"
                                                 : "text-red-500"
                                         }`}
                                     >
-                                        {kebabToSpacedPascal(elem.difficulty)}
+                                        {kebabToSpacedPascal(main.difficulty)}
                                     </div>
                                 </div>
                                 <div
@@ -192,7 +194,7 @@ const ProblemList = ({ data }: { data: ProblemListData[] }) => {
                                     }}
                                 >
                                     <div className="ml-[20px]">
-                                        {elem.like_count}
+                                        {main.like_count}
                                     </div>
                                 </div>
                                 <div
@@ -203,7 +205,7 @@ const ProblemList = ({ data }: { data: ProblemListData[] }) => {
                                     }}
                                 >
                                     <div className="ml-[20px]">
-                                        {elem.dislike_count}
+                                        {main.dislike_count}
                                     </div>
                                 </div>
                                 <div
@@ -214,7 +216,7 @@ const ProblemList = ({ data }: { data: ProblemListData[] }) => {
                                     }}
                                 >
                                     <div className="ml-[20px]">
-                                        {elem.is_starred ? "y" : "n"}
+                                        {main.is_starred ? "y" : "n"}
                                     </div>
                                 </div>
                             </Link>

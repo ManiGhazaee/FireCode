@@ -117,7 +117,7 @@ const ProblemPage = ({
         <>
             <MainHeading
                 data={{
-                    items: [{ text: "ProblemList", link_path: "/problemset" }],
+                    items: [{ text: "Problem List", link_path: "/problemset" }],
                     username: username,
                 }}
             />
@@ -175,7 +175,6 @@ const ProblemPage = ({
                             <div className="h-[50px] bg-black relative border-b border-borders">
                                 <div
                                     className=" inline-block relative w-fit h-fit rounded-md ml-[13px] top-[8px] px-[6px] py-[6px] text-text_2 hover:text-white cursor-pointer text-[14px] transition select-none"
-                                    onClick={submitCode}
                                 >
                                     {currentLang}
                                 </div>

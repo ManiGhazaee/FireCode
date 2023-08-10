@@ -47,7 +47,10 @@ const SidePanel = ({
                     </button>
                 </div>
                 <hr className="border-borders w-[88%] mx-auto" />
-                <SidePanelItem text="Your profile" to="/profile" />
+                <SidePanelItem
+                    text="Your profile"
+                    to={`/accounts/${data.username}`}
+                />
             </div>
         </>
     );

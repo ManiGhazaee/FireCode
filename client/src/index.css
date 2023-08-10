@@ -24,6 +24,11 @@ html {
     text-decoration: none;
 }
 
+::selection {
+    background-color: #dc2626 !important;
+    color: white;
+}
+
 body {
     margin: 0;
     -webkit-font-smoothing: antialiased;
@@ -229,4 +234,22 @@ code {
 .company-logo {
     height: 50px;
     filter: brightness(900%);
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.a-g {
+    animation: gradient 1200ms infinite;
+    background-size: 400% 400%;
+    background: linear-gradient(90deg, #f97316, #dc2626);
 }

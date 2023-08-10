@@ -138,6 +138,7 @@ export function tolowercase(str: string): string {
 }
 
 export function kebabToSpacedPascal(str: string) {
+    if (str == null) return "";
     let spliced = str.split("-");
     let upperCasedFirstChars = spliced.map((str) => {
         return spice(str, 0, 1, str[0].toUpperCase());

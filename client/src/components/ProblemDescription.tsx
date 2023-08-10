@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { convertMarkdownToHtml } from "../ts/utils/utils";
-import { changeCase } from "../ts/utils/string";
+import { changeCase, kebabToSpacedPascal } from "../ts/utils/string";
 import StarIcon from "./StarIcon";
 
 export interface DescriptionData {
@@ -9,9 +9,9 @@ export interface DescriptionData {
     difficulty: "hard" | "medium" | "easy" | string;
     like_count: number;
     dislike_count: number;
-    status: "solved" | "none" | "attempted" | string;
-    is_starred: boolean;
-    like_status: "liked" | "disliked" | "none" | string;
+    status?: "solved" | "none" | "attempted" | string;
+    is_starred?: boolean;
+    like_status?: "liked" | "disliked" | "none" | string;
     description_body: string;
     accept_count: number;
     submission_count: number;
@@ -23,8 +23,12 @@ export interface DescriptionData {
 }
 
 const ProblemDescription = ({ data }: { data: DescriptionData }) => {
-    const [isStarred, setIsStarred] = useState<boolean>(data.is_starred);
-    const [likeStatus, setLikeStatus] = useState<string>(data.like_status);
+    const [isStarred, setIsStarred] = useState<boolean>(
+        data.is_starred || false
+    );
+    const [likeStatus, setLikeStatus] = useState<string>(
+        data.like_status || "none"
+    );
     const xxx = "attempted";
 
     return (
@@ -32,7 +36,8 @@ const ProblemDescription = ({ data }: { data: DescriptionData }) => {
             {Object.keys(data).length !== 0 && (
                 <div>
                     <h1 className="font-bold mt-[36px] ml-[26px] text-[22px]">
-                        <span id="problem-id">{data.id}</span>. {data.name}
+                        <span id="problem-id">{data.id}</span>.{" "}
+                        {kebabToSpacedPascal(data.name)}
                     </h1>
                     <div className="flex flex-row ml-[26px] mt-[20px] select-none">
                         <div
@@ -80,7 +85,7 @@ const ProblemDescription = ({ data }: { data: DescriptionData }) => {
                                 }
                             >
                                 {likeStatus === "liked" ? (
-                                    <i className="bi bi-hand-thumbs-up-fill"></i>
+                                    <i className="bi bi-hand-thumbs-up-fill text-green-600"></i>
                                 ) : (
                                     <i className="bi bi-hand-thumbs-up"></i>
                                 )}
@@ -102,7 +107,7 @@ const ProblemDescription = ({ data }: { data: DescriptionData }) => {
                                 }
                             >
                                 {likeStatus === "disliked" ? (
-                                    <i className="bi bi-hand-thumbs-down-fill"></i>
+                                    <i className="bi bi-hand-thumbs-down-fill text-red-600"></i>
                                 ) : (
                                     <i className="bi bi-hand-thumbs-down"></i>
                                 )}

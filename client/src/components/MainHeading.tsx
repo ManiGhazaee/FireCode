@@ -21,7 +21,7 @@ const MainHeading = ({ data }: { data?: MainHeadingData }) => {
     return (
         <>
             <div className="fixed w-full h-[60px] bg-black border-b border-borders flex felx-row z-[100]">
-                <Link to="/">
+                <Link to="/" className=" select-none">
                     <div
                         id="logo-cont"
                         className="inline-block text-[24px] font-bold italic mx-[36px] mt-[12px]"

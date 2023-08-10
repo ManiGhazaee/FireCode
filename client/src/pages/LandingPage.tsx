@@ -73,8 +73,8 @@ const LandingPage = ({
                         Welcome back {username}!
                     </h1>
                     <p className="absolute w-1/2 text-center mx-auto mt-[50px] z-50 inset-0 top-[300px]">
-                        Ready to conquer complex challenges? Explore our
-                        Problem List now!
+                        Ready to conquer complex challenges? Explore our Problem
+                        List now!
                     </p>
                     <div className="absolute top-[450px] left-1/2 -translate-x-1/2 z-50">
                         <Link

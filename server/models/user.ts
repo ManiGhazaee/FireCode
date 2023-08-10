@@ -10,6 +10,11 @@ interface DUser extends Document {
     problems_like_status:
         | Record<string, DescriptionData["like_status"]>
         | undefined;
+    problems_solved_count: number;
+    rank: number;
+    views: number;
+    solution_count: number;
+    reputation_count: number;
 }
 
 const userSchema = new mongoose.Schema<DUser>({
@@ -41,6 +46,11 @@ const userSchema = new mongoose.Schema<DUser>({
         type: Object,
         default: undefined,
     },
+    problems_solved_count: Number,
+    rank: Number,
+    views: Number,
+    solution_count: Number,
+    reputation_count: Number, 
 });
 
 const UserModel = mongoose.model<DUser>("User", userSchema);
