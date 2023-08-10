@@ -5,6 +5,7 @@ import { existsEmail, existsUsername } from "../utils/utils";
 import jwt from "jsonwebtoken";
 import { authenticateToken } from "../middlewares/token";
 require("dotenv");
+import Filter from "bad-words";
 
 const accounts = express.Router();
 
@@ -37,10 +38,23 @@ accounts.post<
         if (!passwordRegex.test(password)) {
             res.status(400).json({
                 success: false,
-                message: "Password is not valid. Password must contain at least one letter (uppercase or lowercase) and one digit, and must be at least 8 characters in length.",
+                message:
+                    "Password is not valid. Password must contain at least one letter (uppercase or lowercase) and one digit, and must be at least 8 characters in length.",
             });
             return;
         }
+
+        const filter = new Filter();
+
+        if (filter.isProfane(username)) {
+            return res
+                .status(400)
+                .json({
+                    success: false,
+                    message: "Username contains inappropriate language.",
+                });
+        }
+
         if (await existsUsername(username)) {
             res.status(409).json({
                 success: false,
@@ -154,7 +168,7 @@ accounts.get("/:name", async (req, res) => {
     const publicUser = {
         username: user.username,
         email: user.email,
-    }
+    };
 
     res.json(publicUser);
 });

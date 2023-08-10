@@ -70,7 +70,21 @@ const LandingPage = ({
             {verifiedCertain && verified ? (
                 <>
                     <h1 className="absolute text-[48px] mx-auto text-center font-bold mt-[100px] z-50 inset-0 top-[100px]">
-                        Welcome back {username}!
+                        <TypeAnimation
+                            sequence={[
+                                `Welcome back ${username}!`,
+                                2000,
+                                `Ready for more challenges, ${username}?`,
+                                2000,
+                                "Let's dive in!",
+                            ]}
+                            wrapper="span"
+                            cursor={true}
+                            style={{
+                                fontSize: "1em",
+                                display: "inline-block",
+                            }}
+                        />
                     </h1>
                     <p className="absolute w-1/2 text-center mx-auto mt-[50px] z-50 inset-0 top-[300px]">
                         Ready to conquer complex challenges? Explore our Problem
