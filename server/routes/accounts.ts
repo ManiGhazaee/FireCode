@@ -47,12 +47,11 @@ accounts.post<
         const filter = new Filter();
 
         if (filter.isProfane(username)) {
-            return res
-                .status(400)
-                .json({
-                    success: false,
-                    message: "Username contains inappropriate language.",
-                });
+            res.status(400).json({
+                success: false,
+                message: "Username contains inappropriate language.",
+            });
+            return;
         }
 
         if (await existsUsername(username)) {

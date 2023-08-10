@@ -10,8 +10,8 @@ import ErrorPage from "./pages/ErrorPage";
 import { stringify } from "querystring";
 import ProfilePage from "./pages/ProfilePage";
 
-const TOKEN_STORAGE_KEY = "authToken";
-const ID_STORAGE_KEY = "id";
+export const TOKEN_STORAGE_KEY = "authToken";
+export const ID_STORAGE_KEY = "id";
 
 function App() {
     const [token, setToken] = useState(localStorage.getItem(TOKEN_STORAGE_KEY));
