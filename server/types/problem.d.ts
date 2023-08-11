@@ -1,5 +1,12 @@
 type ProblemData = CodeData & DescriptionData;
 
+interface Problem {
+    main: ProblemData;
+    editorial: EditorialData;
+    test: any[][];
+    function_name: string;
+}
+
 interface CodeData {
     code_default_language: string;
     code_body: Record<string, string>;
@@ -43,6 +50,7 @@ interface TestCase {
 }
 
 interface Submission {
+    problem_name: string;
     status:
         | "Accepted"
         | "Runtime Error"
@@ -53,7 +61,7 @@ interface Submission {
     memory: number;
     language: "JavaScript";
     time: Date;
-    code_body: string;
+    code_body?: string;
     input?: string;
     expected_output?: string;
     user_output?: string;

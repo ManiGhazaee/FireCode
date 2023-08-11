@@ -4,9 +4,11 @@ interface DUser extends Document {
     username: string;
     email: string;
     password: string;
-    submissions: Record<string, Submission[]> | undefined;
+    submissions: Submission[] | undefined;
     problems_starred: Record<string, boolean> | undefined;
     problems_status: Record<string, DescriptionData["status"]> | undefined;
+    problems_solved: string[];
+    problems_attempted: string[];
     problems_like_status:
         | Record<string, DescriptionData["like_status"]>
         | undefined;
@@ -30,10 +32,7 @@ const userSchema = new mongoose.Schema<DUser>({
         type: String,
         required: true,
     },
-    submissions: {
-        type: Object,
-        default: undefined,
-    },
+    submissions: Array,
     problems_starred: {
         type: Object,
         default: undefined,
@@ -42,6 +41,8 @@ const userSchema = new mongoose.Schema<DUser>({
         type: Object,
         default: undefined,
     },
+    problems_solved: Array,
+    problems_attempted: Array,
     problems_like_status: {
         type: Object,
         default: undefined,
@@ -50,7 +51,7 @@ const userSchema = new mongoose.Schema<DUser>({
     rank: Number,
     views: Number,
     solution_count: Number,
-    reputation_count: Number, 
+    reputation_count: Number,
 });
 
 const UserModel = mongoose.model<DUser>("User", userSchema);

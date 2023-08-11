@@ -1,10 +1,13 @@
-import express from "express";
+import express, { json } from "express";
 import { writeTestFile } from "../utils/createTest";
 import ProblemModel from "../models/problem";
+import UserModel from "../models/user";
+import { DProblem } from "../models/problem";
 
 const problem = express.Router();
 
-problem.get("/all", async (req, res) => {
+problem.post("/all", async (req, res) => {
+    const { id } = req.body;
     try {
         const allProblems = await ProblemModel.find(
             {},
@@ -13,72 +16,223 @@ problem.get("/all", async (req, res) => {
             .sort({ "main.id": 1 })
             .exec();
 
-        res.json(allProblems);
+        const user = await UserModel.findById(id);
+        const sOrA = {
+            solved: user?.problems_solved,
+            attempted: user?.problems_attempted,
+        };
+        console.log(sOrA);
+
+        let allProblemsArray: DProblem[] = JSON.parse(
+            JSON.stringify(allProblems)
+        );
+
+        if (sOrA.attempted) {
+            for (let i = 0; i < allProblemsArray.length; i++) {
+                if (sOrA.attempted.includes(allProblemsArray[i].main.name)) {
+                    allProblemsArray[i].main.status = "attempted";
+                }
+            }
+        }
+        if (sOrA.solved) {
+            for (let i = 0; i < allProblemsArray.length; i++) {
+                if (sOrA.solved.includes(allProblemsArray[i].main.name)) {
+                    allProblemsArray[i].main.status = "solved";
+                    console.log("first");
+                }
+            }
+        }
+
+        console.log(allProblemsArray);
+
+        res.json(allProblemsArray);
     } catch (e) {
         console.log(e);
         res.json({ success: false, message: "Internal Server Error" });
     }
 });
 
-problem.get("/:name", async (req, res) => {
-    const name = req.params.name;
+problem.post<
+    {},
+    { solved: string[] | undefined; attempted: string[] | undefined },
+    { id: string }
+>("/solved-or-attempted", async (req, res) => {
+    const { id } = req.body;
+    try {
+        const user = await UserModel.findById(id);
+
+        res.json({
+            solved: user?.problems_solved,
+            attempted: user?.problems_attempted,
+        });
+    } catch (e) {
+        console.log(e);
+    }
+});
+
+problem.post<
+    { name: string },
+    Submission[],
+    { code: string; id: string; problem_name: string }
+>("/submit/:name", async (req, res) => {
+    const { name } = req.params;
+    const { id, problem_name } = req.body;
+
     try {
         const problem = await ProblemModel.findOne({
             "main.name": name,
         });
-
-        console.log(problem);
-        if (problem) {
-            const response = problem;
-            res.json(response);
+        const user = await UserModel.findById(id);
+        if (!user) {
+            res.json([
+                {
+                    problem_name: problem_name,
+                    status: "Runtime Error",
+                    error: "user not found",
+                    time: new Date(),
+                    runtime: 0,
+                    language: "JavaScript",
+                    memory: Math.random() * 80,
+                    code_body: undefined,
+                },
+            ]);
+            return;
+        }
+        let history: Submission[] | null;
+        if (user.submissions) {
+            history = user.submissions;
         } else {
-            res.json({ error: "problem not found" });
+            history = null;
+        }
+        if (problem) {
+            writeTestFile(req.body.code, problem.test, problem.function_name)
+                .then(async (resolve) => {
+                    if (resolve.stdout != undefined) {
+                        let submission: Submission[] = [
+                            {
+                                problem_name: problem_name,
+                                status: resolve.stdout.status,
+                                error: resolve.stdout.error_message,
+                                time: resolve.stdout.date,
+                                runtime: resolve.stdout.runtime,
+                                language: "JavaScript",
+                                memory: Math.random() * 80,
+                                code_body: resolve.code_body,
+                                input: resolve.stdout.input,
+                                expected_output: resolve.stdout.expected_output,
+                                user_output: resolve.stdout.user_output,
+                            },
+                        ];
+                        if (history != null) {
+                            submission.push(...history);
+                        }
+
+                        const subsByName = submission.filter(
+                            (elem) => elem.problem_name === problem_name
+                        );
+                        user.submissions = submission;
+
+                        if (submission[0].status === "Accepted") {
+                            if (!user.problems_solved.includes(problem_name)) {
+                                user.problems_solved.push(problem_name);
+                            }
+                        } else {
+                            if (
+                                !user.problems_attempted.includes(problem_name)
+                            ) {
+                                user.problems_attempted.push(problem_name);
+                            }
+                        }
+                        await user.save();
+                        res.json(subsByName);
+                    }
+                })
+                .catch(async (e) => {
+                    let submission: Submission[] = [
+                        {
+                            problem_name: problem_name,
+                            status: "Runtime Error",
+                            error: e,
+                            time: new Date(),
+                            runtime: 0,
+                            language: "JavaScript",
+                            memory: Math.random() * 80,
+                            code_body: undefined,
+                        },
+                    ];
+                    if (history) {
+                        submission.push(...history);
+                    }
+
+                    if (!user.problems_attempted.includes(problem_name)) {
+                        user.problems_attempted.push(problem_name);
+                    }
+
+                    const subsByName = submission.filter(
+                        (elem) => elem.problem_name === problem_name
+                    );
+
+                    user.submissions = submission;
+                    await user.save();
+                    res.json(subsByName);
+                });
         }
     } catch (e) {
         console.log(e);
     }
 });
 
-problem.post("/:name", async (req, res) => {
-    console.log(req.body);
-    const name = req.params.name;
+problem.post<{ name: string }, Submission[], { id: string }>(
+    "/submissions/:name",
+    async (req, res) => {
+        const { name } = req.params;
+        const { id } = req.body;
+        try {
+            const user = await UserModel.findById(id);
+            if (!user) {
+                res.json([]);
+                return;
+            }
+            if (!user.submissions) {
+                res.json([]);
+                return;
+            }
 
+            const subsByName = user.submissions.filter(
+                (elem) => elem.problem_name === name
+            );
+
+            res.json(subsByName);
+        } catch (e) {
+            console.log(e);
+            res.json([]);
+        }
+    }
+);
+
+problem.post("/:name", async (req, res) => {
+    const { name } = req.params;
+    const { id } = req.body;
     try {
         const problem = await ProblemModel.findOne({
             "main.name": name,
         });
-        if (problem) {
-            writeTestFile(req.body.code, problem.test, problem.function_name)
-                .then((resolve) => {
-                    if (resolve.stdout != undefined) {
-                        console.log("stdout_string:", resolve.stdout_string);
 
-                        let submission: Submission = {
-                            status: resolve.stdout.status,
-                            error: resolve.stdout.error_message,
-                            time: resolve.stdout.date,
-                            runtime: resolve.stdout.runtime,
-                            language: "JavaScript",
-                            memory: Math.random() * 80,
-                            code_body: resolve.code_body,
-                            input: resolve.stdout.input,
-                            expected_output: resolve.stdout.expected_output,
-                            user_output: resolve.stdout.user_output,
-                        };
-                        res.json(submission);
-                    }
-                })
-                .catch((e) => {
-                    res.json({
-                        status: "Runtime Error",
-                        error: e,
-                        time: new Date(),
-                        runtime: 0,
-                        language: "JavaScript",
-                        memory: Math.random() * 80,
-                        code_body: undefined,
-                    });
-                });
+        const user = await UserModel.findById(id);
+        const problemJson: DProblem = JSON.parse(JSON.stringify(problem));
+
+        if (user?.problems_attempted.includes(name)) {
+            problemJson.main.status = "attempted";
+        }
+        if (user?.problems_solved.includes(name)) {
+            problemJson.main.status = "solved";
+        }
+
+        if (problemJson) {
+            const response = problemJson;
+            res.json(response);
+        } else {
+            res.json({ error: "problem not found" });
         }
     } catch (e) {
         console.log(e);

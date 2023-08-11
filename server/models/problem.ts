@@ -1,6 +1,6 @@
 import mongoose, { Document } from "mongoose";
 
-interface DProblem extends Document {
+export interface DProblem extends Document {
     main: ProblemData;
     editorial: EditorialData;
     test: any[][];

@@ -14,7 +14,6 @@ export function authenticateToken(
 ) {
     const authHeader = req.headers["authorization"];
     const token = authHeader;
-    console.log(token)
 
     if (!token) {
         return res

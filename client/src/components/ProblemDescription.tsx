@@ -45,7 +45,7 @@ const ProblemDescription = ({ data }: { data: DescriptionData }) => {
                                 data.difficulty === "easy"
                                     ? "text-green-500"
                                     : data.difficulty === "medium"
-                                    ? "text-yellow-500"
+                                    ? "text-orange-500"
                                     : "text-red-600"
                             }`}
                         >
@@ -65,13 +65,13 @@ const ProblemDescription = ({ data }: { data: DescriptionData }) => {
                                     className="bi bi-check-circle"
                                     style={{ color: "#22c55e" }}
                                 ></i>
-                            ) : data.status === "none" ? (
-                                ""
-                            ) : (
+                            ) : data.status === "attempted" ? (
                                 <i
                                     className="bi bi-x-circle"
                                     style={{ color: "#f97316" }}
                                 ></i>
+                            ) : (
+                                ""
                             )}
                         </div>
                         <div id="like-count" className="ml-[20px] mt-[-2px]">

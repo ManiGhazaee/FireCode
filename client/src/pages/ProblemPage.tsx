@@ -3,7 +3,7 @@ import { useState } from "react";
 import ReactCodeMirror from "@uiw/react-codemirror";
 import { loadLanguage } from "@uiw/codemirror-extensions-langs";
 import { tokyoNight } from "@uiw/codemirror-theme-tokyo-night";
-import axios, { AxiosError } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import ProblemNavbar from "../components/ProblemNavbar";
 import ProblemDescription from "../components/ProblemDescription";
 import { useNavigate, useParams } from "react-router-dom";
@@ -39,17 +39,35 @@ const ProblemPage = ({
     const [problemDescriptionData, setProblemDescriptionData] =
         useState<DescriptionData>();
 
-    const [submissionData, setSubmissionData] = useState<Submission>();
+    const [submissionData, setSubmissionData] = useState<Submission[]>();
     const navigate = useNavigate();
+
+    const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
     const { name } = useParams();
 
     const submitCode = () => {
+        if (!id || !name) {
+            console.log("id not found");
+            return;
+        }
+
+        setIsSubmitted(true);
+
+        const problem_name = name;
         axios
-            .post(`http://localhost:80/api/problem/${name}`, { code })
+            .post<
+                {},
+                { data: Submission[] },
+                { code: string; id: string; problem_name: string }
+            >(`http://localhost:80/api/problem/submit/${name}`, {
+                code,
+                id,
+                problem_name,
+            })
             .then(({ data }) => {
                 console.log(data);
-                setSubmissionData(data as unknown as Submission);
+                setSubmissionData(data);
                 navigate(`/problem/${name}/submissions`);
             })
             .catch((err) => console.error(err));
@@ -58,7 +76,7 @@ const ProblemPage = ({
 
     useEffect(() => {
         axios
-            .get(`http://localhost:80/api/problem/${name}`)
+            .post(`http://localhost:80/api/problem/${name}`, { id: id })
             .then(({ data }) => {
                 setProblemDescriptionData(
                     data.main as unknown as SetStateAction<
@@ -96,6 +114,21 @@ const ProblemPage = ({
                     navigate("/sorry");
                 }
             });
+
+        if (!id || !name) {
+            console.log("id not found");
+            return;
+        }
+        axios
+            .post<{}, { data: Submission[] }, { id: string }>(
+                `http://localhost:80/api/problem/submissions/${name}`,
+                { id: id || "" }
+            )
+            .then(({ data }) => {
+                console.log(data);
+                setSubmissionData(data);
+            })
+            .catch((e) => console.log(e));
     }, []);
 
     useEffect(() => {
@@ -157,7 +190,8 @@ const ProblemPage = ({
                                 submissionData != undefined && (
                                     <Submissions
                                         data={{
-                                            submissions_list: [submissionData],
+                                            submissions_list: submissionData,
+                                            is_submitted: isSubmitted,
                                         }}
                                     />
                                 )}
@@ -173,9 +207,7 @@ const ProblemPage = ({
                     <div className="flex flex-col h-[calc(100%-16px)] min-w-[calc(20%-8px)] mr-[8px] flex-grow">
                         <div className="min-h-0 flex-grow min-w-full mr-[8px] mb-[8px] rounded-lg overflow-hidden bg-black border border-borders">
                             <div className="h-[50px] bg-black relative border-b border-borders">
-                                <div
-                                    className=" inline-block relative w-fit h-fit rounded-md ml-[13px] top-[8px] px-[6px] py-[6px] text-text_2 hover:text-white cursor-pointer text-[14px] transition select-none"
-                                >
+                                <div className=" inline-block relative w-fit h-fit rounded-md ml-[13px] top-[8px] px-[6px] py-[6px] text-text_2 hover:text-white cursor-pointer text-[14px] transition select-none">
                                     {currentLang}
                                 </div>
                             </div>

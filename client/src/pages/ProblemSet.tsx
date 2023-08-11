@@ -27,28 +27,6 @@ const ProblemSet = ({
             { text: "Shell", link_path: "/problemset" },
         ],
     };
-    // const problemListData = [
-    //     {
-    //         id: 1,
-    //         name: "two-sum",
-    //         difficulty: "easy",
-    //         like_count: 200,
-    //         dislike_count: 23,
-    //         status: "none",
-    //         is_starred: false,
-    //         acceptance_rate_count: 50.3,
-    //     },
-    //     {
-    //         id: 2,
-    //         name: "add-two-numbers",
-    //         difficulty: "medium",
-    //         like_count: 400,
-    //         dislike_count: 600,
-    //         status: "none",
-    //         is_starred: true,
-    //         acceptance_rate_count: 42.9,
-    //     },
-    // ];
 
     useEffect(() => {
         axios
@@ -72,10 +50,18 @@ const ProblemSet = ({
                 }
             });
 
-        axios.get("http://localhost:80/api/problem/all").then(({ data }) => {
-            setProblemListData(data);
-            console.log(data)
-        });
+        axios
+            .post("http://localhost:80/api/problem/all", { id: id })
+            .then(({ data }) => {
+                setProblemListData(data);
+                console.log(data);
+            });
+
+        axios
+            .post("http://localhost:80/api/problem/solved-or-attempted", {
+                id: id,
+            })
+            .then(({ data }) => {});
     }, []);
 
     return (
@@ -98,7 +84,9 @@ const ProblemSet = ({
                                     </div>
                                 </div>
                                 <div>
-                                    <ProblemList data={problemListData as any} />
+                                    <ProblemList
+                                        data={problemListData as any}
+                                    />
                                 </div>
                             </div>
                         </div>

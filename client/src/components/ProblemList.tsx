@@ -92,7 +92,8 @@ const ProblemList = ({ data }: { data: ProblemListData[] }) => {
                         Star
                     </div>
                 </div>
-                {data != undefined && data.length !== 0 &&
+                {data != undefined &&
+                    data.length !== 0 &&
                     statusRef.current != null &&
                     data.map(({ main }, index) => (
                         <div
@@ -132,13 +133,13 @@ const ProblemList = ({ data }: { data: ProblemListData[] }) => {
                                                 className="bi bi-check-circle status-color"
                                                 // style={{ color: "#22c55e" }}
                                             ></i>
-                                        ) : main.status === "none" ? (
-                                            <div className="border rounded-[99px] border-[#808080] w-[14px] h-[14px] mt-[13px] status-color"></div>
-                                        ) : (
+                                        ) : main.status === "attempted" ? (
                                             <i
                                                 className="bi bi-x-circle status-color "
                                                 // style={{ color: "#f97316" }}
                                             ></i>
+                                        ) : (
+                                            <div className="border rounded-[99px] border-[#808080] w-[14px] h-[14px] mt-[13px] status-color"></div>
                                         )}
                                     </div>
                                 </div>
