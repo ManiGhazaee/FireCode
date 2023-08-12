@@ -253,3 +253,45 @@ code {
     background-size: 400% 400%;
     background: linear-gradient(90deg, #f97316, #dc2626);
 }
+
+.setting-title {
+    font-weight: bold;
+    font-size: 24px;
+    border-bottom: 1px solid var(--borders-color);
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+.setting-p {
+    font-size: 14px;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.setting-button-red {
+    font-size: 14px;
+    width: fit-content;
+    padding: 4px 16px;
+    border: 1px solid rgb(220, 38, 38);
+    color: rgb(220, 38, 38);
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+.setting-button-red:hover {
+    color: white;
+    background-color: rgb(220, 38, 38);
+}
+.setting-button-red:active {
+    color: white;
+    background-color: rgb(170, 32, 32);
+}
+
+.setting-hr {
+    width: 100%;
+    border-color: var(--borders-color);
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

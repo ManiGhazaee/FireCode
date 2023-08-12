@@ -27,6 +27,7 @@ accounts.post<
 
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        const usernameRegex = /^[a-zA-Z0-9_-]{3,15}$/;
 
         if (!emailRegex.test(email)) {
             res.status(400).json({
@@ -40,6 +41,14 @@ accounts.post<
                 success: false,
                 message:
                     "Password is not valid. Password must contain at least one letter (uppercase or lowercase) and one digit, and must be at least 8 characters in length.",
+            });
+            return;
+        }
+        if (!usernameRegex.test(username)) {
+            res.status(400).json({
+                success: false,
+                message:
+                    "Username must be between 3 to 15 characters and can only contain letters, numbers, hyphens, and underscores.",
             });
             return;
         }
@@ -88,6 +97,8 @@ accounts.post<
         const id = userFromDb ? userFromDb.id.toString() : "none";
 
         const token = jwt.sign(user.username, process.env.ACCESS_TOKEN_SECRET!);
+
+        console.log("User '", user.username, "' signed up at ", new Date());
         res.status(201).json({
             token: token,
             id: id,
@@ -138,6 +149,8 @@ accounts.post<
                 user.username,
                 process.env.ACCESS_TOKEN_SECRET!
             );
+
+            console.log("User '", user.username, "' logged in at ", new Date());
             res.json({
                 token: token,
                 id: user.id,
@@ -145,11 +158,27 @@ accounts.post<
                 message: "Logged in successfully",
             });
         } else {
+            console.log(
+                "User '",
+                user.username,
+                "' failed login (incorrect password) at ",
+                new Date()
+            );
             res.json({ success: false, message: "Password incorrect" });
         }
     } catch (e) {
         console.log(e);
         res.status(500).json({ success: false, message: "Error" });
+    }
+});
+
+accounts.post("/delete/:id", authenticateToken, async (req, res) => {
+    try {
+        const { id } = req.params;
+        await UserModel.findByIdAndDelete(id);
+        res.json({ success: true, message: "Account deleted successfully" });
+    } catch (e) {
+        res.json({ success: false, message: e });
     }
 });
 

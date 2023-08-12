@@ -9,6 +9,7 @@ import LoginPage from "./pages/LoginPage";
 import ErrorPage from "./pages/ErrorPage";
 import { stringify } from "querystring";
 import ProfilePage from "./pages/ProfilePage";
+import SettingPage from "./pages/SettingPage";
 
 export const TOKEN_STORAGE_KEY = "authToken";
 export const ID_STORAGE_KEY = "id";
@@ -137,6 +138,10 @@ function App() {
                                 }}
                             />
                         }
+                    />
+                    <Route
+                        path="/settings"
+                        element={<SettingPage token={token} id={id} />}
                     />
                     <Route
                         path="/accounts/:name"

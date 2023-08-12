@@ -56,12 +56,6 @@ const ProblemSet = ({
                 setProblemListData(data);
                 console.log(data);
             });
-
-        axios
-            .post("http://localhost:80/api/problem/solved-or-attempted", {
-                id: id,
-            })
-            .then(({ data }) => {});
     }, []);
 
     return (

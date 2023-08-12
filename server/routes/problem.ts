@@ -21,7 +21,6 @@ problem.post("/all", async (req, res) => {
             solved: user?.problems_solved,
             attempted: user?.problems_attempted,
         };
-        console.log(sOrA);
 
         let allProblemsArray: DProblem[] = JSON.parse(
             JSON.stringify(allProblems)
@@ -38,35 +37,14 @@ problem.post("/all", async (req, res) => {
             for (let i = 0; i < allProblemsArray.length; i++) {
                 if (sOrA.solved.includes(allProblemsArray[i].main.name)) {
                     allProblemsArray[i].main.status = "solved";
-                    console.log("first");
                 }
             }
         }
-
-        console.log(allProblemsArray);
 
         res.json(allProblemsArray);
     } catch (e) {
         console.log(e);
         res.json({ success: false, message: "Internal Server Error" });
-    }
-});
-
-problem.post<
-    {},
-    { solved: string[] | undefined; attempted: string[] | undefined },
-    { id: string }
->("/solved-or-attempted", async (req, res) => {
-    const { id } = req.body;
-    try {
-        const user = await UserModel.findById(id);
-
-        res.json({
-            solved: user?.problems_solved,
-            attempted: user?.problems_attempted,
-        });
-    } catch (e) {
-        console.log(e);
     }
 });
 

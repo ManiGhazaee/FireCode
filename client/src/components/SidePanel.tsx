@@ -1,7 +1,8 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ConfirmModal from "./ConfirmModal";
-import { TOKEN_STORAGE_KEY, ID_STORAGE_KEY } from '../App';
+import { TOKEN_STORAGE_KEY, ID_STORAGE_KEY } from "../App";
+import { deleteTokenAndId } from "../ts/utils/utils";
 
 const SidePanelItem = ({
     text,
@@ -36,8 +37,7 @@ const SidePanel = ({
 
     const navigate = useNavigate();
     const onLogout = () => {
-        localStorage.removeItem(TOKEN_STORAGE_KEY);
-        localStorage.removeItem(ID_STORAGE_KEY);
+        deleteTokenAndId(TOKEN_STORAGE_KEY, ID_STORAGE_KEY);
         navigate("/");
         window.location.reload();
     };
@@ -71,6 +71,10 @@ const SidePanel = ({
                 <SidePanelItem
                     text="Your profile"
                     to={`/accounts/${data.username}`}
+                />
+                <SidePanelItem
+                    text="Settings"
+                    to={`/settings`}
                 />
 
                 <hr className="border-borders w-[88%] mx-auto" />
