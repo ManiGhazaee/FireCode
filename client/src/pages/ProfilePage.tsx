@@ -84,26 +84,26 @@ const ProfilePage = ({
             )}
             {user != null ? (
                 <>
-                    <div className="w-[calc(100%-72px)] h-[160px] bg-black mx-auto mt-[8px] rounded-lg border border-borders">
-                        <div id="main" className="flex flex-row h-fit">
+                    <div className="w-[calc(100%-72px)] h-[260px] sm:h-[160px] bg-black mx-auto mt-[8px] rounded-lg border border-borders">
+                        <div id="main" className="flex flex-col sm:flex-row h-fit">
                             <div id="porfile-pic">
-                                <div className="w-[80px] h-[80px] mt-[40px] border border-borders ml-[50px] rounded-lg"></div>
+                                <div className="w-[80px] h-[80px] mt-[40px] border border-borders sm:ml-[50px] mx-auto rounded-lg"></div>
                             </div>
-                            <div className="flex flex-col w-[280px]">
+                            <div className="flex flex-col w-[280px] text-center sm:text-left mx-auto sm:ml-0">
                                 <div
                                     id="username"
-                                    className="text-[28px] font-bold mt-[40px] text-white ml-[30px]"
+                                    className="text-[28px] font-bold mt-[20px] sm:mt-[40px] text-white sm:ml-[30px] ml-0"
                                 >
                                     {user.username}
                                 </div>
                                 <div
                                     id="username"
-                                    className="text-[18px] mt-[6px] text-text_2 ml-[30px]"
+                                    className="text-[18px] mt-[6px] text-text_2 sm:ml-[30px] ml-0"
                                 >
                                     Rank: {user.rank}
                                 </div>
                             </div>
-                            <div className=" flex flex-row absolute right-[90px]">
+                            <div className="md:flex hidden flex-row absolute right-[90px]">
                                 <div className="w-[80px] h-[80px] mt-[40px] border border-borders ml-[20px] rounded-lg relative">
                                     <i className="bi bi-x-lg text-borders absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2"></i>
                                 </div>
@@ -117,8 +117,8 @@ const ProfilePage = ({
                         </div>
                     </div>
 
-                    <div className="flex flex-row w-[calc(100%-72px)] mx-auto justify-between">
-                        <div className="w-[calc(50%-4px)] h-[240px] bg-black mt-[8px] rounded-lg border border-borders">
+                    <div className="flex lg:flex-row sm:flex-col flex-col w-[calc(100%-72px)] mx-auto justify-between">
+                        <div className="lg:w-[calc(40%-4px)] sm:w-full h-[240px] bg-black mt-[8px] rounded-lg border border-borders">
                             <div className="text-[18px] font-bold mt-[40px] text-white ml-[30px]">
                                 Community Stats
                             </div>
@@ -135,8 +135,8 @@ const ProfilePage = ({
                                 {user.reputation_count}
                             </div>
                         </div>
-                        <div className="w-[calc(50%-4px)] h-[240px] bg-black mt-[8px] rounded-lg border border-borders relative">
-                            <div className="flex flex-row justify-between">
+                        <div className="lg:w-[calc(60%-4px)] sm:w-full sm:h-[240px] h-[414px] bg-black mt-[8px] rounded-lg border border-borders relative">
+                            <div className="flex sm:flex-row flex-col justify-between">
                                 <div>
                                     <div className="text-[18px] font-bold mt-[40px] text-white ml-[30px]">
                                         Solved Problems
@@ -148,7 +148,7 @@ const ProfilePage = ({
                                         </span>
                                     </div>
                                 </div>
-                                <div className="flex flex-col relative mr-[50px] mt-[40px]">
+                                <div className="flex flex-col relative mr-[50px] mt-[40px] w-[200px] sm:w-[300px] ml-[30px] sm:ml-0">
                                     <div className="text-[14px] relative">
                                         <div className="flex flex-row justify-between">
                                             <div className="mb-[8px] text-green-500">
@@ -161,7 +161,7 @@ const ProfilePage = ({
                                             </div>
                                         </div>
                                         <div
-                                            className={`w-[300px] h-[4px] bg-borders mb-[16px] relative after:absolute ${
+                                            className={`sm:w-[300px] w-[200px] h-[4px] bg-borders mb-[16px] relative after:absolute ${
                                                 "after:w-[" +
                                                 ((eAll || 0) / (eSolved || 1)) *
                                                     100 +
@@ -181,7 +181,7 @@ const ProfilePage = ({
                                             </div>
                                         </div>
                                         <div
-                                            className={`w-[300px] h-[4px] bg-borders mb-[16px] relative after:absolute ${
+                                            className={`sm:w-[300px] w-[200px] h-[4px] bg-borders mb-[16px] relative after:absolute ${
                                                 "after:w-[" +
                                                 ((mAll || 0) / (mSolved || 1)) *
                                                     100 +
@@ -201,7 +201,7 @@ const ProfilePage = ({
                                             </div>
                                         </div>
                                         <div
-                                            className={`w-[300px] h-[4px] bg-borders mb-[16px] relative after:absolute ${
+                                            className={`sm:w-[300px] w-[200px] h-[4px] bg-borders mb-[16px] relative after:absolute ${
                                                 "after:w-[" +
                                                 ((hAll || 0) / (hSolved || 1)) *
                                                     100 +

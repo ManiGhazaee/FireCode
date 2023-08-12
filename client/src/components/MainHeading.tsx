@@ -41,18 +41,27 @@ const MainHeading = ({ data }: { data?: MainHeadingData }) => {
                     data.items.map((elem) => (
                         <Link
                             to={elem.link_path}
-                            className="mt-[15px] text-[14px] h-fit p-[5px] text-[#808080] hover:text-white transition"
+                            className="mt-[15px] hidden md:inline-block text-[14px] h-fit p-[5px] text-[#808080] hover:text-white transition"
                         >
                             <div id={elem.text}>{elem.text}</div>
                         </Link>
                     ))}
                 {data?.status === "loggedin" || data?.status == undefined ? (
                     <div className="fixed flex flex-row right-[36px] items-center h-[60px]">
+                        <div className="inline-block p-[5px] text-[14px] text-[#808080] md:hidden">
+                            <div className="group w-[32px] h-[32px] border border-borders rounded-[99px] relative hover:bg-[#222] cursor-pointer">
+                                <i className="bi bi-three-dots-vertical absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 group-hover:text-white"></i>
+                            </div>
+                        </div>
+
                         <div
                             id="notification"
                             className="inline-block p-[5px] text-[14px] text-[#808080] "
                         >
-                            <Notification display={notifDisplayState} displayFn={setNotifDisplayState}/>
+                            <Notification
+                                display={notifDisplayState}
+                                displayFn={setNotifDisplayState}
+                            />
                         </div>
                         <div
                             id="profile-picture"

@@ -17,7 +17,7 @@ const LoginPage = ({
     const [message, setMessage] = useState("");
     const navigate = useNavigate();
 
-    const handleLogin= () => {
+    const handleLogin = () => {
         try {
             axios
                 .post("http://localhost:80/api/accounts/login", {
@@ -50,15 +50,17 @@ const LoginPage = ({
     };
     return (
         <>
-            <div
-                id="logo-cont"
-                className="inline-block relative text-[24px] left-1/2 -translate-x-1/2 font-bold italic mx-auto mt-[12px]"
-            >
-                <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-600 px-[1px]">
-                    Fire
-                </span>
-                <span>Code</span>
-            </div>
+            <Link to={"/"}>
+                <div
+                    id="logo-cont"
+                    className="inline-block relative text-[24px] left-1/2 -translate-x-1/2 font-bold italic mx-auto mt-[12px]"
+                >
+                    <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-600 px-[1px]">
+                        Fire
+                    </span>
+                    <span>Code</span>
+                </div>
+            </Link>
             <div className="min-h-fit w-[300px] mx-auto text-[14px]">
                 <div className="relative bg-black shadow-md rounded px-8 pt-6 pb-8 mb-4">
                     <h2 className="text-[34px] font-bold mb-[30px] text-center mt-[60px]">

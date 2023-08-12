@@ -72,10 +72,8 @@ const SidePanel = ({
                     text="Your profile"
                     to={`/accounts/${data.username}`}
                 />
-                <SidePanelItem
-                    text="Settings"
-                    to={`/settings`}
-                />
+                <SidePanelItem text="Problem list" to={`/problemset`} />
+                <SidePanelItem text="Settings" to={`/settings`} />
 
                 <hr className="border-borders w-[88%] mx-auto" />
                 <div
