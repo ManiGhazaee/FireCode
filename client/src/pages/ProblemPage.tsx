@@ -21,6 +21,7 @@ const ProblemPage = ({
     id: string | null;
 }) => {
     const [username, setUsername] = useState<string>("");
+    const [initCode, setInitCode] = useState<string>("");
     const [code, setCode] = useState<string>("");
     const explanationRef = useRef<HTMLDivElement>(null);
     const sliderRef = useRef<HTMLDivElement>(null);
@@ -87,7 +88,7 @@ const ProblemPage = ({
                     "code_body" in data.main &&
                     "javascript" in data.main.code_body
                 ) {
-                    setCode(
+                    setInitCode(
                         data.main.code_body.javascript as unknown as string
                     );
                 }
@@ -126,6 +127,9 @@ const ProblemPage = ({
             )
             .then(({ data }) => {
                 console.log(data);
+                if (data.length !== 0) {
+                    setCode(data[0].code_body);
+                }
                 setSubmissionData(data);
             })
             .catch((e) => console.log(e));
@@ -212,7 +216,7 @@ const ProblemPage = ({
                                 </div>
                             </div>
                             <ReactCodeMirror
-                                value={code}
+                                value={code === "" ? initCode : code}
                                 extensions={[loadLanguage("javascript")!]}
                                 theme={tokyoNight}
                                 onChange={(value) => {
