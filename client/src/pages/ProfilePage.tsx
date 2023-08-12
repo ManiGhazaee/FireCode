@@ -12,7 +12,7 @@ const ProfilePage = ({
 }) => {
     const [username, setUsername] = useState<string>("");
     const [verified, setVerified] = useState<boolean>(false);
-    const [user, setUser] = useState<User>();
+    const [user, setUser] = useState<PublicUser>();
     const [verifiedCertain, setVerifiedCertain] = useState<boolean>(false);
     const { name } = useParams();
 
@@ -47,10 +47,18 @@ const ProfilePage = ({
                 }
             });
         axios
-            .get<{}, { data: User }>(`http://localhost:80/api/accounts/${name}`)
+            .get<{}, { data: PublicUser }>(
+                `http://localhost:80/api/accounts/${name}`
+            )
             .then(({ data }) => {
                 setUsername(data.username);
                 setUser(data);
+                setEAll(data.easy_problems_count);
+                setMAll(data.medium_problems_count);
+                setHALL(data.hard_problems_count);
+                setESolved(data.problems_solved_easy);
+                setMSolved(data.problems_solved_medium);
+                setHSolved(data.problems_solved_hard);
                 console.log(data);
             })
             .catch((e: AxiosError) => {
@@ -85,7 +93,10 @@ const ProfilePage = ({
             {user != null ? (
                 <>
                     <div className="w-[calc(100%-72px)] h-[260px] sm:h-[160px] bg-black mx-auto mt-[8px] rounded-lg border border-borders">
-                        <div id="main" className="flex flex-col sm:flex-row h-fit">
+                        <div
+                            id="main"
+                            className="flex flex-col sm:flex-row h-fit"
+                        >
                             <div id="porfile-pic">
                                 <div className="w-[80px] h-[80px] mt-[40px] border border-borders sm:ml-[50px] mx-auto rounded-lg"></div>
                             </div>
@@ -123,15 +134,15 @@ const ProfilePage = ({
                                 Community Stats
                             </div>
                             <div className="mt-[20px] text-[14px] ml-[30px]">
-                                <span className="font-bold">Views:</span>{" "}
+                                <span className="text-text_2">Views:</span>{" "}
                                 {user.views}
                             </div>
                             <div className="mt-[20px] text-[14px] ml-[30px]">
-                                <span className="font-bold">Solutions:</span>{" "}
+                                <span className="text-text_2">Solutions:</span>{" "}
                                 {user.solution_count}
                             </div>
                             <div className="mt-[20px] text-[14px] ml-[30px] mb-[40px]">
-                                <span className="font-bold">Reputation:</span>{" "}
+                                <span className="text-text_2">Reputation:</span>{" "}
                                 {user.reputation_count}
                             </div>
                         </div>
@@ -142,9 +153,12 @@ const ProfilePage = ({
                                         Solved Problems
                                     </div>
                                     <div className="text-[58px] font-bold mt-[36px] text-white ml-[30px]">
-                                        {user.problems_solved_count || "999"}{" "}
+                                        {user.problems_solved_count}{" "}
                                         <span className="text-text_2 text-[14px]">
-                                            Solved
+                                            {"/ "}
+                                            {user.easy_problems_count +
+                                                user.medium_problems_count +
+                                                user.hard_problems_count}
                                         </span>
                                     </div>
                                 </div>
@@ -154,19 +168,14 @@ const ProfilePage = ({
                                             <div className="mb-[8px] text-green-500">
                                                 Easy
                                             </div>
-                                            <div className="mb-[8px] text-white">
+                                            <div className="mb-[8px] text-green-500">
                                                 {eSolved}
                                                 {" / "}
                                                 {eAll}
                                             </div>
                                         </div>
                                         <div
-                                            className={`sm:w-[300px] w-[200px] h-[4px] bg-borders mb-[16px] relative after:absolute ${
-                                                "after:w-[" +
-                                                ((eAll || 0) / (eSolved || 1)) *
-                                                    100 +
-                                                "%]"
-                                            }  after:h-[4px] after:bg-orange-500`}
+                                            className={`sm:w-[300px] w-[200px] h-[4px] bg-borders mb-[16px] relative after:absolute easy-line after:h-[4px] after:bg-green-500`}
                                         ></div>
                                     </div>
                                     <div className="text-[14px] relative">
@@ -174,19 +183,14 @@ const ProfilePage = ({
                                             <div className="mb-[8px] text-orange-500">
                                                 Medium
                                             </div>
-                                            <div className="mb-[8px] text-white">
+                                            <div className="mb-[8px] text-orange-500">
                                                 {mSolved}
                                                 {" / "}
                                                 {mAll}
                                             </div>
                                         </div>
                                         <div
-                                            className={`sm:w-[300px] w-[200px] h-[4px] bg-borders mb-[16px] relative after:absolute ${
-                                                "after:w-[" +
-                                                ((mAll || 0) / (mSolved || 1)) *
-                                                    100 +
-                                                "%]"
-                                            }  after:h-[4px] after:bg-orange-500`}
+                                            className={`sm:w-[300px] w-[200px] h-[4px] bg-borders mb-[16px] relative after:absolute medium-line after:h-[4px] after:bg-orange-500`}
                                         ></div>
                                     </div>
                                     <div className="text-[14px] relative">
@@ -194,20 +198,29 @@ const ProfilePage = ({
                                             <div className="mb-[8px] text-red-600">
                                                 Hard
                                             </div>
-                                            <div className="mb-[8px] text-white">
+                                            <div className="mb-[8px] text-red-600">
                                                 {hSolved}
                                                 {" / "}
                                                 {hAll}
                                             </div>
                                         </div>
                                         <div
-                                            className={`sm:w-[300px] w-[200px] h-[4px] bg-borders mb-[16px] relative after:absolute ${
-                                                "after:w-[" +
-                                                ((hAll || 0) / (hSolved || 1)) *
-                                                    100 +
-                                                "%]"
-                                            }  after:h-[4px] after:bg-orange-500`}
+                                            className={`sm:w-[300px] w-[200px] h-[4px] bg-borders mb-[16px] relative after:absolute hard-line after:h-[4px] after:bg-red-500`}
                                         ></div>
+                                        <style>
+                                            {`.easy-line::after { width: ${
+                                                ((eSolved || 0) / (eAll || 1)) *
+                                                100
+                                            }%; }`}
+                                            {`.medium-line::after { width: ${
+                                                ((mSolved || 0) / (mAll || 1)) *
+                                                100
+                                            }%; }`}
+                                            {`.hard-line::after { width: ${
+                                                ((hSolved || 0) / (hAll || 1)) *
+                                                100
+                                            }%; }`}
+                                        </style>
                                     </div>
                                 </div>
                             </div>

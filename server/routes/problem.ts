@@ -113,6 +113,7 @@ problem.post<
                         if (submission[0].status === "Accepted") {
                             if (!user.problems_solved.includes(problem_name)) {
                                 user.problems_solved.push(problem_name);
+                                user.problems_solved_count += 1;
                             }
                         } else {
                             if (
