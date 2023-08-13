@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ProblemPage from "./pages/ProblemPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import RouterLayout from "./layout/RouterLayout";
 import ProblemSet from "./pages/ProblemSet";
 import LandingPage from "./pages/LandingPage";
 import SignupPage from "./pages/SignupPage";
@@ -41,7 +40,6 @@ function App() {
 
     return (
         <div className="App">
-            <RouterLayout />
             <BrowserRouter>
                 <Routes>
                     <Route
@@ -148,7 +146,7 @@ function App() {
                         path="/accounts/:name"
                         element={<ProfilePage token={token} id={id} />}
                     />
-                    
+
                     <Route
                         path="*"
                         element={
