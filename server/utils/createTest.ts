@@ -101,12 +101,12 @@ export function writeTestFile(
         });
     }
     let data =
-        "try {" +
+        "(function x() { try {" +
         codeBody +
         handleTestFunction +
-        `try { console.log(handleTests(${JSON.stringify(
+        `try { return (handleTests(${JSON.stringify(
             testCases
-        )}, ${functionName})); } catch (e) { console.log(\`{ "status":"Runtime Error",
+        )}, ${functionName})); } catch (e) { return (\`{ "status":"Runtime Error",
         "date":"${new Date()}",
         "runtime": 0,
         "error_message": "\${e}",
@@ -114,7 +114,7 @@ export function writeTestFile(
         "test_case":"undefined",
         "expected_output":"undefined",
         "user_output":"undefined"
-        }\`); }} catch (e) { console.log(\`{ "status":"Runtime Error",
+        }\`); }} catch (e) { return (\`{ "status":"Runtime Error",
         "date":"${new Date()}",
         "runtime": 0,
         "error_message": "\${e}",
@@ -122,29 +122,28 @@ export function writeTestFile(
         "test_case":"undefined",
         "expected_output":"undefined",
         "user_output":"undefined"
-        }\`); }`;
+        }\`); }})()`;
 
-    fs.writeFile("./dist/test.js", data, (err) => {
-        console.error(err);
-    });
+    // console.log(eval(data));
 
     return new Promise((resolve, reject) => {
-        cp.exec("node ./dist/test.js", (error, stdout, stderr) => {
-            if (error) {
-                return reject({
-                    stdout: error,
-                    stdout_string: stdout,
-                    stderr: stderr,
-                    code_body: codeBody,
-                });
-            }
+        try {
+            const stdout = eval(data);
+            console.log(stdout);
             resolve({
                 stdout: JSON.parse(stdout),
                 stdout_string: stdout,
-                stderr: stderr,
+                stderr: "",
                 code_body: codeBody,
             });
-        });
+        } catch (error) {
+            return reject({
+                stdout: error,
+                stdout_string: "",
+                stderr: "",
+                code_body: codeBody,
+            });
+        }
     });
 }
 

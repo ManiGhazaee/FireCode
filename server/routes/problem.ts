@@ -86,6 +86,7 @@ problem.post<
             writeTestFile(req.body.code, problem.test, problem.function_name)
                 .then(async (resolve) => {
                     if (resolve.stdout != undefined) {
+                        console.log(resolve.stdout);
                         let submission: Submission[] = [
                             {
                                 problem_name: problem_name,
