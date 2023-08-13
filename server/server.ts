@@ -1,8 +1,6 @@
 require("dotenv").config();
 import express from "express";
 import cors from "cors";
-// import * as two_sum from "./constants/problems/two-sum.json";
-// import { writeTestFile } from "./utils/createTest";
 import router from "./routes/index";
 import mongoose from "mongoose";
 
@@ -19,7 +17,7 @@ db.once("open", () => {
 });
 
 const app: express.Application = express();
-const port = 80;
+const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
@@ -27,5 +25,5 @@ app.use(express.json());
 app.use("/api", router);
 
 app.listen(port, () => {
-    console.log(`server listening at http://localhost:${port}`);
+    console.log(`server listening at port: ${port}`);
 });
