@@ -82,7 +82,6 @@ const ProblemPage = ({
                 setIsSubmitLoading(false);
             });
     };
-    console.log(submissionData);
 
     useEffect(() => {
         axios
@@ -233,7 +232,7 @@ const ProblemPage = ({
                                 </div>
                             </div>
                             <ReactCodeMirror
-                                value={code === "" ? initCode : code}
+                                value={code === "" || code == null ? initCode || "" : code || ""}
                                 extensions={[loadLanguage("javascript")!]}
                                 theme={tokyoNight}
                                 onChange={(value) => {

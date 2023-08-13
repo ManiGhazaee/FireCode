@@ -124,12 +124,12 @@ export function writeTestFile(
         "user_output":"undefined"
         }\`); }`;
 
-    fs.writeFile("./test/test.js", data, (err) => {
+    fs.writeFile("./dist/test.js", data, (err) => {
         console.error(err);
     });
 
     return new Promise((resolve, reject) => {
-        cp.exec("node ./test/test.js", (error, stdout, stderr) => {
+        cp.exec("node ./dist/test.js", (error, stdout, stderr) => {
             if (error) {
                 return reject({
                     stdout: error,

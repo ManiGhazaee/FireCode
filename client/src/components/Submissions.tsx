@@ -24,7 +24,6 @@ export interface Submission {
 }
 
 const Submissions = ({ data }: { data: SubmissionsData }) => {
-    console.log(data);
     if (!data || data.submissions_list.length === 0)
         return (
             <div className="text-[14px] text-text_2 mx-auto text-center mt-[50px]">No submissions found</div>
