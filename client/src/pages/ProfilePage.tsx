@@ -60,7 +60,6 @@ const ProfilePage = ({
                 setESolved(data.problems_solved_easy);
                 setMSolved(data.problems_solved_medium);
                 setHSolved(data.problems_solved_hard);
-                console.log(data);
             })
             .catch((e: AxiosError) => {
                 console.log(e);

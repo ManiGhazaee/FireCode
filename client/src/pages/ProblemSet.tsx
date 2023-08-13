@@ -55,39 +55,37 @@ const ProblemSet = ({
             .post(`${API_URL}/api/problem/all`, { id: id })
             .then(({ data }) => {
                 setProblemListData(data);
-                console.log(data);
             });
     }, []);
 
     return (
         <>
-            {verified && (
-                <>
-                    <MainHeading data={{ username: username || "" }} />
-                    <div className="h-[calc(100vh-60px)] overflow-hidden bg-black">
-                        <div
-                            id="cont"
-                            className="relative flex flex-row h-[calc(100vh-60px)] w-full mt-[8px] "
-                        >
-                            <div
-                                id="explanation"
-                                className="h-[calc(100%-16px)] bg-black border border-borders ml-[8px] rounded-lg w-[calc(100%-16px)] overflow-hidden"
-                            >
-                                <div className="w-full bg-black border-b border-borders ">
-                                    <div className="ml-[9px]">
-                                        <CustomNavbar data={customNavData} />
-                                    </div>
-                                </div>
-                                <div>
-                                    <ProblemList
-                                        data={problemListData as any}
-                                    />
-                                </div>
+            {verified ? (
+                <MainHeading data={{ username: username }} />
+            ) : (
+                <MainHeading data={{ status: "none" }} />
+            )}
+
+            <div className="h-[calc(100vh-60px)] overflow-hidden bg-black">
+                <div
+                    id="cont"
+                    className="relative flex flex-row h-[calc(100vh-60px)] w-full mt-[8px] "
+                >
+                    <div
+                        id="explanation"
+                        className="h-[calc(100%-16px)] bg-black border border-borders ml-[8px] rounded-lg w-[calc(100%-16px)] overflow-hidden"
+                    >
+                        <div className="w-full bg-black border-b border-borders ">
+                            <div className="ml-[9px]">
+                                <CustomNavbar data={customNavData} />
                             </div>
                         </div>
+                        <div>
+                            <ProblemList data={problemListData as any} />
+                        </div>
                     </div>
-                </>
-            )}
+                </div>
+            </div>
         </>
     );
 };

@@ -11,6 +11,7 @@ import Editorial from "../components/Editorial";
 import MainHeading from "../components/MainHeading";
 import Submissions, { Submission } from "../components/Submissions";
 import { API_URL } from "../App";
+import Loading from "../components/Loading";
 
 const ProblemPage = ({
     data,
@@ -34,6 +35,8 @@ const ProblemPage = ({
             explanationRef.current.style.width = newWidth + "px";
     };
 
+    const [isSubmitLoading, setIsSubmitLoading] = useState<boolean>(false);
+
     const [editorial, setEditorial] = useState<string>("");
 
     const activeNavOption = data?.activeNavOption || "description";
@@ -49,8 +52,10 @@ const ProblemPage = ({
     const { name } = useParams();
 
     const submitCode = () => {
+        setIsSubmitLoading(true);
         if (!id || !name) {
             console.log("id not found");
+            setIsSubmitLoading(false);
             return;
         }
 
@@ -68,11 +73,14 @@ const ProblemPage = ({
                 problem_name,
             })
             .then(({ data }) => {
-                console.log(data);
                 setSubmissionData(data);
                 navigate(`/problem/${name}/submissions`);
+                setIsSubmitLoading(false);
             })
-            .catch((err) => console.error(err));
+            .catch((err) => {
+                console.error(err);
+                setIsSubmitLoading(false);
+            });
     };
     console.log(submissionData);
 
@@ -127,7 +135,6 @@ const ProblemPage = ({
                 { id: id || "" }
             )
             .then(({ data }) => {
-                console.log(data);
                 if (data.length !== 0) {
                     setCode(data[0].code_body);
                 }
@@ -182,14 +189,23 @@ const ProblemPage = ({
                         <div className="description-body relative w-full h-[calc(100%-50px)] overflow-y-auto bg-black">
                             {problemDescriptionData != undefined &&
                             activeNavOption === "description" ? (
-                                <ProblemDescription
-                                    data={problemDescriptionData}
-                                />
+                                <>
+                                    <ProblemDescription
+                                        data={problemDescriptionData}
+                                    />
+                                </>
+                            ) : activeNavOption === "description" ? (
+                                <Loading For="pDescription" />
                             ) : (
                                 <></>
                             )}
-                            {activeNavOption === "editorial" && (
+                            {activeNavOption === "editorial" &&
+                            editorial != "" ? (
                                 <Editorial data={editorial} />
+                            ) : activeNavOption === "editorial" ? (
+                                <Loading For="pEditorial" />
+                            ) : (
+                                <></>
                             )}
                             {activeNavOption === "submissions" &&
                                 submissionData != undefined && (
@@ -238,10 +254,18 @@ const ProblemPage = ({
                                 <s>Run</s>
                             </div>
                             <div
-                                className="w-fit h-fit rounded mr-[11px] px-[20px] py-[4px] hover:bg-green-500 cursor-pointer hover:text-black text-green-500 bg-black text-[14px] active:border-green-800 active:bg-green-800 border-green-500 font-bold right-0 transition select-none"
+                                className="w-fit h-fit rounded mr-[11px] px-[20px] py-[4px] hover:bg-green-500 cursor-pointer hover:text-black text-black bg-green-500 text-[14px] active:border-green-800 active:bg-green-800 border-green-500 font-bold right-0 transition select-none"
                                 onClick={submitCode}
                             >
-                                Submit
+                                {isSubmitLoading ? (
+                                    <div className="w-full block h-[21px]">
+                                        <div className="">
+                                            <Loading />
+                                        </div>
+                                    </div>
+                                ) : (
+                                    "Submit"
+                                )}
                             </div>
                         </div>
                     </div>

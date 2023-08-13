@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { kebabToSpacedPascal } from "../ts/utils/string";
+import Loading from "./Loading";
 
 export interface ProblemListData {
     main: {
@@ -93,8 +94,8 @@ const ProblemList = ({ data }: { data: ProblemListData[] }) => {
                     </div>
                 </div>
                 {data != undefined &&
-                    data.length !== 0 &&
-                    statusRef.current != null &&
+                data.length !== 0 &&
+                statusRef.current != null ? (
                     data.map(({ main }, index) => (
                         <div
                             className={`h-[40px] w-full text-[14px] hover:text-black duration-150 ${
@@ -222,7 +223,10 @@ const ProblemList = ({ data }: { data: ProblemListData[] }) => {
                                 </div>
                             </Link>
                         </div>
-                    ))}
+                    ))
+                ) : (
+                    <Loading For="pList" />
+                )}
             </div>
         </div>
     );

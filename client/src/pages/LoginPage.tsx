@@ -2,6 +2,7 @@ import axios, { AxiosError } from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { API_URL } from "../App";
+import Loading from "../components/Loading";
 
 const LoginPage = ({
     Data,
@@ -16,9 +17,11 @@ const LoginPage = ({
     const [usernameOrEmail, setUsernameOrEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
+    const [isLoading, setisLoading] = useState<boolean>(false);
     const navigate = useNavigate();
 
     const handleLogin = () => {
+        setisLoading(true);
         try {
             axios
                 .post(`${API_URL}/api/accounts/login`, {
@@ -30,12 +33,12 @@ const LoginPage = ({
                         setMessage(data.message);
                         return;
                     }
-                    console.log("User signed up:", data);
                     Data.setTokenFunction(data.token);
                     Data.setIdFunction(data.id);
                     navigate("/problemset");
                 })
                 .catch((e: AxiosError) => {
+                    setisLoading(false);
                     setMessage(
                         (
                             e.response?.data as {
@@ -93,7 +96,15 @@ const LoginPage = ({
                             type="button"
                             onClick={handleLogin}
                         >
-                            Login
+                            {isLoading ? (
+                                <div className="w-full block h-[21px]">
+                                    <div className="absolute left-1/2 -translate-x-1/2">
+                                        <Loading />
+                                    </div>
+                                </div>
+                            ) : (
+                                "Login"
+                            )}
                         </button>
                     </div>
                     <div className="flex items-center justify-between mt-[20px]">
