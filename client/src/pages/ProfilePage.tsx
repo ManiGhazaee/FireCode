@@ -2,6 +2,7 @@ import axios, { AxiosError } from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import MainHeading from "../components/MainHeading";
+import { API_URL } from "../App";
 
 const ProfilePage = ({
     token,
@@ -26,7 +27,7 @@ const ProfilePage = ({
 
     useEffect(() => {
         axios
-            .get(`http://localhost:80/api/accounts/id/${id}`, {
+            .get(`${API_URL}/api/accounts/id/${id}`, {
                 headers: {
                     Authorization: token,
                 },
@@ -48,7 +49,7 @@ const ProfilePage = ({
             });
         axios
             .get<{}, { data: PublicUser }>(
-                `http://localhost:80/api/accounts/${name}`
+                `${API_URL}/api/accounts/${name}`
             )
             .then(({ data }) => {
                 setUsername(data.username);

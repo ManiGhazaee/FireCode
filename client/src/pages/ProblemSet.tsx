@@ -6,6 +6,7 @@ import MainHeading from "../components/MainHeading";
 import { useEffect } from "react";
 import axios, { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../App";
 
 const ProblemSet = ({
     token,
@@ -30,7 +31,7 @@ const ProblemSet = ({
 
     useEffect(() => {
         axios
-            .get(`http://localhost:80/api/accounts/id/${id}`, {
+            .get(`${API_URL}/api/accounts/id/${id}`, {
                 headers: {
                     Authorization: token,
                 },
@@ -51,7 +52,7 @@ const ProblemSet = ({
             });
 
         axios
-            .post("http://localhost:80/api/problem/all", { id: id })
+            .post(`${API_URL}/api/problem/all`, { id: id })
             .then(({ data }) => {
                 setProblemListData(data);
                 console.log(data);

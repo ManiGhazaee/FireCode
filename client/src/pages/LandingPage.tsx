@@ -3,6 +3,7 @@ import { TypeAnimation } from "react-type-animation";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios, { AxiosError } from "axios";
+import { API_URL } from "../App";
 
 const LandingPage = ({
     token,
@@ -16,7 +17,7 @@ const LandingPage = ({
     const [verifiedCertain, setVerifiedCertain] = useState<boolean>(false);
     useEffect(() => {
         axios
-            .get(`http://localhost:80/api/accounts/id/${id}`, {
+            .get(`${API_URL}/api/accounts/id/${id}`, {
                 headers: {
                     Authorization: token,
                 },

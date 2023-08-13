@@ -28,7 +28,8 @@
         "express": "^4.18.2",
         "jsonwebtoken": "^9.0.1",
         "mongodb": "^5.7.0",
-        "mongoose": "^7.4.2"
+        "mongoose": "^7.4.2",
+        "typescript": "^5.1.6"
     },
     "prettier": {
         "tabWidth": 4

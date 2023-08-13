@@ -1,6 +1,7 @@
 import axios, { AxiosError } from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { API_URL } from "../App";
 
 const LoginPage = ({
     Data,
@@ -20,7 +21,7 @@ const LoginPage = ({
     const handleLogin = () => {
         try {
             axios
-                .post("http://localhost:80/api/accounts/login", {
+                .post(`${API_URL}/api/accounts/login`, {
                     username_or_email: usernameOrEmail,
                     password: password,
                 })

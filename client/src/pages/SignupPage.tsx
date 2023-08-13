@@ -1,6 +1,7 @@
 import axios, { AxiosError } from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { API_URL } from "../App";
 
 const SignupPage = ({
     Data,
@@ -28,7 +29,7 @@ const SignupPage = ({
                 return;
             }
             axios
-                .post("http://localhost:80/api/accounts/signup", {
+                .post(`${API_URL}/api/accounts/signup`, {
                     username: username,
                     email: email,
                     password: password,

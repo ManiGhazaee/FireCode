@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import ConfirmModal from "../components/ConfirmModal";
 import { deleteTokenAndId } from "../ts/utils/utils";
-import { TOKEN_STORAGE_KEY, ID_STORAGE_KEY } from "../App";
+import { TOKEN_STORAGE_KEY, ID_STORAGE_KEY, API_URL } from "../App";
 
 const SettingPage = ({
     token,
@@ -24,7 +24,7 @@ const SettingPage = ({
         console.log("account deleted");
         axios
             .post(
-                `http://localhost:80/api/accounts/delete/${id}`,
+                `${API_URL}/api/accounts/delete/${id}`,
                 {},
                 {
                     headers: {
@@ -47,7 +47,7 @@ const SettingPage = ({
 
     useEffect(() => {
         axios
-            .get(`http://localhost:80/api/accounts/id/${id}`, {
+            .get(`${API_URL}/api/accounts/id/${id}`, {
                 headers: {
                     Authorization: token,
                 },

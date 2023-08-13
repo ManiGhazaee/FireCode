@@ -10,6 +10,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Editorial from "../components/Editorial";
 import MainHeading from "../components/MainHeading";
 import Submissions, { Submission } from "../components/Submissions";
+import { API_URL } from "../App";
 
 const ProblemPage = ({
     data,
@@ -61,7 +62,7 @@ const ProblemPage = ({
                 {},
                 { data: Submission[] },
                 { code: string; id: string; problem_name: string }
-            >(`http://localhost:80/api/problem/submit/${name}`, {
+            >(`${API_URL}/api/problem/submit/${name}`, {
                 code,
                 id,
                 problem_name,
@@ -77,7 +78,7 @@ const ProblemPage = ({
 
     useEffect(() => {
         axios
-            .post(`http://localhost:80/api/problem/${name}`, { id: id })
+            .post(`${API_URL}/api/problem/${name}`, { id: id })
             .then(({ data }) => {
                 setProblemDescriptionData(
                     data.main as unknown as SetStateAction<
@@ -98,7 +99,7 @@ const ProblemPage = ({
         if (!token) return;
 
         axios
-            .get(`http://localhost:80/api/accounts/id/${id}`, {
+            .get(`${API_URL}/api/accounts/id/${id}`, {
                 headers: {
                     Authorization: token,
                 },
@@ -122,7 +123,7 @@ const ProblemPage = ({
         }
         axios
             .post<{}, { data: Submission[] }, { id: string }>(
-                `http://localhost:80/api/problem/submissions/${name}`,
+                `${API_URL}/api/problem/submissions/${name}`,
                 { id: id || "" }
             )
             .then(({ data }) => {
@@ -139,7 +140,7 @@ const ProblemPage = ({
         if (activeNavOption === "description") return;
 
         axios
-            .get(`http://localhost:80/api/problem/${name}/${activeNavOption}`)
+            .get(`${API_URL}/api/problem/${name}/${activeNavOption}`)
             .then(({ data }) => {
                 if (activeNavOption === "editorial") {
                     if ("editorial_body" in data) {
