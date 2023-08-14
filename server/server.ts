@@ -23,7 +23,7 @@ app.use(express.json());
 
 app.use("/api", router);
 
-app.use(cors({ origin: "https://fire-code.vercel.app" }));
+app.use(cors());
 
 app.listen(port, () => {
     console.log(`server listening at port: ${port}`);
