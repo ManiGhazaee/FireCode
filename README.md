@@ -45,7 +45,9 @@ You can visit the website at https://fire-code.vercel.app.
 - MongoDB: A NoSQL database
 - Mongoose: A MongoDB object modeling tool
 - TypeScript: A typed superset of JavaScript
-- React: A JavaScript library for building user interfaces
+- TypeScript React: A JavaScript library for building user interfaces with TypeScript
+- Tailwind CSS: A utility-first CSS framework
+- CSS: A stylesheet language used to describe the presentation of a document written in HTML or XML
 
 # Server Dependencies
 
