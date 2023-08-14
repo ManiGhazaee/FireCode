@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import router from "./routes/index";
 import mongoose from "mongoose";
+import { customCors } from "./middlewares/cors";
 
 const MONGODB_URI = process.env.MONGODB_URI || "";
 console.log(MONGODB_URI);
@@ -19,16 +20,11 @@ db.once("open", () => {
 const app: express.Application = express();
 const port = process.env.PORT || 3000;
 
-app.use(function (req, res, next) {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    next();
-});
+app.use(customCors);
 
 app.use(express.json());
 
 app.use("/api", router);
-
-
 
 app.listen(port, () => {
     console.log(`server listening at port: ${port}`);
