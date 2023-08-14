@@ -19,7 +19,15 @@ db.once("open", () => {
 const app: express.Application = express();
 const port = process.env.PORT || 3000;
 
-app.use(cors({ origin: "https://fire-code.vercel.app" }));
+app.options(
+    "*",
+    cors({
+        origin: "https://fire-code.vercel.app",
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        allowedHeaders: ["Content-Type", "Authorization"],
+        credentials: true,
+    })
+);
 app.use(express.json());
 
 app.use("/api", router);
