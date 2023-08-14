@@ -19,14 +19,16 @@ db.once("open", () => {
 const app: express.Application = express();
 const port = process.env.PORT || 3000;
 
+app.use(function (req, res, next) {
+    res.setHeader("Access-Control-Allow-Origin", "https://fire-code.vercel.app");
+    next();
+});
+
 app.use(express.json());
 
 app.use("/api", router);
 
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "https://fire-code.vercel.app");
-    next();
-});
+
 
 app.listen(port, () => {
     console.log(`server listening at port: ${port}`);
