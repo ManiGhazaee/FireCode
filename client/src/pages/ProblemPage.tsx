@@ -59,8 +59,6 @@ const ProblemPage = ({
             return;
         }
 
-        setIsSubmitted(true);
-
         const problem_name = name;
         axios
             .post<
@@ -73,6 +71,7 @@ const ProblemPage = ({
                 problem_name,
             })
             .then(({ data }) => {
+                setIsSubmitted(true);
                 setSubmissionData(data);
                 navigate(`/problem/${name}/submissions`);
                 setIsSubmitLoading(false);
@@ -80,6 +79,7 @@ const ProblemPage = ({
             .catch((err) => {
                 console.error(err);
                 setIsSubmitLoading(false);
+                setIsSubmitted(true);
             });
     };
 
@@ -232,7 +232,11 @@ const ProblemPage = ({
                                 </div>
                             </div>
                             <ReactCodeMirror
-                                value={code === "" || code == null ? initCode || "" : code || ""}
+                                value={
+                                    code === "" || code == null
+                                        ? initCode || ""
+                                        : code || ""
+                                }
                                 extensions={[loadLanguage("javascript")!]}
                                 theme={tokyoNight}
                                 onChange={(value) => {

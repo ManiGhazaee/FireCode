@@ -130,29 +130,29 @@ const ProfilePage = ({
 
                     <div className="flex lg:flex-row sm:flex-col flex-col w-[calc(100%-72px)] mx-auto justify-between">
                         <div className="lg:w-[calc(40%-4px)] sm:w-full h-[240px] bg-black mt-[8px] rounded-lg border border-borders">
-                            <div className="text-[18px] font-bold mt-[40px] text-white ml-[30px]">
+                            <div className="text-[22px] font-bold mt-[40px] text-white ml-[50px]">
                                 Community Stats
                             </div>
-                            <div className="mt-[20px] text-[14px] ml-[30px]">
+                            <div className="mt-[18px] text-[14px] ml-[50px]">
                                 <span className="text-text_2">Views:</span>{" "}
                                 {user.views}
                             </div>
-                            <div className="mt-[20px] text-[14px] ml-[30px]">
+                            <div className="mt-[18px] text-[14px] ml-[50px]">
                                 <span className="text-text_2">Solutions:</span>{" "}
                                 {user.solution_count}
                             </div>
-                            <div className="mt-[20px] text-[14px] ml-[30px] mb-[40px]">
+                            <div className="mt-[18px] text-[14px] ml-[50px] mb-[40px]">
                                 <span className="text-text_2">Reputation:</span>{" "}
                                 {user.reputation_count}
                             </div>
                         </div>
-                        <div className="lg:w-[calc(60%-4px)] sm:w-full sm:h-[240px] h-[414px] bg-black mt-[8px] rounded-lg border border-borders relative">
+                        <div className="lg:w-[calc(60%-4px)] sm:w-full sm:h-[240px] h-[450px] bg-black mt-[8px] rounded-lg border border-borders relative">
                             <div className="flex sm:flex-row flex-col justify-between">
                                 <div>
-                                    <div className="text-[18px] font-bold mt-[40px] text-white ml-[30px]">
+                                    <div className="text-[22px] font-bold mt-[40px] text-white ml-[50px]">
                                         Solved Problems
                                     </div>
-                                    <div className="text-[58px] font-bold mt-[36px] text-white ml-[30px]">
+                                    <div className="text-[72px] font-bold mt-[32px] text-white ml-[50px]">
                                         {user.problems_solved_count}{" "}
                                         <span className="text-text_2 text-[14px]">
                                             {"/ "}
@@ -162,7 +162,7 @@ const ProfilePage = ({
                                         </span>
                                     </div>
                                 </div>
-                                <div className="flex flex-col relative mr-[50px] mt-[40px] w-[200px] sm:w-[300px] ml-[30px] sm:ml-0">
+                                <div className="flex flex-col relative mr-[50px] mt-[40px] w-[200px] sm:w-[280px] ml-[50px] sm:ml-0">
                                     <div className="text-[14px] relative">
                                         <div className="flex flex-row justify-between">
                                             <div className="mb-[8px] text-green-500">
@@ -175,7 +175,7 @@ const ProfilePage = ({
                                             </div>
                                         </div>
                                         <div
-                                            className={`sm:w-[300px] w-[200px] h-[4px] bg-borders mb-[16px] relative after:absolute easy-line after:h-[4px] after:bg-green-500`}
+                                            className={`sm:w-[280px] w-[200px] h-[8px] bg-borders mb-[16px] relative after:absolute easy-line after:h-[8px] after:rounded rounded  after:bg-green-500`}
                                         ></div>
                                     </div>
                                     <div className="text-[14px] relative">
@@ -190,7 +190,7 @@ const ProfilePage = ({
                                             </div>
                                         </div>
                                         <div
-                                            className={`sm:w-[300px] w-[200px] h-[4px] bg-borders mb-[16px] relative after:absolute medium-line after:h-[4px] after:bg-orange-500`}
+                                            className={`sm:w-[280px] w-[200px] h-[8px] bg-borders mb-[16px] relative after:absolute medium-line after:h-[8px] after:rounded rounded after:bg-orange-500`}
                                         ></div>
                                     </div>
                                     <div className="text-[14px] relative">
@@ -205,7 +205,7 @@ const ProfilePage = ({
                                             </div>
                                         </div>
                                         <div
-                                            className={`sm:w-[300px] w-[200px] h-[4px] bg-borders mb-[16px] relative after:absolute hard-line after:h-[4px] after:bg-red-500`}
+                                            className={`sm:w-[280px] w-[200px] h-[8px] bg-borders mb-[16px] relative after:absolute hard-line after:h-[8px] after:rounded rounded after:bg-red-500`}
                                         ></div>
                                         <style>
                                             {`.easy-line::after { width: ${

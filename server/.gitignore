@@ -1,5 +1,7 @@
 node_modules
 dist
 .env
-/test/test.js
+test.js
 reqs.rest
+problemTemplate.json
+descriptionTemplate.md
