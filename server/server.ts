@@ -20,7 +20,7 @@ const app: express.Application = express();
 const port = process.env.PORT || 3000;
 
 app.use(function (req, res, next) {
-    res.setHeader("Access-Control-Allow-Origin", "https://fire-code.vercel.app");
+    res.setHeader("Access-Control-Allow-Origin", "*");
     next();
 });
 

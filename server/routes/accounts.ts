@@ -7,6 +7,7 @@ import { authenticateToken } from "../middlewares/token";
 require("dotenv");
 import Filter from "bad-words";
 import ProblemModel from "../models/problem";
+import { customCors } from "../middlewares/cors";
 
 const accounts = express.Router();
 
@@ -14,7 +15,7 @@ accounts.post<
     {},
     { id?: string; token?: string; success: boolean; message: string },
     User
->("/signup", async (req, res) => {
+>("/signup", customCors, async (req, res) => {
     try {
         const { username, email, password } = req.body;
 
@@ -118,7 +119,7 @@ accounts.post<
     {},
     { id?: string; token?: string; success: boolean; message: string },
     { username_or_email: string; password: string }
->("/login", async (req, res) => {
+>("/login",customCors, async (req, res) => {
     const { username_or_email, password } = req.body;
 
     if (!username_or_email || !password) {
@@ -173,7 +174,7 @@ accounts.post<
     }
 });
 
-accounts.post("/delete/:id", authenticateToken, async (req, res) => {
+accounts.post("/delete/:id",customCors, authenticateToken, async (req, res) => {
     try {
         const { id } = req.params;
         await UserModel.findByIdAndDelete(id);
@@ -183,7 +184,7 @@ accounts.post("/delete/:id", authenticateToken, async (req, res) => {
     }
 });
 
-accounts.get("/:name", async (req, res) => {
+accounts.get("/:name",customCors, async (req, res) => {
     const name = req.params.name;
 
     const user = await UserModel.findOne({
@@ -247,7 +248,7 @@ accounts.get("/:name", async (req, res) => {
     res.json(publicUser);
 });
 
-accounts.get("/id/:id", authenticateToken, async (req, res) => {
+accounts.get("/id/:id",customCors, authenticateToken, async (req, res) => {
     const id = req.params.id;
 
     const user = await UserModel.findById(id);
