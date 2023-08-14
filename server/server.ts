@@ -23,7 +23,10 @@ app.use(express.json());
 
 app.use("/api", router);
 
-app.use(cors());
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "https://fire-code.vercel.app");
+    next();
+});
 
 app.listen(port, () => {
     console.log(`server listening at port: ${port}`);
