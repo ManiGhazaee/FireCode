@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import CustomNavbar, { Navbar } from "../components/CustomNavbar";
-import ProblemList from "../components/ProblemList";
+import ProblemList, { SortOptions } from "../components/ProblemList";
 import { changeCase } from "../ts/utils/string";
 import MainHeading from "../components/MainHeading";
 import { useEffect } from "react";
@@ -30,13 +30,22 @@ const ProblemSet = ({
         ],
     };
 
-    const handleSearch = async (searchQuery: string) => {
+    const [searchQ, setSearchQ] = useState<string>("");
+
+    const handleSearch = async (
+        searchQuery: string,
+        options: SortOptions = {
+            acceptance_rate_count: "",
+            difficulty: "",
+            title: "",
+        }
+    ) => {
+        const { acceptance_rate_count, difficulty, title } = options;
         try {
             const { data } = await axios.post(
-                `${API_URL}/api/problem/all?search=${searchQuery}`,
+                `${API_URL}/api/problem/all?search=${searchQuery}&acceptance=${acceptance_rate_count}&difficulty=${difficulty}&title=${title}`,
                 { id }
             );
-            console.log(data);
             setProblemListData(data);
         } catch (error) {
             console.error("Error searching:", error);
@@ -100,12 +109,17 @@ const ProblemSet = ({
                                 placeholder="Search questions..."
                                 onChange={(e) => {
                                     handleSearch(e.target.value);
+                                    setSearchQ(e.target.value);
                                 }}
                                 className="bg-black outline-none border-none relative -translate-y-1/2 top-1/2 left-[9px] px-[20px] text-[14px] h-[calc(100%-2px)] placeholder:text-[14px] placeholder:text-text_2 w-[calc(100%-100px)]"
                             />
                         </div>
                         <div>
-                            <ProblemList data={problemListData as any} />
+                            <ProblemList
+                                searchFn={handleSearch}
+                                searchQuery={searchQ}
+                                data={problemListData as any}
+                            />
                         </div>
                     </div>
                 </div>

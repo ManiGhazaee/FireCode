@@ -1,7 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+    Dispatch,
+    SetStateAction,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 import { Link } from "react-router-dom";
 import { kebabToSpacedPascal } from "../ts/utils/string";
 import Loading from "./Loading";
+import SortIcon from "./SortIcon";
 
 export interface ProblemListData {
     main: {
@@ -16,7 +23,21 @@ export interface ProblemListData {
     };
 }
 
-const ProblemList = ({ data }: { data: ProblemListData[] }) => {
+export type Sort = "asc" | "des" | "";
+export type AccaptanceSort = { acceptance_rate_count: Sort };
+export type TitleSort = { title: Sort };
+export type DifficultySort = { difficulty: Sort };
+export type SortOptions = DifficultySort & TitleSort & AccaptanceSort;
+
+const ProblemList = ({
+    data,
+    searchFn,
+    searchQuery,
+}: {
+    data: ProblemListData[];
+    searchFn: Function;
+    searchQuery: string;
+}) => {
     const [refReset, setRefReset] = useState<number>(0);
     const statusRef = useRef<HTMLDivElement>(null);
     const titleRef = useRef<HTMLDivElement>(null);
@@ -26,6 +47,12 @@ const ProblemList = ({ data }: { data: ProblemListData[] }) => {
     const dislikesRef = useRef<HTMLDivElement>(null);
     const starRef = useRef<HTMLDivElement>(null);
 
+    const [SortOptions, setSortOptions] = useState<SortOptions>({
+        acceptance_rate_count: "",
+        difficulty: "",
+        title: "",
+    });
+
     const statusWidth = starRef.current?.clientWidth;
     const acceptanceWidth = acceptanceRef.current?.clientWidth;
     const difficultyWidth = difficultyRef.current?.clientWidth;
@@ -33,8 +60,44 @@ const ProblemList = ({ data }: { data: ProblemListData[] }) => {
     const dislikesWidth = dislikesRef.current?.clientWidth;
     const starWidth = starRef.current?.clientWidth;
 
-    const statusTest = "attempted";
-    console.log(data);
+    const difficultyOnClick = (options: SortOptions) => {
+        const { difficulty } = SortOptions;
+        const newOptions: SortOptions = {
+            difficulty:
+                difficulty === "" ? "asc" : difficulty === "asc" ? "des" : "",
+            title: SortOptions.title,
+            acceptance_rate_count: SortOptions.acceptance_rate_count,
+        };
+        setSortOptions(newOptions);
+        searchFn(searchQuery, newOptions);
+    };
+
+    const acceptanceOnClick = (options: SortOptions) => {
+        const { acceptance_rate_count } = SortOptions;
+        const newOptions: SortOptions = {
+            acceptance_rate_count:
+                acceptance_rate_count === ""
+                    ? "asc"
+                    : acceptance_rate_count === "asc"
+                    ? "des"
+                    : "",
+            title: SortOptions.title,
+            difficulty: SortOptions.difficulty,
+        };
+        setSortOptions(newOptions);
+        searchFn(searchQuery, newOptions);
+    };
+
+    const titleOnClick = (options: SortOptions) => {
+        const { title } = SortOptions;
+        const newOptions: SortOptions = {
+            title: title === "" ? "asc" : title === "asc" ? "des" : "",
+            acceptance_rate_count: SortOptions.acceptance_rate_count,
+            difficulty: SortOptions.difficulty,
+        };
+        setSortOptions(newOptions);
+        searchFn(searchQuery, newOptions);
+    };
 
     useEffect(() => {
         setRefReset(1);
@@ -43,7 +106,7 @@ const ProblemList = ({ data }: { data: ProblemListData[] }) => {
     return (
         <div>
             <div className="flex flex-col">
-                <div className="flex flex-row w-full text-[14px] h-[40px] items-center text-[#808080] border-b border-borders">
+                <div className="flex flex-row w-full text-[14px] h-[40px] items-center text-[#808080] border-b border-borders select-none">
                     <div
                         id="status-label"
                         className="h-fit w-fit px-[20px] ml-[10px]"
@@ -53,24 +116,53 @@ const ProblemList = ({ data }: { data: ProblemListData[] }) => {
                     </div>
                     <div
                         id="title-label"
-                        className="h-fit flex-grow px-[20px]"
+                        className="h-fit flex-grow px-[20px] hover:text-white hover:cursor-pointer transition"
                         ref={titleRef}
+                        style={{
+                            color:
+                                SortOptions.title === "asc"
+                                    ? "rgb(34, 197, 94)"
+                                    : SortOptions.title === "des"
+                                    ? "rgb(220, 38, 38)"
+                                    : "",
+                        }}
+                        onClick={() => titleOnClick(SortOptions)}
                     >
-                        Title
+                        Title <SortIcon order={SortOptions.title} />
                     </div>
                     <div
                         id="accaptance-label"
-                        className="h-fit w-fit px-[20px]"
+                        className="h-fit w-fit px-[20px] hover:text-white hover:cursor-pointer transition"
                         ref={acceptanceRef}
+                        style={{
+                            color:
+                                SortOptions.acceptance_rate_count === "asc"
+                                    ? "rgb(34, 197, 94)"
+                                    : SortOptions.acceptance_rate_count ===
+                                      "des"
+                                    ? "rgb(220, 38, 38)"
+                                    : "",
+                        }}
+                        onClick={() => acceptanceOnClick(SortOptions)}
                     >
-                        Accaptance
+                        Accaptance{" "}
+                        <SortIcon order={SortOptions.acceptance_rate_count} />
                     </div>
                     <div
                         id="difficulty-label"
-                        className="h-fit w-fit px-[20px]"
+                        className="h-fit w-fit px-[20px] hover:cursor-pointer hover:text-white transition"
                         ref={difficultyRef}
+                        style={{
+                            color:
+                                SortOptions.difficulty === "asc"
+                                    ? "rgb(34, 197, 94)"
+                                    : SortOptions.difficulty === "des"
+                                    ? "rgb(220, 38, 38)"
+                                    : "",
+                        }}
+                        onClick={() => difficultyOnClick(SortOptions)}
                     >
-                        Difficulty
+                        Difficulty <SortIcon order={SortOptions.difficulty} />
                     </div>
                     <div
                         id="likes-label"

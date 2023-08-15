@@ -4,12 +4,21 @@ import ProblemModel from "../models/problem";
 import UserModel from "../models/user";
 import { DProblem } from "../models/problem";
 import { customCors } from "../middlewares/cors";
+import {
+    sortByAcceptance,
+    sortByDifficulty,
+    sortByTitle,
+} from "../utils/utils";
 
 const problem = express.Router();
 
 problem.post("/all", async (req, res) => {
     const { id } = req.body;
     const search = req.query.search || "";
+    const difficulty = req.query.difficulty || "";
+    const acceptance = req.query.acceptance || "";
+    const title = req.query.title || "";
+
     try {
         const allProblems = await ProblemModel.find(
             { "main.name": { $regex: search, $options: "i" } },
@@ -18,6 +27,14 @@ problem.post("/all", async (req, res) => {
             .sort({ "main.id": 1 })
             .exec();
 
+        const allProblemsSorted = sortByAcceptance(
+            acceptance.toString() as Sort,
+            sortByDifficulty(
+                difficulty.toString() as Sort,
+                sortByTitle(title.toString() as Sort, allProblems)
+            )
+        );
+
         const user = await UserModel.findById(id);
         const sOrA = {
             solved: user?.problems_solved,
@@ -25,7 +42,7 @@ problem.post("/all", async (req, res) => {
         };
 
         let allProblemsArray: DProblem[] = JSON.parse(
-            JSON.stringify(allProblems)
+            JSON.stringify(allProblemsSorted)
         );
 
         if (sOrA.attempted) {

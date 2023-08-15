@@ -66,3 +66,5 @@ interface Submission {
     expected_output?: string;
     user_output?: string;
 }
+
+type Sort = "asc" | "des" | "";

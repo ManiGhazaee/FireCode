@@ -70,7 +70,6 @@ const CustomNavbar = ({ data }: { data: Navbar }) => {
         setActiveItemWidth(target.clientWidth - 40 + "px");
         setTranslateXActiveItem(target.offsetLeft);
     };
-    console.log(activeItem);
 
     return (
         <>
