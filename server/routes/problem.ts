@@ -7,7 +7,7 @@ import { customCors } from "../middlewares/cors";
 
 const problem = express.Router();
 
-problem.post("/all", customCors, async (req, res) => {
+problem.post("/all", async (req, res) => {
     const { id } = req.body;
     const search = req.query.search || "";
     try {
@@ -54,7 +54,7 @@ problem.post<
     { name: string },
     Submission[],
     { code: string; id: string; problem_name: string }
->("/submit/:name", customCors, async (req, res) => {
+>("/submit/:name", async (req, res) => {
     const { name } = req.params;
     const { id, problem_name } = req.body;
 
@@ -166,7 +166,7 @@ problem.post<
 
 problem.post<{ name: string }, Submission[], { id: string }>(
     "/submissions/:name",
-    customCors,
+
     async (req, res) => {
         const { name } = req.params;
         const { id } = req.body;
@@ -193,7 +193,7 @@ problem.post<{ name: string }, Submission[], { id: string }>(
     }
 );
 
-problem.post("/:name", customCors, async (req, res) => {
+problem.post("/:name", async (req, res) => {
     const { name } = req.params;
     const { id } = req.body;
     try {
@@ -222,7 +222,7 @@ problem.post("/:name", customCors, async (req, res) => {
     }
 });
 
-problem.get("/:name/editorial", customCors, async (req, res) => {
+problem.get("/:name/editorial", async (req, res) => {
     const name = req.params.name;
     try {
         const problem = await ProblemModel.findOne({
