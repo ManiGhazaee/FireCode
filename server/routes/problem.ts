@@ -9,9 +9,10 @@ const problem = express.Router();
 
 problem.post("/all", customCors, async (req, res) => {
     const { id } = req.body;
+    const search = req.query.search || "";
     try {
         const allProblems = await ProblemModel.find(
-            {},
+            { "main.name": { $regex: search, $options: "i" } },
             "main.id main.name main.acceptance_rate_count main.difficulty main.like_count main.dislike_count"
         )
             .sort({ "main.id": 1 })

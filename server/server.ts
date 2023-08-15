@@ -18,9 +18,10 @@ db.once("open", () => {
 });
 
 const app: express.Application = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 80;
 
-app.use(customCors);
+// app.use(customCors);
+app.use(cors());
 
 app.use(express.json());
 

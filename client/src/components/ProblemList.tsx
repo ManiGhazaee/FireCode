@@ -34,6 +34,7 @@ const ProblemList = ({ data }: { data: ProblemListData[] }) => {
     const starWidth = starRef.current?.clientWidth;
 
     const statusTest = "attempted";
+    console.log(data);
 
     useEffect(() => {
         setRefReset(1);
@@ -224,6 +225,10 @@ const ProblemList = ({ data }: { data: ProblemListData[] }) => {
                             </Link>
                         </div>
                     ))
+                ) : data != undefined && data.length === 0 ? (
+                    <div className="text-[14px] ml-[30px] text-red-600 h-[40px] leading-[40px]">
+                        Problem not found
+                    </div>
                 ) : (
                     <Loading For="pList" />
                 )}

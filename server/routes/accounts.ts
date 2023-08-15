@@ -15,7 +15,7 @@ accounts.post<
     {},
     { id?: string; token?: string; success: boolean; message: string },
     User
->("/signup", customCors, async (req, res) => {
+>("/signup", async (req, res) => {
     try {
         const { username, email, password } = req.body;
 
@@ -119,7 +119,7 @@ accounts.post<
     {},
     { id?: string; token?: string; success: boolean; message: string },
     { username_or_email: string; password: string }
->("/login",customCors, async (req, res) => {
+>("/login", async (req, res) => {
     const { username_or_email, password } = req.body;
 
     if (!username_or_email || !password) {
@@ -174,17 +174,20 @@ accounts.post<
     }
 });
 
-accounts.post("/delete/:id",customCors, authenticateToken, async (req, res) => {
+accounts.post("/delete/:id", authenticateToken, async (req, res) => {
     try {
         const { id } = req.params;
         await UserModel.findByIdAndDelete(id);
-        res.json({ success: true, message: "Account deleted successfully" });
+        res.json({
+            success: true,
+            message: "Account deleted successfully",
+        });
     } catch (e) {
         res.json({ success: false, message: e });
     }
 });
 
-accounts.get("/:name",customCors, async (req, res) => {
+accounts.get("/:name", async (req, res) => {
     const name = req.params.name;
 
     const user = await UserModel.findOne({
@@ -248,7 +251,7 @@ accounts.get("/:name",customCors, async (req, res) => {
     res.json(publicUser);
 });
 
-accounts.get("/id/:id",customCors, authenticateToken, async (req, res) => {
+accounts.get("/id/:id", authenticateToken, async (req, res) => {
     const id = req.params.id;
 
     const user = await UserModel.findById(id);

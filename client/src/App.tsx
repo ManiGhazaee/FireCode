@@ -12,8 +12,8 @@ import SettingPage from "./pages/SettingPage";
 
 export const TOKEN_STORAGE_KEY = "authToken";
 export const ID_STORAGE_KEY = "id";
-export const API_URL = "https://fire-code-api.vercel.app";
-// export const API_URL = "http://localhost:3000";
+// export const API_URL = "https://fire-code-api.vercel.app";
+export const API_URL = "http://localhost:80";
 
 function App() {
     const [token, setToken] = useState(localStorage.getItem(TOKEN_STORAGE_KEY));
