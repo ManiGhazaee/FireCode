@@ -2,28 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { changeCase } from "../ts/utils/string";
 
-export interface Navbar {
-    items: NavbarItem[];
-    default_active_item?: string | "none" | undefined;
-    width_all?: string | undefined;
-    color_all?: string | undefined;
-    color_hover_all?: string | undefined;
-    bg_color_hover_all?: string | undefined;
-    bg_color_all?: string | undefined;
-    active_color_all?: string | undefined;
-    onclick_function_all?: Function | undefined;
-    transition_duration_all?: string | undefined;
-    font_size_all?: string | undefined;
-    options_all?: any | undefined;
-}
-
-export interface NavbarItem {
-    text: string;
-    link_path: string;
-    onclick_function?: string | undefined;
-    options?: any | undefined;
-}
-
 const CustomNavbar = ({ data }: { data: Navbar }) => {
     const default_color_all: string = "#808080";
     const default_color_hover_all: string = "#fff";

@@ -1,33 +1,9 @@
-import React, {
-    Dispatch,
-    SetStateAction,
-    useEffect,
-    useRef,
-    useState,
-} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { kebabToSpacedPascal } from "../ts/utils/string";
 import Loading from "./Loading";
 import SortIcon from "./SortIcon";
-
-export interface ProblemListData {
-    main: {
-        id: number;
-        name: string;
-        difficulty: "hard" | "medium" | "easy" | string;
-        like_count: number;
-        dislike_count: number;
-        status: "solved" | "none" | "attempted" | string;
-        is_starred: boolean;
-        acceptance_rate_count: number;
-    };
-}
-
-export type Sort = "asc" | "des" | "";
-export type AccaptanceSort = { acceptance_rate_count: Sort };
-export type TitleSort = { title: Sort };
-export type DifficultySort = { difficulty: Sort };
-export type SortOptions = DifficultySort & TitleSort & AccaptanceSort;
+import StarIcon from "./StarIcon";
 
 const ProblemList = ({
     data,
@@ -310,8 +286,28 @@ const ProblemList = ({
                                         lineHeight: "40px",
                                     }}
                                 >
-                                    <div className="ml-[20px]">
-                                        {main.is_starred ? "y" : "n"}
+                                    <div className="ml-[20px] relative h-full">
+                                        {main.is_starred ? (
+                                            <div className="absolute top-1/2 -translate-y-1/2 left-0">
+                                                <StarIcon
+                                                    data={{
+                                                        is_filled: true,
+                                                        width: "14px",
+                                                        height: "14px",
+                                                    }}
+                                                />
+                                            </div>
+                                        ) : (
+                                            <div className="absolute top-1/2 -translate-y-1/2 left-0">
+                                                <StarIcon
+                                                    data={{
+                                                        is_filled: false,
+                                                        width: "14px",
+                                                        height: "14px",
+                                                    }}
+                                                />
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </Link>

@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export interface Navbar {
@@ -9,7 +8,6 @@ export interface Navbar {
     onclick_function: Function;
 }
 
-type OnOptionClick = (string: string) => void;
 type Data = { problem_name: string; nav_option_name: string };
 
 const ProblemNavbar = ({ data }: { data: Data }) => {

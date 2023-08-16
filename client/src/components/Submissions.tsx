@@ -1,32 +1,11 @@
-import React, { useState } from "react";
 import CodeBlock from "./CodeBlock";
-
-export interface SubmissionsData {
-    submissions_list: Submission[];
-    is_submitted: boolean;
-}
-export interface Submission {
-    problem_name: string;
-    status:
-        | "Accepted"
-        | "Runtime Error"
-        | "Wrong Answer"
-        | "Time Limit Exceeded";
-    error?: string;
-    runtime: number;
-    memory: number;
-    language: "JavaScript";
-    time: Date;
-    code_body: string;
-    input?: string;
-    expected_output?: string;
-    user_output?: string;
-}
 
 const Submissions = ({ data }: { data: SubmissionsData }) => {
     if (!data || data.submissions_list.length === 0)
         return (
-            <div className="text-[14px] text-text_2 mx-auto text-center mt-[50px]">No submissions found</div>
+            <div className="text-[14px] text-text_2 mx-auto text-center mt-[50px]">
+                No submissions found
+            </div>
         );
     const status = data.submissions_list[0].status;
     const error = data.submissions_list[0].error;
@@ -108,9 +87,6 @@ const Submissions = ({ data }: { data: SubmissionsData }) => {
                             </div>
                         </>
                     )}
-                    <div>
-                        {/* <code>{data.submissions_list[0].code_body}</code> */}
-                    </div>
                     {status === "Wrong Answer" && (
                         <div className="w-full">
                             <div className="text-[14px] text-text_2 ml-[26px] my-[10px]">

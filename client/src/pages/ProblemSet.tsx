@@ -1,13 +1,11 @@
-import React, { useState } from "react";
-import CustomNavbar, { Navbar } from "../components/CustomNavbar";
-import ProblemList, { SortOptions } from "../components/ProblemList";
-import { changeCase } from "../ts/utils/string";
+import { useState } from "react";
+import CustomNavbar from "../components/CustomNavbar";
+import ProblemList from "../components/ProblemList";
 import MainHeading from "../components/MainHeading";
 import { useEffect } from "react";
 import axios, { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../App";
-import Loading from "../components/Loading";
 
 const ProblemSet = ({
     token,

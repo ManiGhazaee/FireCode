@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import MainHeading from "../components/MainHeading";
 import { API_URL } from "../App";
@@ -48,9 +48,7 @@ const ProfilePage = ({
                 }
             });
         axios
-            .get<{}, { data: PublicUser }>(
-                `${API_URL}/api/accounts/${name}`
-            )
+            .get<{}, { data: PublicUser }>(`${API_URL}/api/accounts/${name}`)
             .then(({ data }) => {
                 setUsername(data.username);
                 setUser(data);

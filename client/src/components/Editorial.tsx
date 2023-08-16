@@ -1,4 +1,3 @@
-import React from "react";
 import { convertMarkdownToHtml } from "../ts/utils/utils";
 
 const Editorial = ({ data }: { data: string }) => {

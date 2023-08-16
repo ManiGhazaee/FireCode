@@ -1,5 +1,4 @@
 import React from "react";
-import { Sort } from "./ProblemList";
 
 const SortIcon = ({ order }: { order: Sort }) => {
     return (

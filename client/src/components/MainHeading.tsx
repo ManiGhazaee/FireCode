@@ -1,20 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Tooltip from "./Tooltip";
 import SidePanel from "./SidePanel";
 import Notification from "./Notification";
-
-export interface MainHeadingData {
-    items?: MainHeadingItems[];
-    username?: string;
-    id?: string;
-    status?: "loggedin" | "not-loggedin" | "none";
-}
-
-export interface MainHeadingItems {
-    text: string;
-    link_path: string;
-}
 
 const MainHeading = ({ data }: { data?: MainHeadingData }) => {
     const [sidePanelState, setSidePanelState] = useState<boolean>(false);

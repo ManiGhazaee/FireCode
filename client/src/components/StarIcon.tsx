@@ -1,14 +1,6 @@
-import React from "react";
-
-export interface StarData {
-    is_filled: boolean;
-    width: string;
-    height: string;
-}
-
 const StarIcon = ({ data }: { data: StarData }) => {
     return (
-        <div>
+        <div style={{ width: data.width, height: data.height }}>
             {data.is_filled ? (
                 <svg
                     xmlns="http://www.w3.org/2000/svg"

@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 const Notification = ({
     display,
@@ -36,7 +36,9 @@ const Notification = ({
                     display: display ? "block" : "none",
                 }}
             >
-                <div className="text-[14px] text-text_2 w-full">No Notification</div>
+                <div className="text-[14px] text-text_2 w-full">
+                    No Notification
+                </div>
             </div>
         </>
     );

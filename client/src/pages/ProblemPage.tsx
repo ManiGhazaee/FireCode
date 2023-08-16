@@ -9,7 +9,7 @@ import ProblemDescription from "../components/ProblemDescription";
 import { useNavigate, useParams } from "react-router-dom";
 import Editorial from "../components/Editorial";
 import MainHeading from "../components/MainHeading";
-import Submissions, { Submission } from "../components/Submissions";
+import Submissions from "../components/Submissions";
 import { API_URL } from "../App";
 import Loading from "../components/Loading";
 

@@ -3,25 +3,6 @@ import { convertMarkdownToHtml } from "../ts/utils/utils";
 import { changeCase, kebabToSpacedPascal } from "../ts/utils/string";
 import StarIcon from "./StarIcon";
 
-export interface DescriptionData {
-    id: number;
-    name: string;
-    difficulty: "hard" | "medium" | "easy" | string;
-    like_count: number;
-    dislike_count: number;
-    status?: "solved" | "none" | "attempted" | string;
-    is_starred?: boolean;
-    like_status?: "liked" | "disliked" | "none" | string;
-    description_body: string;
-    accept_count: number;
-    submission_count: number;
-    acceptance_rate_count: number;
-    discussion_count: number;
-    related_topics: string[];
-    similar_questions: string[];
-    solution_count: number;
-}
-
 const ProblemDescription = ({ data }: { data: DescriptionData }) => {
     const [isStarred, setIsStarred] = useState<boolean>(
         data.is_starred || false
@@ -29,8 +10,6 @@ const ProblemDescription = ({ data }: { data: DescriptionData }) => {
     const [likeStatus, setLikeStatus] = useState<string>(
         data.like_status || "none"
     );
-    const xxx = "attempted";
-
     return (
         <>
             {Object.keys(data).length !== 0 && (

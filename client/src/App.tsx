@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ProblemPage from "./pages/ProblemPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ProblemSet from "./pages/ProblemSet";
@@ -6,7 +6,6 @@ import LandingPage from "./pages/LandingPage";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import ErrorPage from "./pages/ErrorPage";
-import { stringify } from "querystring";
 import ProfilePage from "./pages/ProfilePage";
 import SettingPage from "./pages/SettingPage";
 

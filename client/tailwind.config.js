@@ -10,7 +10,7 @@ module.exports = {
                 text_2: "var(--text-2-color)",
                 // text_3: "var(--text-3-color)",
                 borders: "var(--borders-color)",
-                code: "var(--code-color)"
+                code: "var(--code-color)",
                 // primary: "var(--primary-color)",
             },
         },

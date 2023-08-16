@@ -12,9 +12,9 @@ interface DescriptionData {
     difficulty: "hard" | "medium" | "easy" | string;
     like_count: number;
     dislike_count: number;
-    status: "solved" | "none" | "attempted" | string;
-    is_starred: boolean;
-    like_status: "liked" | "disliked" | "none" | string;
+    status?: "solved" | "none" | "attempted" | string;
+    is_starred?: boolean;
+    like_status?: "liked" | "disliked" | "none" | string;
     description_body: string;
     accept_count: number;
     submission_count: number;
@@ -81,4 +81,85 @@ interface PublicUser {
     views: number;
     solution_count: number;
     reputation_count: number;
+}
+
+type Sort = "asc" | "des" | "";
+type AccaptanceSort = { acceptance_rate_count: Sort };
+type TitleSort = { title: Sort };
+type DifficultySort = { difficulty: Sort };
+type SortOptions = DifficultySort & TitleSort & AccaptanceSort;
+
+interface Navbar {
+    items: NavbarItem[];
+    default_active_item?: string | "none" | undefined;
+    width_all?: string | undefined;
+    color_all?: string | undefined;
+    color_hover_all?: string | undefined;
+    bg_color_hover_all?: string | undefined;
+    bg_color_all?: string | undefined;
+    active_color_all?: string | undefined;
+    onclick_function_all?: Function | undefined;
+    transition_duration_all?: string | undefined;
+    font_size_all?: string | undefined;
+    options_all?: any | undefined;
+}
+
+interface NavbarItem {
+    text: string;
+    link_path: string;
+    onclick_function?: string | undefined;
+    options?: any | undefined;
+}
+
+interface MainHeadingData {
+    items?: MainHeadingItems[];
+    username?: string;
+    id?: string;
+    status?: "loggedin" | "not-loggedin" | "none";
+}
+
+interface MainHeadingItems {
+    text: string;
+    link_path: string;
+}
+
+interface ProblemListData {
+    main: {
+        id: number;
+        name: string;
+        difficulty: "hard" | "medium" | "easy" | string;
+        like_count: number;
+        dislike_count: number;
+        status: "solved" | "none" | "attempted" | string;
+        is_starred: boolean;
+        acceptance_rate_count: number;
+    };
+}
+
+interface StarData {
+    is_filled: boolean;
+    width: string;
+    height: string;
+}
+
+interface SubmissionsData {
+    submissions_list: Submission[];
+    is_submitted: boolean;
+}
+interface Submission {
+    problem_name: string;
+    status:
+        | "Accepted"
+        | "Runtime Error"
+        | "Wrong Answer"
+        | "Time Limit Exceeded";
+    error?: string;
+    runtime: number;
+    memory: number;
+    language: "JavaScript";
+    time: Date;
+    code_body: string;
+    input?: string;
+    expected_output?: string;
+    user_output?: string;
 }
