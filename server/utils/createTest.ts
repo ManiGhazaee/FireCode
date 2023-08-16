@@ -1,8 +1,7 @@
-import fs from "fs";
-import * as cp from "child_process";
 import acorn from "acorn";
 
-let handleTestFunction = `function handleTests(testCases, func) {
+let handleTestFunction = `
+function handleTests(testCases, func) {
     let testCase;
     let problemInput;
     let expectedOut;
@@ -123,8 +122,6 @@ export function writeTestFile(
         "expected_output":"undefined",
         "user_output":"undefined"
         }\`); }})()`;
-
-    // console.log(eval(data));
 
     return new Promise((resolve, reject) => {
         try {

@@ -3,7 +3,6 @@ import { writeTestFile } from "../utils/createTest";
 import ProblemModel from "../models/problem";
 import UserModel from "../models/user";
 import { DProblem } from "../models/problem";
-import { customCors } from "../middlewares/cors";
 import {
     sortByAcceptance,
     sortByDifficulty,
