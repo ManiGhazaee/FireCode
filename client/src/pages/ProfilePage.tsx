@@ -39,13 +39,8 @@ const ProfilePage = ({
             })
             .catch((e: AxiosError) => {
                 console.log(e);
-                if (
-                    (e.response?.data as { success: boolean; message: string })
-                        .success === false
-                ) {
-                    setVerified(false);
-                    setVerifiedCertain(true);
-                }
+                setVerified(false);
+                setVerifiedCertain(true);
             });
         axios
             .get<{}, { data: PublicUser }>(`${API_URL}/api/accounts/${name}`)

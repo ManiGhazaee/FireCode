@@ -17,6 +17,10 @@ const LandingPage = ({
     const [verified, setVerified] = useState<boolean>(false);
     const [verifiedCertain, setVerifiedCertain] = useState<boolean>(false);
     useEffect(() => {
+        if (!id) {
+            setVerified(false);
+            setVerifiedCertain(true);
+        }
         axios
             .get(`${API_URL}/api/accounts/id/${id}`, {
                 headers: {
@@ -29,14 +33,8 @@ const LandingPage = ({
                 setVerifiedCertain(true);
             })
             .catch((e: AxiosError) => {
-                console.log(e);
-                if (
-                    (e.response?.data as { success: boolean; message: string })
-                        .success === false
-                ) {
-                    setVerified(false);
-                    setVerifiedCertain(true);
-                }
+                setVerified(false);
+                setVerifiedCertain(true);
             });
     }, []);
     return (

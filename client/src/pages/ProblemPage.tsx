@@ -116,12 +116,7 @@ const ProblemPage = ({
             })
             .catch((e: AxiosError) => {
                 console.log(e);
-                if (
-                    (e.response?.data as { success: boolean; message: string })
-                        .success === false
-                ) {
-                    navigate("/sorry");
-                }
+                navigate("/sorry");
             });
 
         if (!id || !name) {
