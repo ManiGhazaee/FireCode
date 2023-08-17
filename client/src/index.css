@@ -313,9 +313,6 @@ code {
     animation: iSpinnerBlade 1s linear infinite;
     will-change: opacity;
 }
-.black-spinner {
-    background-color: #000 !important;
-}
 .ispinner .ispinner-blade:nth-child(1) {
     transform: rotate(45deg) translateY(-6.5px);
     animation-delay: -1.625s;
@@ -384,6 +381,91 @@ code {
     transform: rotate(360deg) translateY(-11.5px);
 }
 
+/* color: white */
+.ispinner-w {
+    position: relative;
+    width: 20px;
+    height: 20px;
+}
+.ispinner-w .ispinner-w-blade {
+    position: absolute;
+    top: 6.5px;
+    left: 8.5px;
+    width: 2.5px;
+    height: 6.5px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 1.25px;
+    animation: iSpinnerBlade 1s linear infinite;
+    will-change: opacity;
+}
+.ispinner-w .ispinner-w-blade:nth-child(1) {
+    transform: rotate(45deg) translateY(-6.5px);
+    animation-delay: -1.625s;
+}
+.ispinner-w .ispinner-w-blade:nth-child(2) {
+    transform: rotate(90deg) translateY(-6.5px);
+    animation-delay: -1.5s;
+}
+.ispinner-w .ispinner-w-blade:nth-child(3) {
+    transform: rotate(135deg) translateY(-6.5px);
+    animation-delay: -1.375s;
+}
+.ispinner-w .ispinner-w-blade:nth-child(4) {
+    transform: rotate(180deg) translateY(-6.5px);
+    animation-delay: -1.25s;
+}
+.ispinner-w .ispinner-w-blade:nth-child(5) {
+    transform: rotate(225deg) translateY(-6.5px);
+    animation-delay: -1.125s;
+}
+.ispinner-w .ispinner-w-blade:nth-child(6) {
+    transform: rotate(270deg) translateY(-6.5px);
+    animation-delay: -1s;
+}
+.ispinner-w .ispinner-w-blade:nth-child(7) {
+    transform: rotate(315deg) translateY(-6.5px);
+    animation-delay: -0.875s;
+}
+.ispinner-w .ispinner-w-blade:nth-child(8) {
+    transform: rotate(360deg) translateY(-6.5px);
+    animation-delay: -0.75s;
+}
+.ispinner-w.ispinner-w-large {
+    width: 35px;
+    height: 35px;
+}
+.ispinner-w.ispinner-w-large .ispinner-w-blade {
+    top: 11.5px;
+    left: 15px;
+    width: 5px;
+    height: 12px;
+    border-radius: 2.5px;
+}
+.ispinner-w.ispinner-w-large .ispinner-w-blade:nth-child(1) {
+    transform: rotate(45deg) translateY(-11.5px);
+}
+.ispinner-w.ispinner-w-large .ispinner-w-blade:nth-child(2) {
+    transform: rotate(90deg) translateY(-11.5px);
+}
+.ispinner-w.ispinner-w-large .ispinner-w-blade:nth-child(3) {
+    transform: rotate(135deg) translateY(-11.5px);
+}
+.ispinner-w.ispinner-w-large .ispinner-w-blade:nth-child(4) {
+    transform: rotate(180deg) translateY(-11.5px);
+}
+.ispinner-w.ispinner-w-large .ispinner-w-blade:nth-child(5) {
+    transform: rotate(225deg) translateY(-11.5px);
+}
+.ispinner-w.ispinner-w-large .ispinner-w-blade:nth-child(6) {
+    transform: rotate(270deg) translateY(-11.5px);
+}
+.ispinner-w.ispinner-w-large .ispinner-w-blade:nth-child(7) {
+    transform: rotate(315deg) translateY(-11.5px);
+}
+.ispinner-w.ispinner-w-large .ispinner-w-blade:nth-child(8) {
+    transform: rotate(360deg) translateY(-11.5px);
+}
+
 @keyframes iSpinnerBlade {
     0% {
         opacity: 0.85;
@@ -397,3 +479,15 @@ code {
 }
 
 /*  end of loading */
+
+.sort-loading-backdrop {
+    background-color: #00000000;
+    backdrop-filter: blur(0px);
+    animation: sortLoadingAnimation 100ms forwards;
+}
+@keyframes sortLoadingAnimation {
+    100% {
+        background-color: #00000080;
+        backdrop-filter: blur(2px);
+    }
+}

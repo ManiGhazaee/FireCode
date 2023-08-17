@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios, { AxiosError } from "axios";
 import { API_URL } from "../App";
+import Loading from "../components/Loading";
 
 const LandingPage = ({
     token,
@@ -146,7 +147,9 @@ const LandingPage = ({
                     </div>
                 </>
             ) : (
-                <></>
+                <div className="absolute top-1/2 -translate-x-1/2 left-1/2 -translate-y-1/2 z-[120]">
+                    <Loading />
+                </div>
             )}
         </div>
     );
