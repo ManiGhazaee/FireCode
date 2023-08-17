@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { kebabToSpacedPascal } from "../ts/utils/string";
 import Loading from "./Loading";
 import SortIcon from "./SortIcon";
 import StarIcon from "./StarIcon";
-import { createPortal } from "react-dom";
 import Tooltip from "./Tooltip";
 
 const ProblemList = ({
@@ -189,7 +188,7 @@ const ProblemList = ({
                         ) : (
                             <></>
                         )}
-                        {data.map(({ main }, index) => (
+                        {data.map(({ main }) => (
                             <div
                                 className={`h-[40px] w-full text-[14px] hover:text-black duration-150 ${
                                     main.difficulty === "easy"
