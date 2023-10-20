@@ -116,12 +116,7 @@ const ProblemPage = ({
             })
             .catch((e: AxiosError) => {
                 console.log(e);
-                if (
-                    (e.response?.data as { success: boolean; message: string })
-                        .success === false
-                ) {
-                    navigate("/sorry");
-                }
+                navigate("/sorry");
             });
 
         if (!id || !name) {
@@ -250,12 +245,6 @@ const ProblemPage = ({
                             id="console"
                             className="flex justify-end items-center bg-black w-full h-[50px] rounded-lg overflow-hidden border border-borders"
                         >
-                            <div
-                                className="w-fit h-fit rounded mr-[11px] px-[20px] py-[4px] hover:bg-white cursor-pointer hover:text-black hover:border-white text-[#808080] bg-black text-[14px] active:border-[#808080] active:bg-[#808080] border-[#222] font-bold right-0 transition select-none"
-                                // onClick={runCode}
-                            >
-                                <s>Run</s>
-                            </div>
                             <div
                                 className="w-fit h-fit rounded mr-[11px] px-[20px] py-[4px] hover:bg-green-500 cursor-pointer hover:text-black text-black bg-green-500 text-[14px] active:border-green-800 active:bg-green-800 border-green-500 font-bold right-0 transition select-none"
                                 onClick={submitCode}

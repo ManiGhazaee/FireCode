@@ -187,6 +187,19 @@ accounts.post("/delete/:id", authenticateToken, async (req, res) => {
     }
 });
 
+accounts.get("/id/:id", authenticateToken, async (req, res) => {
+    const id = req.params.id;
+
+    const user = await UserModel.findById(id);
+
+    if (!user) {
+        res.status(404).json({ success: false, message: "User not found" });
+        return;
+    }
+
+    res.json(user);
+});
+
 accounts.get("/:name", async (req, res) => {
     const name = req.params.name;
 
@@ -251,17 +264,6 @@ accounts.get("/:name", async (req, res) => {
     res.json(publicUser);
 });
 
-accounts.get("/id/:id", authenticateToken, async (req, res) => {
-    const id = req.params.id;
 
-    const user = await UserModel.findById(id);
-
-    if (!user) {
-        res.status(404).json({ success: false, message: "User not found" });
-        return;
-    }
-
-    res.json(user);
-});
 
 export default accounts;

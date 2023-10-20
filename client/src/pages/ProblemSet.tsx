@@ -63,13 +63,8 @@ const ProblemSet = ({
             })
             .catch((e: AxiosError) => {
                 console.log(e);
-                if (
-                    (e.response?.data as { success: boolean; message: string })
-                        .success === false
-                ) {
-                    navigate("/sorry");
-                    setVerified(false);
-                }
+                navigate("/sorry");
+                setVerified(false);
             });
 
         axios
